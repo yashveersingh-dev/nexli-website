@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Faq from "../components/Faq.astro";
+import CtaButtons from "../components/CtaButtons.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { webPage } from "../lib/seo";
+
+const title = "Founding Partner Program";
+const description =
+  "Be one of the first schools on Nexli. Founding partners get the founding rate, hands-on setup and data migration, a month-to-month exit and a money-back commitment.";
+
+const give = [
+  { icon: "fees", title: "A discounted founding rate", desc: "A materially lower price than standard, locked for your founding period, because you're taking the early bet with us." },
+  { icon: "operations", title: "Hands-on setup & migration", desc: "We personally help set up your school and migrate your existing data, rather than handing you a manual." },
+  { icon: "shield", title: "Month-to-month, money-back", desc: "A month-to-month exit and a money-back commitment for the initial window. If Nexli doesn't work for you, you're not trapped." },
+  { icon: "hr", title: "A direct line to the founder", desc: "You talk to the people building Nexli. Your feedback shapes the roadmap directly, not through a support queue." },
+];
+
+const ask = [
+  "Use Nexli for real, and tell us honestly what works and what doesn't.",
+  "Let us write up your experience as a named case study, once you're genuinely happy.",
+  "Give a short testimonial and, if you're willing, two warm introductions to other schools.",
+];
+
+const faqs = [
+  { q: "Why are you offering this?", a: "Because Nexli is early and we'd rather build with a few real schools than market to many. Founding partners get a better deal and direct influence; we get honest feedback and references. It's a genuine partnership, not a discount code." },
+  { q: "Is the cohort limited?", a: "Yes. We take only a small number of founding partners at a time, because each one gets hands-on attention from the team that built the platform." },
+  { q: "What happens after the founding period?", a: "Your subscription converts to the standard rate for your school's size, with everything still included. There's no lock-in; you can export your data and leave at any time." },
+  { q: "Is Nexli actually ready to use?", a: "Yes. Nexli is a live platform with the full module suite, tested across all roles on mobile. Founding partners shape what comes next, but they're using a real, working system today." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/founding-partner" })}>
+  <PageHero
+    eyebrow="Founding Partner Program"
+    title="Be one of the first schools on Nexli"
+    lead="We're not going to show you fabricated case studies or invented logos. Instead, we'd rather invite you to help write the real ones, as a founding partner."
+    breadcrumbs={[{ label: "Founding Partner" }]}
+  >
+    <CtaButtons primaryLabel="Book Free Live Demo" secondaryLabel="Apply on Instagram" />
+  </PageHero>
+
+  <!-- Honesty note -->
+  <section class="section">
+    <div class="container-nx">
+      <div class="mx-auto max-w-3xl">
+        <div class="callout">
+          <p class="text-ivory-muted">Most software sites in our category fill this space with stock photos and testimonials that may not be real. Nexli is new, and we'd rather be honest about that. We don't yet have a wall of customer logos; we have a working platform and a commitment to the first schools brave enough to build with us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What you get -->
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="max-w-2xl">
+        <p class="eyebrow">What founding partners get</p>
+        <h2 class="reveal mt-3 text-3xl md:text-4xl">A real partnership, not a pilot</h2>
+      </div>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2">
+        {give.map((g, i) => (
+          <div class={`card reveal reveal-${(i % 4) + 1}`}>
+            <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+              <Icon name={g.icon} size={20} />
+            </span>
+            <h3 class="mt-4 text-lg text-ivory">{g.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{g.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- What we ask -->
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="rounded-[1.75rem] border border-line p-8 md:p-12">
+        <div class="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <p class="eyebrow">What we ask in return</p>
+            <h2 class="mt-3 text-3xl md:text-4xl">Fair, and only fair</h2>
+            <p class="mt-4 text-ivory-muted">The deal goes both ways. In exchange for the founding rate and our hands-on attention, we ask for the things that help the next school trust Nexli.</p>
+          </div>
+          <ul class="space-y-4">
+            {ask.map((a) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-1 text-gold"><Icon name="check" size={18} /></span>
+                <span class="text-ivory-muted">{a}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faqs} title="About the program" />
+
+  <CtaBand
+    eyebrow="Limited cohort"
+    title="Want to be a founding school?"
+    text="Tell us about your school on Instagram. If it's a fit, we'll set up a proper conversation, with no obligation."
+  />
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { webPage } from "../../lib/seo";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("legal");
+  return docs.map((entry) => ({ params: { doc: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const title = entry.data.title;
+const description = `${title} for the Nexli school management platform, operated by Yashveer Labs.`;
+---
+<BaseLayout title={title} description={description} noindex jsonLd={webPage({ title, description, path: `/legal/${entry.id}` })}>
+  <PageHero
+    eyebrow="Legal"
+    title={title}
+    breadcrumbs={[{ label: "Legal", href: "/legal" }, { label: title }]}
+  />
+  <section class="section">
+    <div class="container-nx">
+      <div class="mx-auto max-w-3xl">
+        <div class="callout mb-10 text-sm text-ivory-muted">
+          <strong class="text-ivory">Last updated: 19 June 2026.</strong> This document is current and is
+          subject to final legal review. For any question about it, please
+          <a href="/contact" class="text-gold-200 underline underline-offset-2">contact us</a>.
+        </div>
+        <div class="prose-nx">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,125 @@
+---
+import Icon from "../Icon.astro";
+import { SCHOOL } from "../../lib/demo-data";
+import { INSTAGRAM_URL } from "../../lib/site";
+
+interface Screen {
+  id: string;
+  label: string;
+  icon: string;
+}
+interface Props {
+  role: string;
+  title: string;
+  screens: Screen[];
+}
+const { role, title, screens } = Astro.props;
+const first = screens[0]?.id;
+---
+<div id="demo-app" class="container-nx pb-20 pt-24 md:pt-28" data-first={first}>
+  <h1 class="sr-only">Nexli interactive demo: {title} view of {SCHOOL.name}</h1>
+  <!-- Toolbar -->
+  <div class="mb-6 flex flex-col gap-3 rounded-2xl border border-line p-3 sm:flex-row sm:items-center sm:justify-between" style="background:linear-gradient(180deg,var(--color-obsidian-700),var(--color-obsidian-800))">
+    <div class="flex items-center gap-3">
+      <span class="inline-grid h-10 w-10 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+        <Icon name="operations" size={19} />
+      </span>
+      <div>
+        <p class="text-sm text-ivory">{SCHOOL.name}</p>
+        <p class="text-xs text-ivory-faint">{title} · {SCHOOL.session} · {SCHOOL.board}</p>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      <span class="demo-badge"><Icon name="sparkle" size={12} /> Demo · sample data</span>
+      <a href="/demo" class="btn btn-ghost" style="padding:0.5rem 0.9rem;font-size:0.8rem">
+        <Icon name="arrow-right" size={14} class="-scale-x-100" /> Change role
+      </a>
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-instagram" style="padding:0.5rem 0.95rem;font-size:0.8rem">
+        <Icon name="instagram" size={15} /> Message us
+      </a>
+    </div>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-[14rem_1fr]">
+    <!-- Nav -->
+    <aside class="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0" role="tablist" aria-label={`${title} screens`}>
+      <p class="hidden px-1 pb-2 text-xs font-semibold uppercase tracking-[0.16em] text-ivory-faint lg:block">{title}</p>
+      {screens.map((s, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${s.id}`}
+          aria-controls={`panel-${s.id}`}
+          aria-selected={i === 0 ? "true" : "false"}
+          tabindex={i === 0 ? 0 : -1}
+          class="demo-nav-item shrink-0"
+          data-screen-nav={s.id}
+        >
+          <Icon name={s.icon} size={17} class="text-gold" />
+          <span class="whitespace-nowrap">{s.label}</span>
+        </button>
+      ))}
+    </aside>
+
+    <!-- Screens -->
+    <div class="min-w-0">
+      <slot />
+      <p class="mt-8 text-center text-xs text-ivory-faint">
+        This is an illustrative demo of {SCHOOL.name} with sample data; nothing here is a real student or record.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.getElementById("demo-app");
+    if (!root) return;
+    const navs = Array.from(root.querySelectorAll("[data-screen-nav]"));
+    const screens = Array.from(root.querySelectorAll("[data-screen]"));
+    const ids = screens.map((s) => s.getAttribute("data-screen"));
+    // Wire each panel as a tabpanel labelled by its tab (kept in JS so the six
+    // role components don't each have to repeat the ARIA plumbing).
+    screens.forEach((s) => {
+      const sid = s.getAttribute("data-screen");
+      s.setAttribute("role", "tabpanel");
+      s.setAttribute("id", "panel-" + sid);
+      s.setAttribute("aria-labelledby", "tab-" + sid);
+      s.setAttribute("tabindex", "0");
+    });
+    function show(id) {
+      if (!ids.includes(id)) id = root.getAttribute("data-first");
+      screens.forEach((s) => (s.hidden = s.getAttribute("data-screen") !== id));
+      navs.forEach((n) => {
+        const active = n.getAttribute("data-screen-nav") === id;
+        n.classList.toggle("is-active", active);
+        n.setAttribute("aria-selected", String(active));
+        n.tabIndex = active ? 0 : -1;
+      });
+    }
+    navs.forEach((n, idx) => {
+      n.addEventListener("click", () => {
+        const id = n.getAttribute("data-screen-nav");
+        show(id);
+        history.replaceState(null, "", "#" + id);
+        const top = root.getBoundingClientRect().top + window.scrollY - 84;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+      // Roving-focus arrow-key navigation, per the WAI-ARIA tabs pattern.
+      n.addEventListener("keydown", (e) => {
+        let t = -1;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") t = (idx + 1) % navs.length;
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp") t = (idx - 1 + navs.length) % navs.length;
+        else if (e.key === "Home") t = 0;
+        else if (e.key === "End") t = navs.length - 1;
+        if (t < 0) return;
+        e.preventDefault();
+        const tid = navs[t].getAttribute("data-screen-nav");
+        show(tid);
+        navs[t].focus();
+        history.replaceState(null, "", "#" + tid);
+      });
+    });
+    show(location.hash.slice(1) || root.getAttribute("data-first"));
+  })();
+</script>

@@ -1,0 +1,86 @@
+---
+import DemoShell from "./DemoShell.astro";
+import Icon from "../Icon.astro";
+import { STAFF_TODAY, INCIDENTS, ATTENDANCE_WEEK, AT_RISK } from "../../lib/demo-data";
+
+const screens = [
+  { id: "oversight", label: "Oversight", icon: "shield" },
+  { id: "staff", label: "Staff today", icon: "hr" },
+  { id: "operations", label: "Operations", icon: "operations" },
+];
+const present = STAFF_TODAY.filter((s) => s.status === "Present").length;
+const statusTone = { Present: "badge-good", "On leave": "badge-warn", Late: "badge-warn", Absent: "badge-bad" } as Record<string, string>;
+const toneClass = { good: "badge-good", warn: "badge-warn", bad: "badge-bad" } as Record<string, string>;
+---
+<DemoShell role="vice-principal" title="Vice Principal" screens={screens}>
+  <!-- Oversight -->
+  <section class="demo-screen" data-screen="oversight">
+    <h2 class="text-2xl">Daily oversight</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Discipline, staff and operations at a glance.</p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Staff present</span><div class="demo-stat-value mt-3">{present}/{STAFF_TODAY.length}</div><span class="text-xs text-ivory-faint">teaching staff</span></div>
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Substitutions</span><div class="demo-stat-value mt-3">1</div><span class="text-xs text-ivory-faint">arranged today</span></div>
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Open incidents</span><div class="demo-stat-value mt-3">{INCIDENTS.length}</div></div>
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Flagged students</span><div class="demo-stat-value mt-3">{AT_RISK.length}</div></div>
+    </div>
+    <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Students to follow up</h3>
+        <ul class="mt-4 space-y-3">
+          {AT_RISK.map((r) => (
+            <li class="flex items-start justify-between gap-3">
+              <div><p class="text-sm text-ivory">{r.name} <span class="text-ivory-faint">· {r.cls}</span></p><p class="text-xs text-ivory-muted">{r.reason}</p></div>
+              <span class={`badge ${toneClass[r.tone]}`}>review</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Attendance this week</h3>
+        <div class="mt-5 flex items-end gap-3" style="height:130px">
+          {ATTENDANCE_WEEK.map((d) => (
+            <div class="flex flex-1 flex-col items-center justify-end gap-2">
+              <div class="demo-col" style={`height:${(d.pct - 60) * 2.4}px`}></div>
+              <span class="text-xs text-ivory-faint">{d.day}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Staff today -->
+  <section class="demo-screen" data-screen="staff" hidden>
+    <h2 class="text-2xl">Staff today</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Attendance and duty status for teaching staff.</p>
+    <div class="demo-panel mt-5">
+      <div class="overflow-x-auto">
+        <table class="demo-table">
+          <thead><tr><th>Name</th><th>Department</th><th>Status</th><th>Note</th></tr></thead>
+          <tbody>
+            {STAFF_TODAY.map((s) => (
+              <tr><td class="text-ivory">{s.name}</td><td>{s.dept}</td><td><span class={`badge ${statusTone[s.status]}`}>{s.status}</span></td><td>{s.note}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Operations -->
+  <section class="demo-screen" data-screen="operations" hidden>
+    <h2 class="text-2xl">Operations</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Open items across discipline, safety and facilities.</p>
+    <div class="mt-5 space-y-3">
+      {INCIDENTS.map((i) => (
+        <div class="demo-panel flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class={`badge ${toneClass[i.tone]}`}>{i.type}</span>
+            <span class="text-sm text-ivory">{i.detail}</span>
+          </div>
+          <span class="text-xs text-ivory-faint">Owner: {i.owner}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+</DemoShell>

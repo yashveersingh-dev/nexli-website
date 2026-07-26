@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import KbCategoryView from "../../../components/KbCategoryView.astro";
+import CtaBand from "../../../components/CtaBand.astro";
+import { KB_CATEGORIES, KB_BY_SLUG } from "../../../lib/site";
+import { getArticlesByCategory, KB_PAGE_SIZE } from "../../../lib/kb";
+import { webPage } from "../../../lib/seo";
+
+export async function getStaticPaths() {
+  return Promise.all(
+    KB_CATEGORIES.map(async (c) => {
+      const articles = await getArticlesByCategory(c.slug);
+      return {
+        params: { category: c.slug },
+        props: {
+          category: c,
+          articles: articles.slice(0, KB_PAGE_SIZE),
+          totalPages: Math.max(1, Math.ceil(articles.length / KB_PAGE_SIZE)),
+          totalCount: articles.length,
+        },
+      };
+    })
+  );
+}
+const { category, articles, totalPages, totalCount } = Astro.props;
+const cat = KB_BY_SLUG[category.slug];
+const title = cat.title;
+const description = `${totalCount}+ in-depth ${cat.title} guides for Indian schools: ${cat.blurb}`;
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: `/knowledge-base/${category.slug}` })}>
+  <KbCategoryView category={category} articles={articles} page={1} totalPages={totalPages} totalCount={totalCount} />
+  <CtaBand />
+</BaseLayout>

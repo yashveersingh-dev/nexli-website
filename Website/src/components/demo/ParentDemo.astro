@@ -1,0 +1,107 @@
+---
+import DemoShell from "./DemoShell.astro";
+import Icon from "../Icon.astro";
+import { CHILD, FEES_LEDGER, MESSAGES } from "../../lib/demo-data";
+
+const screens = [
+  { id: "child", label: "Child overview", icon: "admissions" },
+  { id: "fees", label: "Fees", icon: "fees" },
+  { id: "attendance", label: "Attendance", icon: "attendance" },
+  { id: "messages", label: "Messages", icon: "communication" },
+];
+---
+<DemoShell role="parent" title="Parent" screens={screens}>
+  <!-- Child overview -->
+  <section class="demo-screen" data-screen="child">
+    <h2 class="text-2xl">{CHILD.name}</h2>
+    <p class="mt-1 text-sm text-ivory-muted">{CHILD.cls} · Roll {CHILD.roll}</p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Attendance</span><div class="demo-stat-value mt-3">{CHILD.attendance}%</div><span class="badge badge-good mt-3">Healthy</span></div>
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Average</span><div class="demo-stat-value mt-3">{CHILD.avg}%</div></div>
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Class rank</span><div class="demo-stat-value mt-3">{CHILD.rank}</div></div>
+      <div class="demo-panel"><span class="text-xs text-ivory-faint">Term 2 fees</span><div class="demo-stat-value mt-3">Due</div><span class="badge badge-warn mt-3">by 15 Oct</span></div>
+    </div>
+    <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Latest update</h3>
+        <p class="mt-3 text-sm text-ivory-muted">{MESSAGES[0].text}</p>
+        <p class="mt-2 text-xs text-ivory-faint">{MESSAGES[0].from} · {MESSAGES[0].time}</p>
+      </div>
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">What you can do here</h3>
+        <ul class="mt-3 space-y-2 text-sm text-ivory-muted">
+          <li class="flex items-center gap-2"><Icon name="check" size={15} class="text-gold" /> See attendance, homework and report cards</li>
+          <li class="flex items-center gap-2"><Icon name="check" size={15} class="text-gold" /> Pay fees online and get instant receipts</li>
+          <li class="flex items-center gap-2"><Icon name="check" size={15} class="text-gold" /> Receive circulars by SMS and app</li>
+        </ul>
+        <p class="mt-3 text-xs text-ivory-faint">You only ever see your own child's data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fees -->
+  <section class="demo-screen" data-screen="fees" hidden>
+    <h2 class="text-2xl">Fees</h2>
+    <p class="mt-1 text-sm text-ivory-muted">{CHILD.name} · {CHILD.cls}</p>
+    <div class="demo-panel mt-5">
+      <div class="overflow-x-auto">
+        <table class="demo-table">
+          <thead><tr><th>Item</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody>
+            {FEES_LEDGER.map((f) => (
+              <tr>
+                <td class="text-ivory">{f.term}</td>
+                <td>{f.amount}</td>
+                <td><span class={`badge ${f.status === "Due" ? "badge-warn" : "badge-good"}`}>{f.status}</span></td>
+                <td>{f.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-5 flex flex-wrap items-center gap-3 border-t border-line pt-4">
+        <button type="button" class="btn btn-gold" data-pay style="padding:0.6rem 1.3rem"><Icon name="fees" size={16} /> Pay Term 2 online</button>
+        <span class="text-xs text-ivory-faint" data-pay-note hidden>Payment links open your UPI / card / net-banking app (demo).</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Attendance -->
+  <section class="demo-screen" data-screen="attendance" hidden>
+    <h2 class="text-2xl">Attendance</h2>
+    <p class="mt-1 text-sm text-ivory-muted">{CHILD.name} · this year</p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-3">
+      <div class="demo-panel text-center"><span class="text-xs text-ivory-faint">Overall</span><div class="demo-stat-value mt-2">{CHILD.attendance}%</div></div>
+      <div class="demo-panel text-center"><span class="text-xs text-ivory-faint">This month</span><div class="demo-stat-value mt-2">96%</div></div>
+      <div class="demo-panel text-center"><span class="text-xs text-ivory-faint">Absences</span><div class="demo-stat-value mt-2">3</div></div>
+    </div>
+    <div class="callout mt-4 text-sm text-ivory-muted">
+      <strong class="text-ivory">You're notified the same day.</strong> If {CHILD.name.split(" ")[0]} is ever marked absent, you get an automatic alert, with no need to call the school.
+    </div>
+  </section>
+
+  <!-- Messages -->
+  <section class="demo-screen" data-screen="messages" hidden>
+    <h2 class="text-2xl">Messages</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Circulars and updates from the school.</p>
+    <div class="mt-5 space-y-3">
+      {MESSAGES.map((m) => (
+        <div class="demo-panel">
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-sm text-ivory">{m.from}</span>
+            <span class="text-xs text-ivory-faint">{m.time}</span>
+          </div>
+          <p class="mt-2 text-sm text-ivory-muted">{m.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</DemoShell>
+
+<script is:inline>
+  (function () {
+    const pay = document.querySelector("[data-pay]");
+    const note = document.querySelector("[data-pay-note]");
+    if (pay && note) pay.addEventListener("click", () => { note.hidden = false; });
+  })();
+</script>

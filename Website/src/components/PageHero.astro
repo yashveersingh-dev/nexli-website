@@ -1,0 +1,30 @@
+---
+import Breadcrumbs from "./Breadcrumbs.astro";
+// Standard interior-page hero: atmosphere + eyebrow + title + lead, with optional breadcrumb.
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  breadcrumbs?: Crumb[];
+  align?: "start" | "center";
+}
+const { eyebrow, title, lead, breadcrumbs, align = "start" } = Astro.props;
+const centered = align === "center";
+---
+<section class="relative overflow-hidden border-b border-line">
+  <div class="glow-radial"></div>
+  <div class="grid-texture"></div>
+  <div class="container-nx relative pb-12 pt-32 md:pb-16 md:pt-40">
+    <div class={`${centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}`}>
+      {breadcrumbs && <Breadcrumbs items={breadcrumbs} class={`mb-6 ${centered ? "flex justify-center" : ""}`} />}
+      {eyebrow && <p class={`eyebrow ${centered ? "justify-center" : ""}`}>{eyebrow}</p>}
+      <h1 class="mt-4 text-4xl leading-[1.05] md:text-6xl">{title}</h1>
+      {lead && <p class={`mt-6 text-lg text-ivory-muted md:text-xl ${centered ? "mx-auto max-w-2xl" : "max-w-2xl"}`}>{lead}</p>}
+      {Astro.slots.has("default") && <div class={`mt-8 ${centered ? "flex justify-center" : ""}`}><slot /></div>}
+    </div>
+  </div>
+</section>

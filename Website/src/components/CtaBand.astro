@@ -1,0 +1,27 @@
+---
+import CtaButtons from "./CtaButtons.astro";
+// Closing call-to-action band, reused at the foot of most pages.
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+}
+const {
+  eyebrow = "Get started",
+  title = "Ready to bring clarity to your school?",
+  text = "Explore the whole platform in a free, no-signup live demo, then message us on Instagram and we'll show you exactly how Nexli fits. No obligation, just a clear conversation.",
+} = Astro.props;
+---
+<section class="section">
+  <div class="container-nx">
+    <div class="reveal relative overflow-hidden rounded-[1.75rem] border border-line px-6 py-14 text-center md:px-12 md:py-20">
+      <div class="glow-radial"></div>
+      <div class="relative mx-auto max-w-2xl">
+        <p class="eyebrow justify-center">{eyebrow}</p>
+        <h2 class="mt-4 text-3xl md:text-4xl">{title}</h2>
+        <p class="mx-auto mt-4 max-w-xl text-ivory-muted">{text}</p>
+        <CtaButtons class="mt-8" align="center" />
+      </div>
+    </div>
+  </div>
+</section>

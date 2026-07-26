@@ -1,0 +1,31 @@
+---
+import Icon from "./Icon.astro";
+import { DEMO_HREF, INSTAGRAM_URL, PRIMARY_CTA } from "../lib/site";
+
+interface Props {
+  kicker?: string;
+  title: string;
+  body?: string;
+}
+const { kicker = "Coming soon", title, body } = Astro.props;
+---
+<section class="relative overflow-hidden">
+  <div class="glow-radial"></div>
+  <div class="container-nx relative flex min-h-[70vh] flex-col items-center justify-center py-28 text-center">
+    <p class="eyebrow justify-center">
+      <Icon name="sparkle" size={15} />
+      {kicker}
+    </p>
+    <h1 class="mt-6 max-w-3xl text-4xl sm:text-5xl md:text-6xl">{title}</h1>
+    {body && <p class="mt-6 max-w-xl text-ivory-muted">{body}</p>}
+    <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a href={PRIMARY_CTA.href} class="btn btn-gold w-full sm:w-auto">
+        <Icon name="sparkle" size={18} /> {PRIMARY_CTA.label}
+      </a>
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-ghost w-full sm:w-auto">
+        <Icon name="instagram" size={16} /> Message on Instagram
+      </a>
+    </div>
+    <slot />
+  </div>
+</section>

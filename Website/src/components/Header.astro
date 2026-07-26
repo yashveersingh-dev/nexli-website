@@ -1,0 +1,214 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { NAV, DEMO_HREF, INSTAGRAM_URL, INSTAGRAM_HANDLE, PRIMARY_CTA } from "../lib/site";
+---
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-colors duration-300">
+  <div class="container-nx">
+    <div class="flex h-[4.75rem] items-center justify-between gap-4">
+      <Logo />
+
+      <!-- Desktop nav -->
+      <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+        {NAV.map((item) =>
+          item.items ? (
+            <div class="nav-group relative">
+              <a
+                href={item.href}
+                class="nav-trigger inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm text-ivory-muted transition-colors hover:text-ivory"
+                aria-haspopup="true"
+              >
+                {item.label}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav-caret" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+              </a>
+              <div class={`nav-panel ${item.wide ? "nav-panel-wide" : ""}`}>
+                <div class={`nav-panel-inner ${item.wide ? "grid grid-cols-2 gap-1" : "flex flex-col"}`}>
+                  {item.items.map((sub) => (
+                    <a href={sub.href} class="nav-link">
+                      {sub.icon && (
+                        <span class="nav-link-icon"><Icon name={sub.icon} size={17} /></span>
+                      )}
+                      <span class="min-w-0">
+                        <span class="block text-sm text-ivory">{sub.label}</span>
+                        {sub.desc && <span class="block truncate text-xs text-ivory-faint">{sub.desc}</span>}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a href={item.href} class="rounded-full px-3.5 py-2 text-sm text-ivory-muted transition-colors hover:text-ivory">
+              {item.label}
+            </a>
+          )
+        )}
+      </nav>
+
+      <div class="hidden items-center gap-3 lg:flex">
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener"
+          aria-label={`Message Yashveer Labs on Instagram (${INSTAGRAM_HANDLE})`}
+          class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-ivory-muted transition-colors hover:border-gold/50 hover:text-gold-200"
+        >
+          <Icon name="instagram" size={18} />
+        </a>
+        <a href={PRIMARY_CTA.href} class="btn btn-gold" style="padding:0.6rem 1.2rem;font-size:0.85rem">
+          <Icon name="sparkle" size={16} />
+          Book Free Demo
+        </a>
+      </div>
+
+      <button
+        id="menu-toggle"
+        type="button"
+        class="inline-flex items-center justify-center rounded-lg border border-line p-2 text-ivory lg:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" size={22} />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden max-h-[80vh] overflow-y-auto border-t border-line bg-obsidian-800/97 backdrop-blur-xl lg:hidden">
+    <nav class="container-nx flex flex-col gap-1 py-4" aria-label="Mobile">
+      {NAV.map((item) =>
+        item.items ? (
+          <div class="m-group border-b border-line/60">
+            <button type="button" class="m-acc flex w-full items-center justify-between px-3 py-3 text-left text-ivory" aria-expanded="false">
+              {item.label}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="m-caret transition-transform" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+            </button>
+            <div class="m-sub hidden pb-2">
+              {item.items.map((sub) => (
+                <a href={sub.href} class="block rounded-lg px-3 py-2.5 text-sm text-ivory-muted transition-colors hover:bg-white/5 hover:text-ivory">
+                  {sub.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} class="border-b border-line/60 px-3 py-3 text-ivory-muted transition-colors hover:text-ivory">
+            {item.label}
+          </a>
+        )
+      )}
+      <div class="mt-4 flex flex-col gap-3">
+        <a href={PRIMARY_CTA.href} class="btn btn-gold">
+          <Icon name="sparkle" size={18} /> {PRIMARY_CTA.label}
+        </a>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-ghost">
+          <Icon name="instagram" size={18} /> Message on Instagram
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const header = document.getElementById("site-header");
+    const onScroll = () => header && header.classList.toggle("is-scrolled", window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    if (toggle && menu) {
+      toggle.addEventListener("click", () => {
+        const open = menu.classList.toggle("hidden") === false;
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      });
+      menu.querySelectorAll(".m-acc").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const sub = btn.parentElement.querySelector(".m-sub");
+          const caret = btn.querySelector(".m-caret");
+          const open = sub.classList.toggle("hidden") === false;
+          btn.setAttribute("aria-expanded", String(open));
+          if (caret) caret.style.transform = open ? "rotate(180deg)" : "";
+        });
+      });
+      menu.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          menu.classList.add("hidden");
+          toggle.setAttribute("aria-expanded", "false");
+          toggle.setAttribute("aria-label", "Open menu");
+        })
+      );
+    }
+  })();
+</script>
+
+<style>
+  #site-header.is-scrolled {
+    background: color-mix(in srgb, var(--color-obsidian-800) 82%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  /* ---- Desktop dropdowns ---- */
+  .nav-group:hover .nav-trigger,
+  .nav-group:focus-within .nav-trigger { color: var(--color-ivory); }
+  .nav-caret { transition: transform 0.2s ease; opacity: 0.7; }
+  .nav-group:hover .nav-caret,
+  .nav-group:focus-within .nav-caret { transform: rotate(180deg); }
+
+  .nav-panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    min-width: 17rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 60;
+  }
+  .nav-panel-wide { min-width: 38rem; }
+  .nav-group:hover .nav-panel,
+  .nav-group:focus-within .nav-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+  /* hover bridge so the panel doesn't close in the gap */
+  .nav-panel::before { content: ""; position: absolute; top: -0.6rem; left: 0; right: 0; height: 0.6rem; }
+  .nav-panel-inner {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-xl);
+    background: color-mix(in srgb, var(--color-obsidian-700) 96%, transparent);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.9);
+    padding: 0.5rem;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.85rem;
+    padding: 0.6rem 0.75rem;
+    transition: background-color 0.18s ease;
+  }
+  .nav-link:hover { background: rgba(198, 165, 92, 0.08); }
+  .nav-link-icon {
+    display: grid;
+    place-items: center;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    border-radius: 0.6rem;
+    border: 1px solid var(--color-line);
+    color: var(--color-gold);
+    background: rgba(255, 255, 255, 0.02);
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+import DemoShell from "./DemoShell.astro";
+import Icon from "../Icon.astro";
+import { TIMETABLE, REPORT_CARD, ASSIGNMENTS_STUDENT, CHILD } from "../../lib/demo-data";
+
+const screens = [
+  { id: "timetable", label: "Timetable", icon: "attendance" },
+  { id: "attendance", label: "Attendance", icon: "check" },
+  { id: "report", label: "Report card", icon: "academics" },
+  { id: "assignments", label: "Assignments", icon: "book" },
+];
+const statusTone = { Pending: "badge-warn", Draft: "badge", Done: "badge-good" } as Record<string, string>;
+---
+<DemoShell role="student" title="Student" screens={screens}>
+  <!-- Timetable -->
+  <section class="demo-screen" data-screen="timetable">
+    <h2 class="text-2xl">Hi {REPORT_CARD.student.split(" ")[0]} 👋</h2>
+    <p class="mt-1 text-sm text-ivory-muted">{REPORT_CARD.cls} · today's timetable.</p>
+    <div class="demo-panel mt-5">
+      <div class="space-y-2.5">
+        {TIMETABLE.map((p) => (
+          <div class="flex items-center gap-4 rounded-xl border border-line px-4 py-3">
+            <div class="text-center">
+              <div class="text-xs text-ivory-faint">P{p.period}</div>
+              <div class="text-sm text-ivory">{p.time}</div>
+            </div>
+            <div class="flex-1">
+              <div class="text-ivory">{p.subject}</div>
+              <div class="text-xs text-ivory-faint">{p.teacher} · {p.room}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Attendance -->
+  <section class="demo-screen" data-screen="attendance" hidden>
+    <h2 class="text-2xl">My attendance</h2>
+    <p class="mt-1 text-sm text-ivory-muted">This academic year so far.</p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-3">
+      <div class="demo-panel text-center"><span class="text-xs text-ivory-faint">Overall</span><div class="demo-stat-value mt-2">{CHILD.attendance}%</div><span class="badge badge-good mt-3">Above 75%</span></div>
+      <div class="demo-panel text-center"><span class="text-xs text-ivory-faint">Present</span><div class="demo-stat-value mt-2">171</div><span class="text-xs text-ivory-faint">of 174 days</span></div>
+      <div class="demo-panel text-center"><span class="text-xs text-ivory-faint">Leaves</span><div class="demo-stat-value mt-2">3</div><span class="text-xs text-ivory-faint">approved</span></div>
+    </div>
+    <div class="demo-panel mt-4">
+      <h3 class="text-sm text-ivory">Last 4 weeks</h3>
+      <div class="mt-4 grid grid-cols-7 gap-1.5">
+        {Array.from({ length: 28 }).map((_, i) => {
+          const absent = i === 9 || i === 17;
+          return <div class="aspect-square rounded-md" style={`background:${absent ? "rgba(232,128,107,.25)" : "rgba(108,211,154,.18)"};border:1px solid ${absent ? "rgba(232,128,107,.4)" : "rgba(108,211,154,.3)"}`} title={absent ? "Absent" : "Present"}></div>;
+        })}
+      </div>
+      <p class="mt-3 text-xs text-ivory-faint">Green = present · red = absent. Parents are notified on the day of any absence.</p>
+    </div>
+  </section>
+
+  <!-- Report card -->
+  <section class="demo-screen" data-screen="report" hidden>
+    <h2 class="text-2xl">Report card</h2>
+    <p class="mt-1 text-sm text-ivory-muted">{REPORT_CARD.term} · {REPORT_CARD.cls}</p>
+    <div class="demo-panel mt-5">
+      <div class="overflow-x-auto">
+        <table class="demo-table">
+          <thead><tr><th>Subject</th><th>Marks</th><th>Out of</th><th>Grade</th></tr></thead>
+          <tbody>
+            {REPORT_CARD.subjects.map((s) => (
+              <tr><td class="text-ivory">{s.name}</td><td>{s.marks}</td><td>{s.max}</td><td><span class="badge badge-good">{s.grade}</span></td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+        <span class="text-sm text-ivory-muted">{REPORT_CARD.result}</span>
+        <span class="inline-flex items-center gap-2 text-xs text-gold"><Icon name="check" size={14} /> CBSE 9-point · print-ready</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Assignments -->
+  <section class="demo-screen" data-screen="assignments" hidden>
+    <h2 class="text-2xl">Assignments</h2>
+    <p class="mt-1 text-sm text-ivory-muted">What's due, and what you've submitted.</p>
+    <div class="mt-5 space-y-3">
+      {ASSIGNMENTS_STUDENT.map((a) => (
+        <div class="demo-panel flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="badge badge-good">{a.subject}</span>
+            <h3 class="mt-2 text-ivory">{a.title}</h3>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-ivory-faint">{a.due}</span>
+            <span class={`badge ${statusTone[a.status]}`}>{a.status}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</DemoShell>

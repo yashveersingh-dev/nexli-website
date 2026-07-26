@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { MODULE_PAGES } from "../lib/modules";
+import { SOLUTION_PAGES } from "../lib/solutions";
+import { KB_CATEGORIES } from "../lib/site";
+import { webPage } from "../lib/seo";
+
+const title = "Sitemap";
+const description = "A complete map of the Nexli website: every page, from the platform and solutions to the knowledge base, company and legal pages.";
+
+const groups = [
+  {
+    heading: "Main",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "Platform", href: "/platform" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Live Demo", href: "/demo" },
+      { label: "Knowledge Base", href: "/knowledge-base" },
+      { label: "FAQ", href: "/faq" },
+    ],
+  },
+  {
+    heading: "Platform modules",
+    links: MODULE_PAGES.map((m) => ({ label: m.nav, href: `/platform/${m.slug}` })),
+  },
+  {
+    heading: "Platform: more",
+    links: [
+      { label: "Security", href: "/security" },
+      { label: "Compliance", href: "/compliance" },
+    ],
+  },
+  {
+    heading: "Solutions",
+    links: [
+      { label: "All solutions", href: "/solutions" },
+      ...SOLUTION_PAGES.map((s) => ({ label: s.nav, href: `/solutions/${s.slug}` })),
+    ],
+  },
+  {
+    heading: "Knowledge Base",
+    links: KB_CATEGORIES.map((c) => ({ label: c.title, href: `/knowledge-base/${c.slug}` })),
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Founder", href: "/founder" },
+      { label: "Careers", href: "/careers" },
+      { label: "Contact", href: "/contact" },
+      { label: "Founding Partner Program", href: "/founding-partner" },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/legal/privacy" },
+      { label: "Terms & Conditions", href: "/legal/terms" },
+      { label: "Data Processing Agreement", href: "/legal/data-processing" },
+      { label: "Parent Consent", href: "/legal/parent-consent" },
+      { label: "Refund & Cancellation", href: "/legal/refund" },
+      { label: "Accessibility", href: "/accessibility" },
+    ],
+  },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/sitemap" })}>
+  <PageHero
+    eyebrow="Sitemap"
+    title="Everything, in one list"
+    lead="A human-friendly map of the whole site. Looking for the machine-readable version? It's at /sitemap-index.xml."
+    breadcrumbs={[{ label: "Sitemap" }]}
+  />
+  <section class="section">
+    <div class="container-nx">
+      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {groups.map((g) => (
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-ivory-faint">{g.heading}</h2>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {g.links.map((l) => (
+                <li><a href={l.href} class="text-ivory-muted transition-colors hover:text-gold-200">{l.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

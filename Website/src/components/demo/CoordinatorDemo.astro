@@ -1,0 +1,88 @@
+---
+import DemoShell from "./DemoShell.astro";
+import Icon from "../Icon.astro";
+import { COVERAGE, EXAM_PIPELINE, CLASS_ROSTER } from "../../lib/demo-data";
+
+const screens = [
+  { id: "coverage", label: "Syllabus coverage", icon: "academics" },
+  { id: "exams", label: "Examinations", icon: "check" },
+  { id: "sections", label: "Section health", icon: "operations" },
+];
+const sections = [
+  { name: "8-A", strength: 34, attendance: 95, avg: 84 },
+  { name: "8-B", strength: CLASS_ROSTER.length, attendance: 92, avg: 83 },
+  { name: "8-C", strength: 33, attendance: 90, avg: 79 },
+];
+---
+<DemoShell role="coordinator" title="Coordinator" screens={screens}>
+  <!-- Coverage -->
+  <section class="demo-screen" data-screen="coverage">
+    <h2 class="text-2xl">Syllabus coverage</h2>
+    <p class="mt-1 text-sm text-ivory-muted">How each subject is tracking against the plan.</p>
+    <div class="demo-panel mt-5">
+      <div class="space-y-4">
+        {COVERAGE.map((c) => (
+          <div>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-ivory-muted">{c.subject}</span>
+              <span class={`text-xs ${c.pct < 90 ? "text-[#e3b341]" : "text-ivory-faint"}`}>{c.done}/{c.planned} periods · {c.pct}%</span>
+            </div>
+            <div class="demo-bar-track mt-2"><div class="demo-bar-fill" style={`width:${c.pct}%`}></div></div>
+          </div>
+        ))}
+      </div>
+      <p class="mt-5 border-t border-line pt-4 text-xs text-ivory-faint">Social Science is behind schedule, so a coordinator can reassign periods or flag for the HOD.</p>
+    </div>
+  </section>
+
+  <!-- Exams -->
+  <section class="demo-screen" data-screen="exams" hidden>
+    <h2 class="text-2xl">Examinations</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Term 1 examination workflow.</p>
+    <div class="mt-5 grid gap-4 lg:grid-cols-2">
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Pipeline</h3>
+        <ul class="mt-4 space-y-3">
+          {EXAM_PIPELINE.map((s) => (
+            <li class="flex items-center gap-3 text-sm">
+              <span class={`inline-grid h-5 w-5 place-items-center rounded-full ${s.done ? "text-gold" : "text-ivory-faint"}`} style={`border:1px solid ${s.done ? "rgba(198,165,92,.5)" : "var(--color-line)"}`}>{s.done ? <Icon name="check" size={12} /> : ""}</span>
+              <span class={s.done ? "text-ivory-muted" : "text-ivory-faint"}>{s.stage}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Next actions</h3>
+        <ul class="mt-4 space-y-2.5 text-sm text-ivory-muted">
+          <li class="flex items-center gap-2"><Icon name="arrow-right" size={14} class="text-gold" /> Chase marks entry: 3 papers pending</li>
+          <li class="flex items-center gap-2"><Icon name="arrow-right" size={14} class="text-gold" /> Moderate internal assessment</li>
+          <li class="flex items-center gap-2"><Icon name="arrow-right" size={14} class="text-gold" /> Generate report cards on completion</li>
+        </ul>
+        <p class="mt-4 text-xs text-ivory-faint">Report cards auto-populate from the gradebook; teachers review, not retype.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sections -->
+  <section class="demo-screen" data-screen="sections" hidden>
+    <h2 class="text-2xl">Section health · Class 8</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Comparing the sections you coordinate.</p>
+    <div class="demo-panel mt-5">
+      <div class="overflow-x-auto">
+        <table class="demo-table">
+          <thead><tr><th>Section</th><th>Strength</th><th>Attendance</th><th>Average</th></tr></thead>
+          <tbody>
+            {sections.map((s) => (
+              <tr>
+                <td class="text-ivory">Class {s.name}</td>
+                <td>{s.strength}</td>
+                <td><span class={`badge ${s.attendance < 92 ? "badge-warn" : "badge-good"}`}>{s.attendance}%</span></td>
+                <td>{s.avg}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</DemoShell>

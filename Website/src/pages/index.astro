@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import Hero from "../components/home/Hero.astro";
+import Standards from "../components/home/Standards.astro";
+import Modules from "../components/home/Modules.astro";
+import Compliance from "../components/home/Compliance.astro";
+import KnowledgeTeaser from "../components/home/KnowledgeTeaser.astro";
+import CTASection from "../components/home/CTASection.astro";
+
+const values = [
+  {
+    icon: "operations",
+    title: "One source of truth",
+    desc: "Every record, whether student, staff, fee, or document, lives in one connected system. No more reconciling spreadsheets across departments.",
+  },
+  {
+    icon: "shield",
+    title: "Role-aware by default",
+    desc: "118+ roles, each with exactly the access they need. Principals, accountants, teachers, and parents see their own tailored view.",
+  },
+  {
+    icon: "communication",
+    title: "Works on any device",
+    desc: "An installable PWA that's fast even on older Android phones and patchy networks, designed mobile-first, from 320px up.",
+  },
+];
+---
+<BaseLayout
+  description="Nexli is the School Operating System: admissions, academics, attendance, fees, compliance and operations in one connected platform for modern schools."
+>
+  <Hero />
+  <Standards />
+
+  <section class="section">
+    <div class="container-nx">
+      <div class="grid gap-4 md:grid-cols-3">
+        {values.map((v) => (
+          <div class="card reveal">
+            <div
+              class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line text-gold"
+              style="background:rgba(198,165,92,0.06)"
+            >
+              <Icon name={v.icon} size={21} />
+            </div>
+            <h3 class="mt-5 text-lg text-ivory">{v.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Modules />
+  <Compliance />
+  <KnowledgeTeaser />
+  <CTASection />
+</BaseLayout>

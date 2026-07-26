@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { KB_CATEGORIES } from "../../lib/site";
+import { countsByCategory, getAllArticles } from "../../lib/kb";
+import { webPage } from "../../lib/seo";
+
+const counts = await countsByCategory();
+const total = (await getAllArticles()).length;
+const title = "Knowledge Base";
+const description = `${total}+ in-depth, practical guides for running a better school, across 20 categories, from admissions and academics to compliance, finance and leadership.`;
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/knowledge-base" })}>
+  <PageHero
+    eyebrow="Knowledge Base"
+    title="Guides for running a better school"
+    lead={`A growing library of ${total}+ practical, in-depth articles across 20 categories, written for principals, administrators and teachers across India.`}
+    breadcrumbs={[{ label: "Knowledge Base" }]}
+  />
+
+  <section class="section">
+    <div class="container-nx">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {KB_CATEGORIES.map((c, i) => (
+          <a href={`/knowledge-base/${c.slug}`} class={`card group reveal reveal-${(i % 4) + 1} flex flex-col`}>
+            <div class="flex items-center justify-between gap-3">
+              <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(198,165,92,0.06)">
+                <Icon name={c.icon} size={20} />
+              </span>
+              <span class="text-xs text-ivory-faint">{counts[c.slug] || 0} guides</span>
+            </div>
+            <h2 class="mt-4 text-lg text-ivory transition-colors group-hover:text-gold-200">{c.title}</h2>
+            <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ivory-muted">{c.blurb}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Beyond the guides"
+    title="See the platform these guides describe"
+    text="The Knowledge Base is free and always will be. When you're ready to put it into practice, Nexli is the system that runs it. Try the live demo or message us."
+  />
+</BaseLayout>

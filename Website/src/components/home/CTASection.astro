@@ -1,0 +1,31 @@
+---
+import Icon from "../Icon.astro";
+import { DEMO_HREF, INSTAGRAM_URL, PRIMARY_CTA } from "../../lib/site";
+---
+<section class="section">
+  <div class="container-nx">
+    <div class="relative overflow-hidden rounded-3xl border border-line px-6 py-16 text-center sm:px-12">
+      <div class="glow-radial"></div>
+      <div class="relative">
+        <p class="eyebrow reveal justify-center">Get started</p>
+        <h2 class="reveal reveal-1 mx-auto mt-5 max-w-2xl text-3xl sm:text-4xl md:text-5xl">
+          Ready to bring clarity to your school?
+        </h2>
+        <p class="reveal reveal-2 mx-auto mt-5 max-w-xl text-ivory-muted">
+          Walk through the whole platform in a free, no-signup live demo, then message us on
+          Instagram and we'll show you exactly how Nexli fits your school.
+        </p>
+        <div class="reveal reveal-3 mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a href={PRIMARY_CTA.href} class="btn btn-gold w-full sm:w-auto">
+            <Icon name="sparkle" size={17} />
+            {PRIMARY_CTA.label}
+          </a>
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-ghost w-full sm:w-auto">
+            <Icon name="instagram" size={16} />
+            Message on Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

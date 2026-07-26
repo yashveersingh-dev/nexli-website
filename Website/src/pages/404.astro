@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { INSTAGRAM_URL } from "../lib/site";
+const links = [
+  { label: "Home", href: "/" },
+  { label: "Platform", href: "/platform" },
+  { label: "Knowledge Base", href: "/knowledge-base" },
+  { label: "Live Demo", href: "/demo" },
+];
+---
+<BaseLayout title="Page not found" description="The page you were looking for could not be found." noindex>
+  <section class="relative overflow-hidden">
+    <div class="glow-radial"></div>
+    <div class="grid-texture"></div>
+    <div class="container-nx relative flex min-h-[78vh] flex-col items-center justify-center py-28 text-center">
+      <p class="font-display text-7xl text-gradient-gold md:text-8xl">404</p>
+      <h1 class="mt-6 max-w-2xl text-3xl md:text-5xl">This page wandered off the timetable</h1>
+      <p class="mt-5 max-w-md text-ivory-muted">The page you're looking for doesn't exist or has moved. Let's get you back to something useful.</p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+        {links.map((l) => (
+          <a href={l.href} class="chip transition-colors hover:border-gold/40 hover:text-gold-200">{l.label}</a>
+        ))}
+      </div>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="/" class="btn btn-gold">Back to home</a>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-ghost">
+          <Icon name="instagram" size={17} /> Message us on Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

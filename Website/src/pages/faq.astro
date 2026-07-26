@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Faq from "../components/Faq.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { webPage } from "../lib/seo";
+
+const title = "FAQ";
+const description =
+  "Answers to common questions about Nexli: pricing, security, compliance, onboarding, data and support for the School Operating System, with India-grade compliance built in.";
+
+const faqs = [
+  { q: "What is Nexli?", a: "Nexli is a cloud-based School Operating System for K-12 schools, with India-grade compliance built in. It is one connected platform covering admissions, academics, attendance, fees, HR, communication, transport, hostel, safety and compliance, with 118+ configurable roles." },
+  { q: "How much does Nexli cost?", a: "Pricing is based on your school's size, and every feature is included on every plan. There are no feature tiers. Book a demo or message us on Instagram with your student count, and we'll give you a clear quote." },
+  { q: "Is there a free trial?", a: "You can explore the full interactive demo for free, with no signup, login or email. For a guided pilot at your own school, ask us about the Founding Partner program." },
+  { q: "Where is our school's data stored?", a: "On Google Cloud infrastructure, using an India region where available, so your data stays close to home. Data is encrypted in transit and at rest." },
+  { q: "Is Nexli compliant with the DPDP Act?", a: "Nexli is built around DPDP-aligned handling: verifiable parental consent with OTP, a consent registry with withdrawal tracking, data-access audit logs and a Data Protection Officer view. See the Security and Compliance pages for detail." },
+  { q: "Does Nexli support CBSE, ICSE and State Boards?", a: "Yes. Report cards and grading are configurable: CBSE 9-point out of the box, with custom grading for ICSE/CISCE and state boards. CBSE LOC and UDISE+ reporting are built in." },
+  { q: "Can we import the data we already have?", a: "Yes. Bulk import from CSV or Excel includes validation, duplicate detection and an error report, so migrating existing students and staff is clean." },
+  { q: "Do we need IT staff to run Nexli?", a: "No. Nexli is cloud-based and self-service, so your school operations team manages it. IT involvement is typically only needed for initial setup." },
+  { q: "Will it work on phones?", a: "Yes. Nexli is mobile-first and has been tested across all roles on a phone, so staff, students and parents can use it on the devices they already have." },
+  { q: "How are parents kept informed?", a: "Through targeted circulars and automatic alerts delivered over SMS and in-app notification, plus child-scoped parent portals. For example, an absence alert the day a child is marked absent, or a fee reminder when a payment is due." },
+  { q: "What does onboarding involve?", a: "Typically importing students and staff, setting up classes, publishing the timetable and configuring fees. Founding Partner schools get hands-on setup and data migration directly from us." },
+  { q: "What support do you offer?", a: "Responsive support through Instagram and email. We treat schools as running live operations that can't wait, so we aim to reply quickly." },
+  { q: "Can we leave and take our data with us?", a: "Yes. You can export your data at any time and there is no lock-in. On cancellation, data is returned or deleted in line with the Terms and Data Processing Agreement." },
+  { q: "Is messaging included in the price?", a: "SMS messages to parents are billed at cost as prepaid credits, because the carriers charge per message. In-app and email notices are included. AI features are a separate optional add-on, and everything else is included." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/faq" })}>
+  <PageHero
+    eyebrow="FAQ"
+    title="Questions schools ask us"
+    lead="Straight answers on pricing, security, compliance, onboarding and support. Can't find what you need? Message us on Instagram and we'll reply quickly."
+    breadcrumbs={[{ label: "FAQ" }]}
+  />
+  <Faq items={faqs} title="" eyebrow="" />
+  <CtaBand
+    eyebrow="Still have a question?"
+    title="Ask us anything about your school"
+    text="If your question isn't here, the fastest way to a real answer is a message on Instagram. Tell us about your school and we'll help."
+  />
+</BaseLayout>

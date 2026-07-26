@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { webPage } from "../lib/seo";
+
+const title = "Accessibility";
+const description =
+  "Nexli's accessibility statement: our commitment to WCAG 2.1 AA, what we've done, known limitations, and how to tell us about a barrier.";
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/accessibility" })}>
+  <PageHero
+    eyebrow="Accessibility"
+    title="Accessibility statement"
+    lead="We want this website to be usable by everyone, including people who rely on assistive technology. Here's where we stand, honestly."
+    breadcrumbs={[{ label: "Accessibility" }]}
+  />
+  <section class="section">
+    <div class="container-nx">
+      <div class="mx-auto max-w-3xl prose-nx">
+        <h2>Our goal</h2>
+        <p>We aim to meet the <strong>Web Content Accessibility Guidelines (WCAG) 2.1, Level AA</strong> across this website. Accessibility is an ongoing effort, not a one-time box to tick, and we keep improving as we go.</p>
+
+        <h2>What we've done</h2>
+        <ul>
+          <li>Semantic, keyboard-navigable HTML with visible focus indicators.</li>
+          <li>A "skip to content" link, landmark regions and labelled navigation.</li>
+          <li>Colour contrast chosen to meet AA for body text and interface elements.</li>
+          <li>Respect for the "reduce motion" setting: animations are disabled when you ask your device to reduce motion.</li>
+          <li>Responsive layouts that work from a small phone to a large screen, with text that scales.</li>
+          <li>Descriptive link text and alternative text for meaningful images.</li>
+        </ul>
+
+        <h2>Known limitations</h2>
+        <p>We're a small, early-stage team and we're candid about that. Some areas may not yet fully meet AA, and the Knowledge Base contains a large volume of content that we are reviewing over time. If you hit a barrier, telling us helps us prioritise the fix.</p>
+
+        <h2>Tell us about a barrier</h2>
+        <p>If something on this site is hard to use with your assistive technology, please <a href="/contact">contact us</a>. The fastest way to reach us is a message on Instagram. Let us know the page and what went wrong, and we'll do our best to help and to fix it.</p>
+
+        <p class="text-sm text-ivory-faint">Last reviewed: 19 June 2026.</p>
+      </div>
+    </div>
+  </section>
+  <CtaBand
+    eyebrow="We're listening"
+    title="Found an accessibility barrier?"
+    text="We genuinely want to know. Message us on Instagram with the page and the problem, and we'll work on it."
+  />
+</BaseLayout>

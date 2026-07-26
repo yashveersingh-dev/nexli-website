@@ -1,0 +1,167 @@
+---
+import DemoShell from "./DemoShell.astro";
+import Icon from "../Icon.astro";
+import { PRINCIPAL_KPIS, ATTENDANCE_WEEK, ENROLLMENT, FEE_OVERVIEW, AT_RISK, COVERAGE, EXAM_PIPELINE } from "../../lib/demo-data";
+
+const screens = [
+  { id: "overview", label: "School overview", icon: "analytics" },
+  { id: "academics", label: "Academics", icon: "academics" },
+  { id: "fees", label: "Fees overview", icon: "fees" },
+  { id: "attendance", label: "Attendance", icon: "attendance" },
+];
+const maxEnroll = Math.max(...ENROLLMENT.map((e) => e.count));
+const toneClass = { good: "badge-good", warn: "badge-warn", bad: "badge-bad" } as Record<string, string>;
+---
+<DemoShell role="principal" title="Principal" screens={screens}>
+  <!-- Overview -->
+  <section class="demo-screen" data-screen="overview">
+    <h2 class="text-2xl">Good morning, Principal</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Here's your school in two minutes.</p>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {PRINCIPAL_KPIS.map((k) => (
+        <div class="demo-panel">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-ivory-faint">{k.label}</span>
+            <Icon name={k.icon} size={16} class="text-gold" />
+          </div>
+          <div class="demo-stat-value mt-3">{k.value}</div>
+          <div class="mt-1 text-xs text-ivory-faint">{k.sub}</div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-4 grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+      <div class="demo-panel">
+        <div class="flex items-center justify-between">
+          <h3 class="text-sm text-ivory">Attendance this week</h3>
+          <span class="text-xs text-ivory-faint">School average</span>
+        </div>
+        <div class="mt-5 flex items-end gap-3" style="height:140px">
+          {ATTENDANCE_WEEK.map((d) => (
+            <div class="flex flex-1 flex-col items-center justify-end gap-2">
+              <span class="text-xs text-ivory-muted">{d.pct}%</span>
+              <div class="demo-col" style={`height:${(d.pct - 60) * 2.6}px`}></div>
+              <span class="text-xs text-ivory-faint">{d.day}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Needs attention</h3>
+        <ul class="mt-4 space-y-3">
+          {AT_RISK.map((r) => (
+            <li class="flex items-start justify-between gap-3">
+              <div>
+                <p class="text-sm text-ivory">{r.name} <span class="text-ivory-faint">· {r.cls}</span></p>
+                <p class="text-xs text-ivory-muted">{r.reason}</p>
+              </div>
+              <span class={`badge ${toneClass[r.tone]}`}>flag</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academics -->
+  <section class="demo-screen" data-screen="academics" hidden>
+    <h2 class="text-2xl">Academics</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Curriculum coverage and the examination pipeline.</p>
+    <div class="mt-5 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Syllabus coverage by subject</h3>
+        <div class="mt-4 space-y-4">
+          {COVERAGE.map((c) => (
+            <div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-ivory-muted">{c.subject}</span>
+                <span class="text-ivory-faint">{c.done}/{c.planned} periods · {c.pct}%</span>
+              </div>
+              <div class="demo-bar-track mt-2"><div class="demo-bar-fill" style={`width:${c.pct}%`}></div></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Term 1 exam pipeline</h3>
+        <ul class="mt-4 space-y-3">
+          {EXAM_PIPELINE.map((s) => (
+            <li class="flex items-center gap-3 text-sm">
+              <span class={`inline-grid h-5 w-5 place-items-center rounded-full ${s.done ? "text-gold" : "text-ivory-faint"}`} style={`border:1px solid ${s.done ? "rgba(198,165,92,.5)" : "var(--color-line)"}`}>
+                {s.done ? <Icon name="check" size={12} /> : ""}
+              </span>
+              <span class={s.done ? "text-ivory-muted" : "text-ivory-faint"}>{s.stage}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fees -->
+  <section class="demo-screen" data-screen="fees" hidden>
+    <h2 class="text-2xl">Fees overview</h2>
+    <p class="mt-1 text-sm text-ivory-muted">Collection health for the current term.</p>
+    <div class="mt-5 grid gap-4 lg:grid-cols-[1fr_1.5fr]">
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Collection status</h3>
+        <div class="demo-stat-value mt-4">{FEE_OVERVIEW.collectedPct}%</div>
+        <p class="text-xs text-ivory-faint">collected this term</p>
+        <div class="mt-5 space-y-3">
+          {FEE_OVERVIEW.bands.map((b) => (
+            <div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-ivory-muted">{b.label}</span><span class="text-ivory-faint">{b.pct}%</span>
+              </div>
+              <div class="demo-bar-track mt-2"><div class="demo-bar-fill" style={`width:${b.pct}%`}></div></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Recent defaulters</h3>
+        <table class="demo-table mt-3">
+          <thead><tr><th>Student</th><th>Class</th><th>Pending</th><th>Overdue</th></tr></thead>
+          <tbody>
+            {FEE_OVERVIEW.defaulters.map((d) => (
+              <tr><td class="text-ivory">{d.name}</td><td>{d.cls}</td><td>{d.amount}</td><td><span class="badge badge-warn">{d.days} days</span></td></tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="mt-3 text-xs text-ivory-faint">Reminders are sent automatically on the due date and when overdue.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Attendance -->
+  <section class="demo-screen" data-screen="attendance" hidden>
+    <h2 class="text-2xl">Attendance</h2>
+    <p class="mt-1 text-sm text-ivory-muted">School-wide attendance and enrolment.</p>
+    <div class="mt-5 grid gap-4 lg:grid-cols-2">
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">Enrolment by stage</h3>
+        <div class="mt-4 space-y-3">
+          {ENROLLMENT.map((e) => (
+            <div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-ivory-muted">{e.grade}</span><span class="text-ivory-faint">{e.count}</span>
+              </div>
+              <div class="demo-bar-track mt-2"><div class="demo-bar-fill" style={`width:${(e.count / maxEnroll) * 100}%`}></div></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="demo-panel">
+        <h3 class="text-sm text-ivory">This week</h3>
+        <div class="mt-5 flex items-end gap-3" style="height:150px">
+          {ATTENDANCE_WEEK.map((d) => (
+            <div class="flex flex-1 flex-col items-center justify-end gap-2">
+              <div class="demo-col" style={`height:${(d.pct - 60) * 2.8}px`}></div>
+              <span class="text-xs text-ivory-faint">{d.day}</span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-4 text-xs text-ivory-faint">Below-75% students are flagged automatically and parents alerted.</p>
+      </div>
+    </div>
+  </section>
+</DemoShell>

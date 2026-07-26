@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from "../lib/site";
+import { webPage } from "../lib/seo";
+
+const title = "Careers";
+const description =
+  "Yashveer Labs is an early-stage studio building Nexli, the School Operating System for schools everywhere. We're not hiring at scale yet, but we'd like to know the right people early.";
+
+const traits = [
+  { icon: "academics", title: "You understand schools", desc: "Whether through teaching, running operations, or building education products, you know that a school is a human institution, not a database." },
+  { icon: "operations", title: "You build deeply", desc: "You'd rather solve one real problem properly than ship ten shallow features. You care about the details users feel but never see." },
+  { icon: "shield", title: "You take responsibility seriously", desc: "We hold children's data. You treat security, privacy and safeguarding as values, not checkboxes." },
+  { icon: "sparkle", title: "You're comfortable early", desc: "Early-stage means ambiguity, breadth and ownership. You see that as the opportunity it is, not a problem to wait out." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/careers" })}>
+  <PageHero
+    eyebrow="Careers"
+    title="Help build the School Operating System"
+    lead="An honest page, because we'd rather be honest. Yashveer Labs is early: Nexli is real and live, but the team is small and growing carefully. We're not running a big hiring drive yet."
+    breadcrumbs={[{ label: "Careers" }]}
+  />
+
+  <section class="section">
+    <div class="container-nx">
+      <div class="mx-auto max-w-3xl">
+        <div class="callout">
+          <p class="text-sm text-ivory-muted"><strong class="text-ivory">No open roles listed right now.</strong> We're not going to invent vacancies to look bigger than we are. As Nexli grows with its first schools, we'll add real roles here. If you're the kind of person below, reach out anyway; we keep good people in mind.</p>
+        </div>
+      </div>
+
+      <div class="mx-auto mt-12 max-w-4xl">
+        <p class="eyebrow">Who we look for</p>
+        <h2 class="reveal mt-3 text-3xl md:text-4xl">The kind of people who fit here</h2>
+        <div class="mt-8 grid gap-5 sm:grid-cols-2">
+          {traits.map((t, i) => (
+            <div class={`card reveal reveal-${(i % 4) + 1}`}>
+              <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+                <Icon name={t.icon} size={20} />
+              </span>
+              <h3 class="mt-4 text-lg text-ivory">{t.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{t.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mx-auto mt-12 max-w-3xl rounded-[1.75rem] border border-line p-8 text-center md:p-10">
+        <h2 class="text-2xl md:text-3xl">How to get in touch</h2>
+        <p class="mx-auto mt-3 max-w-xl text-ivory-muted">Tell us who you are and what you'd want to build. The fastest way to reach Yashveer Labs is a direct message on Instagram.</p>
+        <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-instagram">
+            <Icon name="instagram" size={18} /> Introduce yourself on Instagram
+          </a>
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-ghost">Follow {INSTAGRAM_HANDLE}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    eyebrow="Or just say hello"
+    title="Not sure where you'd fit? Reach out anyway."
+    text="The best people rarely match a job description exactly. If you believe in what Nexli is building, start a conversation."
+  />
+</BaseLayout>

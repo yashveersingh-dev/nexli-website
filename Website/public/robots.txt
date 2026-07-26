@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# TODO(owner): replace https://domain.com with the real production domain once
+# registered (must match SITE.url in src/lib/site.ts and `site` in astro.config.mjs).
+Sitemap: https://domain.com/sitemap-index.xml

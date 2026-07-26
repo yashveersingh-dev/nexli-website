@@ -1,0 +1,22 @@
+---
+import Icon from "./Icon.astro";
+import type { Article } from "../lib/kb";
+interface Props {
+  article: Article;
+  index?: number;
+}
+const { article, index = 0 } = Astro.props;
+const href = `/knowledge-base/${article.categorySlug}/${article.slug}`;
+---
+<a href={href} class={`card group reveal reveal-${(index % 4) + 1} flex flex-col`}>
+  <div class="flex items-center gap-2 text-[0.68rem] uppercase tracking-wider text-ivory-faint">
+    <span>{article.categoryTitle}</span>
+    <span aria-hidden="true">·</span>
+    <span>{article.readingTime} min read</span>
+  </div>
+  <h3 class="mt-3 text-lg leading-snug text-ivory transition-colors group-hover:text-gold-200">{article.title}</h3>
+  <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-ivory-muted">{article.description}</p>
+  <span class="mt-4 inline-flex items-center gap-2 text-sm text-gold transition-transform group-hover:translate-x-1">
+    Read guide <Icon name="arrow-right" size={15} />
+  </span>
+</a>

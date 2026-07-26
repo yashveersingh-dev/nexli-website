@@ -1,0 +1,86 @@
+---
+import PageHero from "./PageHero.astro";
+import ArticleCard from "./ArticleCard.astro";
+import Icon from "./Icon.astro";
+import type { Article } from "../lib/kb";
+
+interface Cat {
+  slug: string;
+  title: string;
+  icon: string;
+  blurb: string;
+}
+interface Props {
+  category: Cat;
+  articles: Article[];
+  page: number;
+  totalPages: number;
+  totalCount: number;
+}
+const { category, articles, page, totalPages, totalCount } = Astro.props;
+const base = `/knowledge-base/${category.slug}`;
+const pageHref = (p: number) => (p <= 1 ? base : `${base}/page/${p}`);
+// compact page window
+const windowPages: number[] = [];
+for (let p = Math.max(1, page - 2); p <= Math.min(totalPages, page + 2); p++) windowPages.push(p);
+---
+<PageHero
+  eyebrow="Knowledge Base"
+  title={category.title}
+  lead={category.blurb}
+  breadcrumbs={[{ label: "Knowledge Base", href: "/knowledge-base" }, { label: category.title }]}
+/>
+
+<section class="section">
+  <div class="container-nx">
+    <div class="flex items-center justify-between gap-4 border-b border-line pb-5">
+      <p class="text-sm text-ivory-muted">
+        <span class="text-ivory">{totalCount}</span> guides
+        {totalPages > 1 && <span class="text-ivory-faint"> · page {page} of {totalPages}</span>}
+      </p>
+      <a href="/knowledge-base" class="inline-flex items-center gap-1.5 text-sm text-ivory-faint transition-colors hover:text-gold-200">
+        <Icon name="arrow-right" size={14} class="rotate-180" /> All categories
+      </a>
+    </div>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {articles.map((a, i) => <ArticleCard article={a} index={i} />)}
+    </div>
+
+    {totalPages > 1 && (
+      <nav class="mt-12 flex items-center justify-center gap-1.5" aria-label="Pagination">
+        {page > 1 && (
+          <a href={pageHref(page - 1)} class="chip transition-colors hover:border-gold/40 hover:text-gold-200" rel="prev" aria-label="Previous page">
+            <Icon name="arrow-right" size={15} class="rotate-180" />
+          </a>
+        )}
+        {windowPages[0] > 1 && (
+          <>
+            <a href={pageHref(1)} class="chip hover:border-gold/40 hover:text-gold-200">1</a>
+            {windowPages[0] > 2 && <span class="px-1 text-ivory-faint">…</span>}
+          </>
+        )}
+        {windowPages.map((p) => (
+          <a
+            href={pageHref(p)}
+            aria-current={p === page ? "page" : undefined}
+            class={`chip transition-colors hover:border-gold/40 hover:text-gold-200 ${p === page ? "border-gold/60 text-gold" : ""}`}
+          >
+            {p}
+          </a>
+        ))}
+        {windowPages[windowPages.length - 1] < totalPages && (
+          <>
+            {windowPages[windowPages.length - 1] < totalPages - 1 && <span class="px-1 text-ivory-faint">…</span>}
+            <a href={pageHref(totalPages)} class="chip hover:border-gold/40 hover:text-gold-200">{totalPages}</a>
+          </>
+        )}
+        {page < totalPages && (
+          <a href={pageHref(page + 1)} class="chip transition-colors hover:border-gold/40 hover:text-gold-200" rel="next" aria-label="Next page">
+            <Icon name="arrow-right" size={15} />
+          </a>
+        )}
+      </nav>
+    )}
+  </div>
+</section>

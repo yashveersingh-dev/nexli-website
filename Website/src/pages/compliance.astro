@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Faq from "../components/Faq.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { webPage } from "../lib/seo";
+
+const title = "Compliance";
+const description =
+  "What Nexli supports for Indian school compliance: CBSE, ICSE/CISCE, DPDP Act 2023, POCSO, RTE, NEP 2020, UDISE+ and FSSAI, built into the core, not bolted on.";
+
+const items = [
+  { tag: "DPDP Act 2023", icon: "shield", desc: "Consent-first handling of personal data: parental consent with OTP verification, a consent registry, withdrawal tracking, data-access audit logs and a Data Protection Officer view of the processing trail." },
+  { tag: "POCSO Act 2012", icon: "safety", desc: "Child-protection complaints with access restricted to the Child Protection Officer, encrypted case files, an incident timeline, automatic escalation and a mandatory-reporting workflow." },
+  { tag: "RTE Act 2009", icon: "academics", desc: "A separate pipeline for the 25% EWS quota, with quota monitoring and RTE reimbursement claim tracking kept distinct from general admissions and fees." },
+  { tag: "CBSE", icon: "compliance", desc: "CBSE 9-point report cards, the List of Candidates (LOC) export for Class 10 and 12, and a compliance calendar that tracks affiliation-related deadlines." },
+  { tag: "ICSE / CISCE", icon: "book", desc: "Configurable grading and assessment so CISCE schools run on their own framework rather than a forced CBSE format." },
+  { tag: "NEP 2020", icon: "sparkle", desc: "A full Holistic Progress Card across cognitive, social-emotional, physical, arts, vocational and life-skills domains, with self, peer, teacher and parent input." },
+  { tag: "UDISE+", icon: "analytics", desc: "UDISE+ annual data reporting fields, pre-populated from the records the school already maintains." },
+  { tag: "FSSAI & safety", icon: "operations", desc: "Canteen and food-safety documentation, plus a compliance calendar covering fire NOC, building safety, water testing, lab safety and statutory filings." },
+];
+
+const faqs = [
+  { q: "Is compliance an extra module I have to buy?", a: "No. DPDP, POCSO, RTE, CBSE, UDISE+ and FSSAI support are built into the core platform on every plan, so compliant records are a byproduct of normal operations." },
+  { q: "Does Nexli help with the DPDP Act?", a: "Yes. It collects verifiable parental consent with OTP, keeps a consent registry with withdrawal tracking, logs data access, and gives a Data Protection Officer a view of the processing trail." },
+  { q: "Can Nexli produce the CBSE LOC and UDISE+ data?", a: "Yes. The List of Candidates exports in the required format for board classes, and UDISE+ annual reporting fields are populated from your existing records." },
+  { q: "Does Nexli implement the NEP Holistic Progress Card?", a: "Yes, in full: multiple developmental domains with self, peer, teacher and parent input and a visual output, not just a compliance form." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/compliance" })}>
+  <PageHero
+    eyebrow="Compliance"
+    title="Indian compliance, built into the core"
+    lead="Compliance overhead is one reason schools resist going digital. Nexli weaves it into daily operations, so the regulators' formats come out the other side, automatically."
+    breadcrumbs={[{ label: "Compliance" }]}
+  />
+
+  <section class="section">
+    <div class="container-nx">
+      <div class="grid gap-5 sm:grid-cols-2">
+        {items.map((it, i) => (
+          <div class={`card reveal reveal-${(i % 4) + 1}`}>
+            <div class="flex items-center gap-3">
+              <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+                <Icon name={it.icon} size={20} />
+              </span>
+              <h2 class="text-lg text-ivory">{it.tag}</h2>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-ivory-muted">{it.desc}</p>
+          </div>
+        ))}
+      </div>
+      <div class="callout mt-8 text-sm text-ivory-muted">
+        <strong class="text-ivory">A note on honesty.</strong> Nexli supports the workflows and reporting formats above. It does not replace your legal counsel or your statutory filings; it makes the school records that feed them accurate, accessible and ready. For data-protection specifics, see the <a href="/legal/privacy" class="text-gold-200 underline underline-offset-2">Privacy Policy</a>.
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faqs} title="Compliance questions" />
+
+  <CtaBand
+    eyebrow="See it in context"
+    title="See compliance handled in the demo"
+    text="Open the interactive demo to see how consent, safeguarding and reporting sit inside everyday operations, or ask us on Instagram."
+  />
+</BaseLayout>

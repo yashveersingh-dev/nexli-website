@@ -1,0 +1,36 @@
+---
+import Icon from "./Icon.astro";
+import { DEMO_HREF, INSTAGRAM_URL, PRIMARY_CTA } from "../lib/site";
+// The standard CTA pair: a free live demo (primary) + Instagram (secondary).
+interface Props {
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  class?: string;
+  align?: "start" | "center";
+}
+const {
+  primaryLabel = PRIMARY_CTA.label,
+  primaryHref = DEMO_HREF,
+  secondaryLabel = "Message on Instagram",
+  secondaryHref = INSTAGRAM_URL,
+  class: className = "",
+  align = "start",
+} = Astro.props;
+const secondaryExternal = /^https?:/.test(secondaryHref);
+---
+<div class={`flex flex-col gap-3 sm:flex-row sm:flex-wrap ${align === "center" ? "sm:justify-center" : ""} ${className}`}>
+  <a href={primaryHref} class="btn btn-gold">
+    <Icon name="sparkle" size={17} />
+    {primaryLabel}
+  </a>
+  <a
+    href={secondaryHref}
+    class="btn btn-ghost"
+    {...(secondaryExternal ? { target: "_blank", rel: "noopener" } : {})}
+  >
+    {secondaryExternal && <Icon name="instagram" size={17} />}
+    {secondaryLabel}
+  </a>
+</div>

@@ -1,0 +1,15 @@
+---
+const standards = ["CBSE", "CISCE / ICSE", "State Boards", "NEP 2020", "DPDP Act 2023", "UDISE+"];
+---
+<section class="border-y border-line bg-obsidian-800/40">
+  <div class="container-nx py-8">
+    <p class="text-center text-xs uppercase tracking-[0.22em] text-ivory-faint">
+      Built around the standards Indian schools run on
+    </p>
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+      {standards.map((s) => (
+        <span class="font-display text-base text-ivory-muted/80 sm:text-lg">{s}</span>
+      ))}
+    </div>
+  </div>
+</section>

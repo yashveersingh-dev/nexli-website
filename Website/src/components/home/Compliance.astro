@@ -1,0 +1,37 @@
+---
+import Icon from "../Icon.astro";
+import { COMPLIANCE } from "../../lib/site";
+---
+<section class="section border-t border-line">
+  <div class="container-nx">
+    <div class="grid items-start gap-12 lg:grid-cols-[1fr_1.4fr]">
+      <div class="lg:sticky lg:top-28">
+        <p class="eyebrow reveal">Compliance by design</p>
+        <h2 class="reveal reveal-1 mt-5 text-3xl sm:text-4xl md:text-5xl">
+          Built for Indian regulation, not retrofitted to it
+        </h2>
+        <p class="reveal reveal-2 mt-5 text-ivory-muted">
+          Data-residency, child-safety, and statutory reporting aren't add-ons in Nexli; they're
+          wired into the core. Your school stays audit-ready without the scramble.
+        </p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        {COMPLIANCE.map((c) => (
+          <article class="card reveal">
+            <div class="flex items-center gap-3">
+              <div
+                class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line text-gold"
+                style="background:rgba(198,165,92,0.06)"
+              >
+                <Icon name={c.icon} size={19} />
+              </div>
+              <h3 class="text-base text-ivory">{c.title}</h3>
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-ivory-muted">{c.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

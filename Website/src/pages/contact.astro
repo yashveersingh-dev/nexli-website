@@ -1,0 +1,101 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { webPage } from "../lib/seo";
+import {
+  INSTAGRAM_URL,
+  INSTAGRAM_HANDLE,
+  CONTACT_EMAIL,
+  EMAIL_HREF,
+  LOCATION,
+  DEMO_HREF,
+  SOCIALS,
+} from "../lib/site";
+
+const title = "Contact";
+const description =
+  "Get in touch with Nexli. Message us on Instagram for the fastest reply, or email us, and we'll show you how the School Operating System fits your school.";
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/contact" })}>
+  <section class="relative overflow-hidden">
+    <div class="glow-radial"></div>
+    <div class="container-nx relative pt-32 pb-20 md:pt-40">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="eyebrow justify-center"><Icon name="sparkle" size={15} /> Contact</p>
+        <h1 class="mt-6 text-4xl sm:text-5xl md:text-6xl">Let's talk about your school</h1>
+        <p class="mt-6 text-ivory-muted">
+          Tell us about your school and what you'd like to improve, and we'll show you exactly how
+          Nexli fits. No pressure, no jargon, just a clear conversation. The quickest way to reach us
+          is a direct message on Instagram.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-14 grid max-w-4xl gap-6 lg:grid-cols-2">
+        <!-- Primary channel: Instagram -->
+        <div class="card flex flex-col">
+          <div class="flex items-center gap-3">
+            <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl text-white" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%)">
+              <Icon name="instagram" size={22} />
+            </div>
+            <div>
+              <h2 class="text-lg text-ivory">Message us on Instagram</h2>
+              <p class="text-sm text-ivory-faint">The fastest way to reach us</p>
+            </div>
+          </div>
+          <p class="mt-5 text-sm leading-relaxed text-ivory-muted">
+            Send a direct message with your school's name and what you'd like to improve, and we'll
+            reply with a clear, no-obligation answer. If a call would help, we'll arrange one from there.
+          </p>
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener" class="btn btn-instagram mt-6 w-full">
+            <Icon name="instagram" size={18} /> Message {INSTAGRAM_HANDLE}
+          </a>
+        </div>
+
+        <!-- Secondary channel: email + location -->
+        <div class="card flex flex-col">
+          <div class="flex items-center gap-3">
+            <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+              <Icon name="mail" size={22} />
+            </div>
+            <div>
+              <h2 class="text-lg text-ivory">Prefer email?</h2>
+              <p class="text-sm text-ivory-faint">Write to us in your own words</p>
+            </div>
+          </div>
+          <p class="mt-5 text-sm leading-relaxed text-ivory-muted">
+            Email works just as well. Tell us about your school and your timeline, and we'll get back
+            to you with the next step.
+          </p>
+          <a href={EMAIL_HREF} class="btn btn-ghost mt-6 w-full">
+            <Icon name="mail" size={18} /> {CONTACT_EMAIL}
+          </a>
+
+          <div class="mt-6 border-t border-line pt-5">
+            <p class="flex items-center gap-2 text-sm text-ivory-muted">
+              <Icon name="pin" size={16} class="text-gold" /> {LOCATION}
+            </p>
+            <div class="mt-4 flex flex-wrap items-center gap-2.5">
+              {SOCIALS.map((s) => (
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Yashveer Labs on ${s.label}`}
+                  class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-ivory-muted transition-colors hover:border-gold/50 hover:text-gold-200"
+                >
+                  <Icon name={s.icon} size={16} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="mx-auto mt-10 max-w-2xl text-center text-sm text-ivory-faint">
+        Want to see Nexli first? Explore the
+        <a href={DEMO_HREF} class="text-gold-200 underline-offset-2 hover:underline">interactive live demo</a>,
+        with no signup and no login.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import FeatureGrid from "../components/FeatureGrid.astro";
+import Faq from "../components/Faq.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { webPage } from "../lib/seo";
+
+const title = "Security";
+const description =
+  "How Nexli protects school data: India-hosted infrastructure, DPDP-aligned handling, role-based access across 118+ roles, server-enforced and tested security rules, tenant isolation, encryption and audit logs.";
+
+const controls = [
+  { icon: "globe", title: "Hosted in India", desc: "Data is stored and processed on Google Cloud infrastructure, using an India region where available, keeping school data close to home." },
+  { icon: "shield", title: "Role-based access control", desc: "118+ configurable roles, each with a permission matrix down to the action: view, create, edit, approve, export. People see only what their role allows." },
+  { icon: "compliance", title: "Server-enforced rules", desc: "Access isn't trusted to the browser. Every read and write is enforced by a live server-side security ruleset, so the rules, not the client, decide what each role can do." },
+  { icon: "operations", title: "Tenant isolation", desc: "Each school's data is structurally separated under its own scope. One school can never see another's records." },
+  { icon: "fees", title: "Encryption", desc: "Data is encrypted in transit over HTTPS/TLS, and at rest by the cloud platform. The most sensitive minor data is additionally encrypted in storage." },
+  { icon: "safety", title: "Tested access control", desc: "The security ruleset is exercised by an automated test suite covering every role-scoped access scenario, with all 145 access-control tests passing against the live rules." },
+  { icon: "analytics", title: "Audit logs", desc: "Significant data access is logged, so a Data Protection Officer can review who accessed what, and when." },
+  { icon: "hr", title: "Least privilege by design", desc: "Even the Super Admin has no raw access to a school's academic, medical or financial records. Administration is separated from content." },
+];
+
+const childSafety = [
+  "Direct messaging between students is disabled by default.",
+  "Counselling notes sit in a confidential, restricted locker.",
+  "POCSO case files are accessible only to the Child Protection Officer, and are encrypted.",
+  "The platform does not collect biometric templates; attendance is marked manually or through optional integrated devices.",
+];
+
+const faqs = [
+  { q: "Where is our data stored?", a: "On Google Cloud infrastructure, using an India region where available, so school data stays within the country wherever the platform can place it." },
+  { q: "Who can see sensitive records?", a: "Access is governed by role. The most sensitive records (POCSO, counselling and medical) are restricted to a small set of authorised roles, and even the Super Admin has no raw access to a school's academic, medical or financial content." },
+  { q: "Is the data encrypted?", a: "Yes. Data is encrypted in transit over HTTPS/TLS and at rest by the cloud platform, with additional encryption applied to the most sensitive minor data." },
+  { q: "How do you keep children safe on the platform?", a: "By design: student-to-student messaging is off by default, counselling and POCSO records are restricted and encrypted, and the platform doesn't collect biometric data." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/security" })}>
+  <PageHero
+    eyebrow="Security"
+    title="Built to be trusted with children's data"
+    lead="A school's most sensitive records deserve more than a privacy promise. Here's concretely how Nexli protects the data you put into it."
+    breadcrumbs={[{ label: "Security" }]}
+  />
+
+  <section class="section">
+    <div class="container-nx">
+      <FeatureGrid items={controls} />
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="rounded-[1.75rem] border border-line p-8 md:p-12">
+        <div class="grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <p class="eyebrow">Child safety first</p>
+            <h2 class="mt-3 text-3xl md:text-4xl">Safeguarding is the default, not a setting</h2>
+            <p class="mt-4 text-ivory-muted">Because Nexli is built for schools, child protection shapes the architecture, not an option you have to remember to switch on.</p>
+          </div>
+          <ul class="space-y-4">
+            {childSafety.map((c) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-1 text-gold"><Icon name="check" size={18} /></span>
+                <span class="text-ivory-muted">{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <p class="mt-6 text-center text-sm text-ivory-faint">
+        Read the <a href="/legal/privacy" class="text-gold-200 underline underline-offset-2">Privacy Policy</a> and
+        <a href="/legal/data-processing" class="text-gold-200 underline underline-offset-2"> Data Processing Agreement</a> for the full detail.
+      </p>
+    </div>
+  </section>
+
+  <Faq items={faqs} title="Security questions" />
+
+  <CtaBand
+    eyebrow="Talk to us"
+    title="Have a security or DPO question?"
+    text="We're happy to walk your IT team or Data Protection Officer through how Nexli handles your school's data. Message us on Instagram."
+  />
+</BaseLayout>

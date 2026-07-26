@@ -1,0 +1,28 @@
+---
+// Emblem + NEXLI wordmark lockup used in the header and footer.
+interface Props {
+  class?: string;
+  size?: number; // emblem size in px
+  wordmark?: boolean;
+}
+const { class: className = "", size = 34, wordmark = true } = Astro.props;
+---
+<a href="/" class={`inline-flex items-center gap-3 ${className}`} aria-label="Nexli, home">
+  <img
+    src="/logo-emblem.png"
+    alt=""
+    width={size}
+    height={size}
+    class="shrink-0"
+    style={`width:${size}px;height:${size}px`}
+    loading="eager"
+    decoding="async"
+  />
+  {wordmark && (
+    <span
+      class="font-display text-ivory"
+      style="font-size:1.15rem;letter-spacing:0.32em;font-weight:600;padding-left:0.1em"
+      >NEXLI</span
+    >
+  )}
+</a>

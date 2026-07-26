@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { MODULE_PAGES } from "../lib/modules";
+import { COMPLIANCE } from "../lib/site";
+import { webPage } from "../lib/seo";
+
+const title = "Platform: the School Operating System";
+const description =
+  "Nexli is one connected platform for the whole school: admissions, academics, attendance, fees, HR, communication, transport, hostel, safety and compliance, with 118+ configurable roles.";
+
+const pillars = [
+  { icon: "operations", title: "One source of truth", desc: "Every record (student, staff, fee, mark) lives once and flows everywhere it's needed. No parallel spreadsheets, no conflicting versions." },
+  { icon: "shield", title: "Role-aware by default", desc: "118+ configurable roles, each with a precise permission matrix. People see exactly what their job needs, and nothing more." },
+  { icon: "compliance", title: "Compliance woven in", desc: "DPDP, POCSO, RTE, CBSE, UDISE+ and FSSAI are built into the core, so routine operation produces compliant records." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/platform" })}>
+  <PageHero
+    eyebrow="Platform"
+    title="Every school operation, in one place"
+    lead="Nexli replaces the tangle of registers, spreadsheets and disconnected apps with a single platform, built around how Indian schools actually run."
+    breadcrumbs={[{ label: "Platform" }]}
+  >
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <a href="/demo" class="btn btn-gold">Try the live demo</a>
+      <a href="/pricing" class="btn btn-ghost">See pricing approach</a>
+    </div>
+  </PageHero>
+
+  <!-- Pillars -->
+  <section class="section">
+    <div class="container-nx">
+      <div class="grid gap-5 md:grid-cols-3">
+        {pillars.map((p, i) => (
+          <div class={`card reveal reveal-${i + 1}`}>
+            <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+              <Icon name={p.icon} size={20} />
+            </span>
+            <h3 class="mt-4 text-xl text-ivory">{p.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Module suite -->
+  <section id="modules" class="section pt-0">
+    <div class="container-nx">
+      <div class="max-w-2xl">
+        <p class="eyebrow">The module suite</p>
+        <h2 class="reveal mt-3 text-3xl md:text-5xl">Twelve modules, one login</h2>
+        <p class="mt-4 text-ivory-muted">Each module is a full product in its own right, and every one shares the same data, design and permissions. Open any to see exactly what it does.</p>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {MODULE_PAGES.map((m, i) => (
+          <a href={`/platform/${m.slug}`} class={`card group reveal reveal-${(i % 4) + 1} block`}>
+            <div class="flex items-start justify-between gap-3">
+              <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+                <Icon name={m.icon} size={20} />
+              </span>
+              <Icon name="arrow-right" size={18} class="text-ivory-faint transition-all group-hover:translate-x-1 group-hover:text-gold" />
+            </div>
+            <h3 class="mt-4 text-lg text-ivory">{m.nav}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{m.summary}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Built for India -->
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="rounded-[1.75rem] border border-line p-8 md:p-12">
+        <div class="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <div>
+            <p class="eyebrow">Built for Indian regulation</p>
+            <h2 class="mt-3 text-3xl md:text-4xl">Not retrofitted to it</h2>
+            <p class="mt-4 text-ivory-muted">Indian schools are not smaller versions of Western institutions. Nexli is built from the ground up for the regulations, formats and realities you work within.</p>
+            <a href="/compliance" class="mt-6 inline-flex items-center gap-2 text-sm text-gold transition-transform hover:translate-x-1">
+              See what Nexli supports <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            {COMPLIANCE.map((c) => (
+              <div class="flex gap-3.5">
+                <span class="mt-0.5 text-gold"><Icon name={c.icon} size={20} /></span>
+                <div>
+                  <h3 class="text-base text-ivory">{c.title}</h3>
+                  <p class="mt-1 text-sm text-ivory-muted">{c.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

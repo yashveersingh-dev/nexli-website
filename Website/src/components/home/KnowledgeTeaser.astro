@@ -1,0 +1,40 @@
+---
+import Icon from "../Icon.astro";
+import { KB_CATEGORIES } from "../../lib/site";
+const featured = KB_CATEGORIES.slice(0, 8);
+---
+<section class="section border-t border-line">
+  <div class="container-nx">
+    <div class="overflow-hidden rounded-3xl border border-line bg-obsidian-800/50 p-8 sm:p-12">
+      <div class="grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
+        <div>
+          <p class="eyebrow reveal">Knowledge Base</p>
+          <h2 class="reveal reveal-1 mt-5 text-3xl sm:text-4xl">
+            2,000+ in-depth guides for running a better school
+          </h2>
+          <p class="reveal reveal-2 mt-5 max-w-xl text-ivory-muted">
+            A growing, practical library across 20 categories, from admissions and academics to
+            compliance, finance, safety, and leadership. Written for principals, administrators, and
+            teachers.
+          </p>
+          <a href="/knowledge-base" class="btn btn-gold reveal reveal-3 mt-8">
+            Explore the Knowledge Base
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          {featured.map((c) => (
+            <a
+              href={`/knowledge-base/${c.slug}`}
+              class="group flex items-center gap-3 rounded-xl border border-line bg-white/[0.015] p-3.5 transition-colors hover:border-gold/40"
+            >
+              <Icon name={c.icon} size={18} class="text-gold" />
+              <span class="text-sm text-ivory-muted transition-colors group-hover:text-ivory">{c.title}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

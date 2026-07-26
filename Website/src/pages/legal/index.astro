@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Icon from "../../components/Icon.astro";
+import { webPage } from "../../lib/seo";
+
+const title = "Legal";
+const description = "Nexli's legal documents: Privacy Policy, Terms & Conditions, Data Processing Agreement, Parent Consent and Refund & Cancellation Policy.";
+const docs = [
+  { href: "/legal/privacy", title: "Privacy Policy", desc: "How personal data is collected, used and protected, aligned to the DPDP Act." },
+  { href: "/legal/terms", title: "Terms & Conditions", desc: "The terms governing use of the Nexli platform." },
+  { href: "/legal/data-processing", title: "Data Processing Agreement", desc: "How Nexli processes data on a school's documented instructions." },
+  { href: "/legal/refund", title: "Refund & Cancellation Policy", desc: "How billing, cancellation and refunds work." },
+  { href: "/legal/parent-consent", title: "Parent Consent", desc: "Verifiable parental consent for processing a child's data." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/legal" })}>
+  <PageHero
+    eyebrow="Legal"
+    title="Legal & policies"
+    lead="The documents that govern how Nexli and Yashveer Labs handle your school's data and your subscription. Current, and subject to final legal review."
+    breadcrumbs={[{ label: "Legal" }]}
+  />
+  <section class="section">
+    <div class="container-nx">
+      <div class="mx-auto grid max-w-3xl gap-4">
+        {docs.map((d) => (
+          <a href={d.href} class="card group flex items-center gap-4">
+            <span class="inline-grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+              <Icon name="shield" size={19} />
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-ivory transition-colors group-hover:text-gold-200">{d.title}</span>
+              <span class="block text-sm text-ivory-muted">{d.desc}</span>
+            </span>
+            <Icon name="arrow-right" size={18} class="shrink-0 text-ivory-faint transition-all group-hover:translate-x-1 group-hover:text-gold" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,24 @@
+{
+  "name": "nexli-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nexli marketing website — the School Operating System for modern education.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "@astrojs/sitemap": "^3.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "js-yaml": "^4.1.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

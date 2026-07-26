@@ -1,0 +1,30 @@
+---
+import Icon from "./Icon.astro";
+// A responsive grid of feature cards. Each item: { title, desc, icon? }.
+interface Item {
+  title: string;
+  desc: string;
+  icon?: string;
+}
+interface Props {
+  items: Item[];
+  cols?: 2 | 3;
+  /** fallback icon when an item has none */
+  icon?: string;
+}
+const { items, cols = 3, icon } = Astro.props;
+const gridCols = cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3";
+---
+<div class={`grid gap-5 ${gridCols}`}>
+  {items.map((it, i) => (
+    <div class={`card reveal reveal-${(i % 4) + 1}`}>
+      {(it.icon || icon) && (
+        <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+          <Icon name={it.icon || icon} size={20} />
+        </span>
+      )}
+      <h3 class="mt-4 text-lg text-ivory">{it.title}</h3>
+      <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{it.desc}</p>
+    </div>
+  ))}
+</div>

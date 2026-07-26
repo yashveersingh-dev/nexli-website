@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { webPage } from "../../lib/seo";
+
+const title = "Refund & Cancellation Policy";
+const description =
+  "How subscriptions, cancellations and refunds work for the Nexli school management platform, operated by Yashveer Labs.";
+---
+<BaseLayout title={title} description={description} noindex jsonLd={webPage({ title, description, path: "/legal/refund" })}>
+  <PageHero
+    eyebrow="Legal"
+    title={title}
+    breadcrumbs={[{ label: "Legal", href: "/legal" }, { label: "Refund & Cancellation" }]}
+  />
+  <section class="section">
+    <div class="container-nx">
+      <div class="mx-auto max-w-3xl">
+        <div class="callout mb-10 text-sm text-ivory-muted">
+          <strong class="text-ivory">Last updated: 19 June 2026.</strong> This policy is current and is
+          subject to final legal review. For anything specific to your school's agreement, please
+          <a href="/contact" class="text-gold-200 underline underline-offset-2">contact us</a>.
+        </div>
+        <div class="prose-nx">
+          <p>This Refund &amp; Cancellation Policy explains how billing, cancellation and refunds work for the Nexli school-management platform ("Nexli", "we", "us"), operated by Yashveer Labs, when a school subscribes to it.</p>
+
+          <h2>Subscriptions</h2>
+          <p>Nexli is provided as a subscription, priced by school size with every feature included. Subscriptions are offered on monthly, term and annual (or longer) billing periods. Nexli does not sell one-time or lifetime licences, because the service carries ongoing infrastructure cost. The applicable price, billing period and any taxes are set out in your order.</p>
+
+          <h2>Renewals</h2>
+          <p>Subscriptions continue for the agreed billing period. Unless your order states otherwise, a subscription renews for a further period of the same length. You may choose not to renew by giving notice before the end of the current period (see Cancellation).</p>
+
+          <h2>Cancellation</h2>
+          <p>You may cancel your subscription at any time, effective at the end of the current billing period. Cancelling stops future renewals; it does not, by itself, create a refund for the period already paid, except as set out below. To cancel, contact us through the channels on the <a href="/contact">contact page</a> and we will confirm in writing.</p>
+
+          <h2>Refunds</h2>
+          <ul>
+            <li><strong>Founding Partner money-back.</strong> Founding Partner schools are offered a money-back commitment as described when they join the program. If, within the agreed initial window, Nexli does not work for your school, we will refund the founding fee for that period.</li>
+            <li><strong>Service failure.</strong> If a confirmed fault on our side prevents you from using the core platform for a sustained period and we are unable to resolve it, we will work with you in good faith on a fair pro-rata credit or refund for the affected period.</li>
+            <li><strong>Billing errors.</strong> Any amount charged in error (for example, a duplicate charge) is refunded in full once confirmed.</li>
+          </ul>
+          <p>Outside these cases, fees already paid for a billing period are generally non-refundable, because the service has been made available for that period. Add-on usage that has already been consumed (such as SMS messages already sent) is not refundable, as those costs are paid through to the carriers.</p>
+
+          <h2>How refunds are made</h2>
+          <p>Approved refunds are made to the original payment method or by bank transfer to the school's account, in Indian Rupees, normally within a reasonable number of working days of approval.</p>
+
+          <h2>Your data on cancellation</h2>
+          <p>You can export your school's data at any time using the platform's export features. On cancellation we will, in line with the Terms and the Data Processing Agreement, return or delete your data within the period stated there, save where retention is required by law.</p>
+
+          <h2>Changes to this policy</h2>
+          <p>We may update this policy from time to time. Material changes will be communicated, and the "last updated" date above will be revised.</p>
+
+          <h2>Contact</h2>
+          <p>For any question about billing, cancellation or refunds, please <a href="/contact">contact us</a>. The fastest way to reach us is a message on Instagram.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,55 @@
+---
+import JsonLd from "./JsonLd.astro";
+// Accessible FAQ (native <details>) + FAQPage JSON-LD.
+// `items` answers should be plain text (used verbatim in structured data).
+interface QA {
+  q: string;
+  a: string;
+}
+interface Props {
+  items: QA[];
+  title?: string;
+  eyebrow?: string;
+  /** emit FAQPage JSON-LD (set false if the page already emits one elsewhere) */
+  jsonLd?: boolean;
+}
+const { items, title = "Frequently asked questions", eyebrow = "FAQ", jsonLd = true } = Astro.props;
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((it) => ({
+    "@type": "Question",
+    name: it.q,
+    acceptedAnswer: { "@type": "Answer", text: it.a },
+  })),
+};
+---
+{items.length > 0 && (
+  <section class="section">
+    <div class="container-nx">
+      <div class="mx-auto max-w-3xl">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        {title && <h2 class="reveal mt-3 text-3xl md:text-4xl">{title}</h2>}
+        <div class={`${title || eyebrow ? "mt-8" : ""} divide-y divide-line border-y border-line`}>
+          {items.map((it) => (
+            <details class="faq-item group">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left">
+                <span class="text-lg text-ivory">{it.q}</span>
+                <span class="faq-plus mt-1 shrink-0 text-gold transition-transform" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                </span>
+              </summary>
+              <p class="pb-5 pr-8 text-ivory-muted">{it.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+    {jsonLd && <JsonLd schema={faqSchema} />}
+  </section>
+)}
+
+<style>
+  .faq-item[open] .faq-plus { transform: rotate(45deg); }
+  .faq-item summary::-webkit-details-marker { display: none; }
+</style>

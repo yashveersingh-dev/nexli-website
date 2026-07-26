@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PrincipalDemo from "../../components/demo/PrincipalDemo.astro";
+import ViceprincipalDemo from "../../components/demo/ViceprincipalDemo.astro";
+import TeacherDemo from "../../components/demo/TeacherDemo.astro";
+import CoordinatorDemo from "../../components/demo/CoordinatorDemo.astro";
+import StudentDemo from "../../components/demo/StudentDemo.astro";
+import ParentDemo from "../../components/demo/ParentDemo.astro";
+import { ROLES, SCHOOL } from "../../lib/demo-data";
+import { webPage } from "../../lib/seo";
+
+export function getStaticPaths() {
+  return ROLES.map((r) => ({ params: { role: r.slug }, props: { role: r } }));
+}
+const { role } = Astro.props;
+
+const COMPONENTS: Record<string, any> = {
+  principal: PrincipalDemo,
+  "vice-principal": ViceprincipalDemo,
+  teacher: TeacherDemo,
+  coordinator: CoordinatorDemo,
+  student: StudentDemo,
+  parent: ParentDemo,
+};
+const Demo = COMPONENTS[role.slug];
+
+const title = `${role.title} demo`;
+const description = `Explore Nexli as a ${role.title}: an interactive demo of ${SCHOOL.name} with sample data. No signup, no login, no email.`;
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: `/demo/${role.slug}` })}>
+  <Demo />
+</BaseLayout>

@@ -1,0 +1,201 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import Faq from "../components/Faq.astro";
+import CtaButtons from "../components/CtaButtons.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { webPage } from "../lib/seo";
+import { INSTAGRAM_URL, DEMO_HREF } from "../lib/site";
+
+const title = "Pricing";
+const description =
+  "Nexli is priced by school size, with every feature included on every plan. Two clear tiers: a Founding School rate for the first cohort, and Standard School pricing after that. No rupee surprises, no feature paywalls.";
+
+const principles = [
+  { icon: "fees", title: "Priced by school size", desc: "One simple variable: how many students you have. The larger your school, the lower the per-student rate, so you're never penalised for growing." },
+  { icon: "check", title: "Every feature, every plan", desc: "We don't lock features behind tiers. Admissions, academics, fees, HR, compliance, safety and communication are included for every school, large or small." },
+  { icon: "operations", title: "Billing that fits your year", desc: "Pay monthly, or commit for a term or the full academic year for a better rate. Annual billing matches the school financial year and keeps things simple." },
+];
+
+// Two clearly differentiated tiers. Exact figures are shared as a written quote
+// once we know a school's student count; the structure and difference are public.
+const tiers = [
+  {
+    name: "Founding School",
+    badge: "Limited · First cohort",
+    featured: true,
+    who: "For the first 10 to 15 schools to build with Nexli.",
+    points: [
+      "The lowest rate Nexli will ever offer, locked for your founding period",
+      "Hands-on setup and data migration, done with you, not handed over as a manual",
+      "A direct line to the founder; your feedback shapes the roadmap",
+      "Month-to-month exit and a money-back commitment",
+      "Every module included, with no feature tiers",
+    ],
+    cta: { label: "Apply to be a founding school", href: "/founding-partner" },
+  },
+  {
+    name: "Standard School",
+    badge: "After the founding cohort",
+    featured: false,
+    who: "For schools joining once the founding seats are filled.",
+    points: [
+      "Priced purely by school size; larger schools pay a lower per-student rate",
+      "The full platform, every module, the same as founding schools",
+      "Structured onboarding and ongoing support",
+      "Monthly, per-term or annual billing, your choice",
+      "No lock-in: export your data and leave at any time",
+    ],
+    cta: { label: "Get a quote for your school", href: "/contact" },
+  },
+];
+
+const included = [
+  "Admissions", "Academics & exams", "Attendance", "Report cards & HPC",
+  "Fees & finance", "HR & payroll", "Communication", "Transport",
+  "Hostel", "Library", "Medical & safety", "Compliance",
+];
+
+const addons = [
+  { icon: "sparkle", title: "Nexli Intelligence (AI)", desc: "As Nexli's AI features roll out, they're billed separately. Because AI compute has a real per-use cost, it stays a clearly-marked add-on rather than something hidden in the base price." },
+  { icon: "communication", title: "Parent messaging (SMS)", desc: "SMS to parents is charged at cost as prepaid credits, because mobile operators bill per message. In-app and email notices are included; you only pay for the texts you send." },
+];
+
+const faqs = [
+  { q: "How much does Nexli cost?", a: "Pricing depends on your school's size, and every feature is included on every plan. We share a clear, written quote once we know your student count. Book a demo or message us on Instagram and we'll walk you through it." },
+  { q: "What's the difference between Founding and Standard pricing?", a: "Founding Schools are the small first cohort: they get the lowest rate Nexli will offer, locked for their founding period, plus hands-on setup and a direct line to the founder. Standard pricing applies once those seats are filled, and is set purely by school size. Every school, founding or standard, gets the full platform." },
+  { q: "Are features locked to higher plans?", a: "No. Differentiation is by school size, not by features. Every school gets the full platform: admissions, academics, fees, HR, compliance, safety and communication." },
+  { q: "What costs extra?", a: "Only two things: Nexli Intelligence (our AI features, as they roll out), and SMS messaging to parents. AI is an optional add-on; SMS is billed at cost as prepaid credits because the carriers charge per message. In-app and email communication is included." },
+  { q: "Is there a long-term lock-in?", a: "No. You can export your data at any time, and shorter billing terms are available. Longer commitments simply come at a better rate." },
+];
+---
+<BaseLayout title={title} description={description} jsonLd={webPage({ title, description, path: "/pricing" })}>
+  <PageHero
+    eyebrow="Pricing"
+    title="Simple pricing, by school size"
+    lead="No feature tiers, no surprises. You pay based on how many students you have, and every plan includes the entire platform. Founding schools get the lowest rate, locked. Tell us your size and we'll give you a clear quote."
+    breadcrumbs={[{ label: "Pricing" }]}
+  >
+    <CtaButtons primaryLabel="Book Free Live Demo" secondaryLabel="Message on Instagram" />
+  </PageHero>
+
+  <!-- Two tiers -->
+  <section class="section">
+    <div class="container-nx">
+      <div class="grid gap-6 lg:grid-cols-2">
+        {tiers.map((t) => (
+          <div class={`relative flex flex-col rounded-[1.75rem] border p-8 md:p-10 ${t.featured ? "border-gold/40" : "border-line"}`} style={t.featured ? "background:linear-gradient(180deg,rgba(198,165,92,0.07),transparent)" : ""}>
+            {t.featured && <div class="glow-radial"></div>}
+            <div class="relative">
+              <p class="kicker-chip"><Icon name="sparkle" size={13} /> {t.badge}</p>
+              <h2 class="mt-5 text-2xl md:text-3xl text-ivory">{t.name}</h2>
+              <p class="mt-2 text-sm text-ivory-muted">{t.who}</p>
+              <ul class="mt-6 space-y-3">
+                {t.points.map((p) => (
+                  <li class="flex items-start gap-2.5 text-sm text-ivory-muted">
+                    <Icon name="check" size={17} class="mt-0.5 shrink-0 text-gold" />
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="mt-6 text-sm text-ivory-faint">Exact pricing is shared as a written quote once we know your student count.</p>
+              <a href={t.cta.href} class={`btn mt-6 w-full ${t.featured ? "btn-gold" : "btn-ghost"}`}>{t.cta.label}</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Principles -->
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="grid gap-5 md:grid-cols-3">
+        {principles.map((p, i) => (
+          <div class={`card reveal reveal-${i + 1}`}>
+            <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+              <Icon name={p.icon} size={20} />
+            </span>
+            <h3 class="mt-4 text-xl text-ivory">{p.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- What's included -->
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="rounded-[1.75rem] border border-line p-8 md:p-12">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Included on every plan</p>
+          <h2 class="mt-3 text-3xl md:text-4xl">The whole platform, for every school</h2>
+          <p class="mt-4 text-ivory-muted">There is no "basic" Nexli missing the things that matter. Every school, founding or standard, gets all twelve modules from day one.</p>
+        </div>
+        <div class="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+          {included.map((f) => (
+            <div class="flex items-center gap-2.5 text-ivory-muted">
+              <Icon name="check" size={17} class="shrink-0 text-gold" />
+              <span class="text-sm">{f}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add-ons -->
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Optional add-ons</p>
+        <h2 class="mt-3 text-3xl md:text-4xl">The only things that cost extra</h2>
+        <p class="mt-4 text-ivory-muted">Two capabilities have a genuine per-use cost, so we price them honestly and separately, never buried in the base price.</p>
+      </div>
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        {addons.map((a) => (
+          <div class="card">
+            <span class="inline-grid h-11 w-11 place-items-center rounded-xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+              <Icon name={a.icon} size={20} />
+            </span>
+            <h3 class="mt-4 text-xl text-ivory">{a.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ivory-muted">{a.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Founding partner -->
+  <section class="section pt-0">
+    <div class="container-nx">
+      <a href="/founding-partner" class="group block overflow-hidden rounded-[1.75rem] border border-line">
+        <div class="relative p-8 md:p-12">
+          <div class="glow-radial"></div>
+          <div class="relative grid items-center gap-8 md:grid-cols-[1.5fr_1fr]">
+            <div>
+              <p class="kicker-chip"><Icon name="sparkle" size={14} /> Founding Partner Program</p>
+              <h2 class="mt-5 text-3xl md:text-4xl">Be one of the first schools on Nexli</h2>
+              <p class="mt-4 max-w-xl text-ivory-muted">A small founding cohort gets the founding rate, hands-on setup and data migration, a month-to-month exit and a money-back commitment, in exchange for honest feedback and a reference. It's a real partnership, not a discount code.</p>
+            </div>
+            <div class="md:justify-self-end">
+              <span class="inline-flex items-center gap-2 text-gold transition-transform group-hover:translate-x-1">
+                Learn about the program <Icon name="arrow-right" size={18} />
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <Faq items={faqs} title="Pricing questions" />
+
+  <CtaBand
+    eyebrow="Get a quote"
+    title="Tell us your size, get a clear price"
+    text="See the whole platform in a free live demo, then share your student count on Instagram and we'll come back with a straightforward, written quote."
+  />
+</BaseLayout>

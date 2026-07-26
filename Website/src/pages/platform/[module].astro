@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import FeatureGrid from "../../components/FeatureGrid.astro";
+import Faq from "../../components/Faq.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { MODULE_PAGES, MODULE_BY_SLUG } from "../../lib/modules";
+import { KB_BY_SLUG } from "../../lib/site";
+import { webPage } from "../../lib/seo";
+
+export function getStaticPaths() {
+  return MODULE_PAGES.map((m) => ({ params: { module: m.slug }, props: { m } }));
+}
+const { m } = Astro.props;
+const path = `/platform/${m.slug}`;
+const connects = m.connects.map((s) => MODULE_BY_SLUG[s]).filter(Boolean);
+const kb = KB_BY_SLUG[m.kb];
+---
+<BaseLayout title={m.seoTitle} description={m.seoDescription} jsonLd={webPage({ title: m.seoTitle, description: m.seoDescription, path })}>
+  <PageHero
+    eyebrow="Platform"
+    title={m.title}
+    lead={m.tagline}
+    breadcrumbs={[{ label: "Platform", href: "/platform" }, { label: m.nav }]}
+  >
+    <a href="/demo" class="btn btn-gold">See it in the live demo</a>
+  </PageHero>
+
+  <section class="section">
+    <div class="container-nx">
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <div class="lg:sticky lg:top-28 lg:self-start">
+          <span class="inline-grid h-14 w-14 place-items-center rounded-2xl border border-line text-gold" style="background:rgba(255,255,255,0.02)">
+            <Icon name={m.icon} size={26} />
+          </span>
+          <p class="eyebrow mt-6">In one place</p>
+          <h2 class="mt-3 text-3xl md:text-4xl">What {m.nav} covers</h2>
+        </div>
+        <div class="prose-nx max-w-none">
+          {m.intro.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+
+      <div class="mt-14">
+        <FeatureGrid items={m.features} icon={m.icon} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container-nx">
+      <div class="grid gap-6 md:grid-cols-2">
+        <div class="card">
+          <p class="eyebrow">Works with</p>
+          <h3 class="mt-3 text-2xl">One connected system</h3>
+          <p class="mt-2 text-sm text-ivory-muted">{m.nav} shares the same data layer as the rest of Nexli, so nothing is entered twice.</p>
+          <div class="mt-5 flex flex-wrap gap-2.5">
+            {connects.map((c) => (
+              <a href={`/platform/${c.slug}`} class="chip transition-colors hover:border-gold/40 hover:text-gold-200">
+                <Icon name={c.icon} size={15} class="text-gold" />
+                {c.nav}
+              </a>
+            ))}
+          </div>
+        </div>
+        {kb && (
+          <a href={`/knowledge-base/${kb.slug}`} class="card group block">
+            <p class="eyebrow">Learn more</p>
+            <h3 class="mt-3 text-2xl">{kb.title} guides</h3>
+            <p class="mt-2 text-sm text-ivory-muted">{kb.blurb}</p>
+            <span class="mt-5 inline-flex items-center gap-2 text-sm text-gold transition-transform group-hover:translate-x-1">
+              Explore the Knowledge Base <Icon name="arrow-right" size={16} />
+            </span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <Faq items={m.faqs} title={`${m.nav}: questions schools ask`} />
+
+  <CtaBand
+    eyebrow="See it live"
+    title={`See ${m.nav} in action`}
+    text="Open the interactive demo (no signup, no login) or message us on Instagram and we'll walk your school through it."
+  />
+</BaseLayout>
