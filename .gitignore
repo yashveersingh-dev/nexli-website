@@ -1,0 +1,33 @@
+# ---- Dependencies ----
+**/node_modules/
+
+# ---- Build output ----
+**/dist/
+**/dist-ssr/
+*.local
+
+# ---- Env / secrets — NEVER commit ----
+**/.env
+**/.env.*
+!**/.env.example
+**/serviceAccount.json
+**/serviceAccount*.json
+**/*-service-account.json
+**/serviceAccountKey.json
+
+# ---- Logs / caches / emulator artifacts ----
+**/*.log
+**/.vite/
+**/.firebase/
+**/coverage/
+**/firebase-debug.log
+**/firestore-debug.log
+**/ui-debug.log
+
+# ---- OS / editor ----
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.sw?
