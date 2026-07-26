@@ -1,0 +1,6 @@
+/* NEXLI — Transfer Certificate styles (staff audience). Most layout reuses
+   shared classes (nx-page, nx-kv, nx-detail__*, nx-savebar from kit.css). */
+.nx-tc-cert {
+  border: 1px solid var(--border-2); border-radius: var(--r-md); padding: 20px;
+  background: rgba(198, 165, 92, 0.03);
+}

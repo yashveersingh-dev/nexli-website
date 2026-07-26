@@ -1,0 +1,84 @@
+/* ============================================================================
+ * Canteen & Nutrition — module-only styles. Reuses the global kit (nx-page,
+ * nx-toolbar, panel, kpi-grid, grid, badge) + the shared ops menu classes
+ * (ops-menu-day / ops-meal / ops-veg). Only canteen-specific bits live here.
+ * ==========================================================================*/
+
+/* Vertical card stack (self-owned so the module needn't import finance.css). */
+.cant-list { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+/* Section sub-heading between blocks. */
+.cant-subhead {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+  color: var(--text-muted); margin: 22px 0 12px;
+}
+
+/* Today's menu — gently emphasised panel. */
+.cant-today { border-color: color-mix(in srgb, var(--gold) 32%, var(--hairline)); }
+.cant-notes {
+  display: flex; align-items: flex-start; gap: 6px; margin: 12px 0 0;
+  font-size: 12.5px; color: var(--text-muted);
+}
+.cant-notes svg { flex-shrink: 0; margin-top: 2px; }
+
+/* Quick headcount entry. */
+.cant-quick { margin-bottom: 8px; }
+.cant-quick__grid {
+  display: grid; gap: 12px;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  align-items: end;
+}
+.cant-quick__action { display: flex; }
+@media (max-width: 640px) {
+  .cant-quick__grid { grid-template-columns: 1fr 1fr; }
+  .cant-quick__action { grid-column: 1 / -1; }
+}
+
+/* Meal icon chip (recent headcounts / inspections). */
+.cant-mealicon {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: color-mix(in srgb, var(--gold) 12%, transparent); color: var(--gold);
+}
+
+/* Menu form — meal block + item rows. */
+.cant-meal {
+  border: 1px solid var(--hairline); border-radius: var(--radius-md);
+  padding: 14px; margin-bottom: 12px; background: var(--surface, var(--card));
+}
+.cant-meal__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.cant-meal__title { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 14px; }
+.cant-meal__title svg { color: var(--gold); }
+
+.cant-itemrow {
+  display: grid; gap: 8px; align-items: end;
+  grid-template-columns: 1fr 84px auto auto;
+  padding: 4px 0;
+}
+.cant-itemrow__veg { display: flex; align-items: center; gap: 6px; padding-bottom: 8px; }
+.cant-itemrow__veglabel { font-size: 12px; color: var(--text-muted); }
+.cant-itemrow__rm { display: flex; align-items: center; padding-bottom: 4px; min-width: 28px; }
+@media (max-width: 520px) {
+  .cant-itemrow { grid-template-columns: 1fr auto; grid-auto-rows: auto; }
+  .cant-itemrow > :nth-child(1) { grid-column: 1 / -1; }
+}
+
+/* Rating stars. */
+.cant-stars { display: inline-flex; gap: 2px; line-height: 0; }
+.cant-star { color: var(--hairline); }
+.cant-star.is-on { color: var(--gold); }
+
+.cant-starpick { display: flex; gap: 4px; }
+.cant-starpick__btn {
+  display: inline-flex; padding: 4px; border: none; background: transparent;
+  color: var(--hairline); cursor: pointer; border-radius: 8px; transition: color 0.12s ease;
+}
+.cant-starpick__btn.is-on { color: var(--gold); }
+.cant-starpick__btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .cant-starpick__btn { transition: none; }
+}
+
+/* Two-up grid inside modals (date + meal). */
+.cant-modal-grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 420px) { .cant-modal-grid { grid-template-columns: 1fr; } }

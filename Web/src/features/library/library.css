@@ -1,0 +1,25 @@
+/* ===== NEXLI · Library module styles ===== */
+
+.lib-kpis { margin-bottom: 16px; }
+
+/* Catalog: category filter sizing in the toolbar */
+.lib-catfilter { flex: 0 0 auto; min-width: 160px; }
+@media (max-width: 519.98px) {
+  .lib-catfilter { flex: 1 1 100%; min-width: 0; }
+}
+
+/* Book cell (cover + title/author) — .lib-book* now lives in the global stylesheet
+   (src/styles/app.css) so Fees/Expense/Facility reuse it without needing this
+   lazily-loaded module stylesheet. */
+
+/* Borrower cell */
+.lib-borrower { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* Due-date cell */
+.lib-due { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.lib-due--over { color: var(--danger); font-weight: 600; }
+
+/* Toolbar spacer pushes the action to the right when there are no filters */
+.lib-spacer { flex: 1 1 auto; }
+
+.lib-note { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin: 0; }

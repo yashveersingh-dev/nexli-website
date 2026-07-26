@@ -1,0 +1,176 @@
+/* Question Paper Generator — feature-local styles.
+   Self-contained (no dependency on other feature CSS). Print output uses a
+   separate window (see print.ts), so these classes are for the in-app UI only. */
+
+.qp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.qp-toolbar > .qp-grow { flex: 1; }
+
+/* Filter row of compact selects */
+.qp-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* Chip toggles (subject / status / difficulty quick filters) */
+.qp-chipset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.qp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  background: transparent;
+  color: var(--text, inherit);
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.qp-chip:hover { border-color: var(--gold, #c6a55c); }
+.qp-chip.is-on {
+  background: color-mix(in srgb, var(--gold, #c6a55c) 18%, transparent);
+  border-color: var(--gold, #c6a55c);
+  color: var(--gold, #c6a55c);
+}
+
+/* Question list rows */
+.qp-q {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.06));
+}
+.qp-q__check { margin-top: 3px; flex-shrink: 0; }
+.qp-q__body { min-width: 0; flex: 1; }
+.qp-q__stem {
+  font-size: 13.5px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.qp-q__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  align-items: center;
+}
+.qp-q__tag {
+  font-size: 11px;
+  color: var(--text-muted, #8a8a8a);
+}
+.qp-q__actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+/* Marks meter */
+.qp-meter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: var(--surface-2, rgba(255, 255, 255, 0.03));
+  margin-bottom: 14px;
+}
+.qp-meter__bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border, rgba(255, 255, 255, 0.1));
+  overflow: hidden;
+}
+.qp-meter__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--gold, #c6a55c);
+  transition: width 0.25s ease;
+}
+.qp-meter__fill.is-over { background: #d05a5a; }
+.qp-meter__fill.is-exact { background: #4caf7d; }
+.qp-meter__label { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.qp-meter__sub { font-size: 11.5px; color: var(--text-muted, #8a8a8a); }
+
+/* Builder section blocks */
+.qp-section {
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.qp-section__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.qp-section__title { font-size: 14px; font-weight: 700; flex: 1; }
+.qp-section__instr { font-size: 12px; color: var(--text-muted, #8a8a8a); margin-bottom: 8px; }
+.qp-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-top: 1px dashed var(--border, rgba(255, 255, 255, 0.07));
+  font-size: 13px;
+}
+.qp-item__no { font-weight: 700; min-width: 22px; }
+.qp-item__stem {
+  flex: 1;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.qp-item__marks { font-weight: 600; white-space: nowrap; }
+.qp-item__actions { display: flex; gap: 2px; }
+
+/* Preview (in-app) */
+.qp-preview {
+  background: #fff;
+  color: #111;
+  border-radius: 10px;
+  padding: 28px 34px;
+  font-family: 'Times New Roman', Georgia, serif;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.qp-preview__head { text-align: center; border-bottom: 2px solid #222; padding-bottom: 10px; margin-bottom: 12px; }
+.qp-preview__school { font-size: 20px; font-weight: 700; }
+.qp-preview__exam { font-size: 14px; font-weight: 700; margin-top: 6px; text-transform: uppercase; }
+.qp-preview__meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; font-size: 12.5px; margin-top: 6px; }
+.qp-preview__section-title { font-size: 13px; font-weight: 700; text-align: center; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin: 14px 0 6px; }
+.qp-preview__instr { font-size: 11.5px; font-style: italic; color: #444; margin-bottom: 8px; }
+.qp-preview__q { display: flex; gap: 8px; font-size: 13px; line-height: 1.5; margin-bottom: 10px; }
+.qp-preview__q-no { font-weight: 700; min-width: 22px; }
+.qp-preview__q-body { flex: 1; white-space: pre-wrap; }
+.qp-preview__q-marks { font-weight: 700; }
+.qp-preview__opts { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 3px 24px; }
+.qp-preview__opts li { width: 44%; }
+
+/* Stat tiles */
+.qp-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+.qp-stat {
+  flex: 1;
+  min-width: 120px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.qp-stat__num { font-size: 22px; font-weight: 700; }
+.qp-stat__label { font-size: 12px; color: var(--text-muted, #8a8a8a); }

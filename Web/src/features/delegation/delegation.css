@@ -1,0 +1,72 @@
+/* Operational Delegation — list rows + grant modal helpers. */
+
+.nx-deleg-list {
+  display: flex;
+  flex-direction: column;
+}
+.nx-deleg-list--muted {
+  opacity: 0.92;
+}
+
+.nx-deleg-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 4px;
+  border-bottom: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.06));
+}
+.nx-deleg-row:last-child {
+  border-bottom: 0;
+}
+.nx-deleg-row--past {
+  align-items: center;
+  padding: 10px 4px;
+}
+
+.nx-deleg-row__main {
+  flex: 1;
+  min-width: 0;
+}
+.nx-deleg-row__name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text-strong, #1a1a1a);
+}
+.nx-deleg-row__role {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.nx-deleg-row__sub {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+.nx-deleg-row__reason {
+  font-size: 13px;
+  color: var(--text-default, #333);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: min(420px, 60vw);
+}
+.nx-deleg-row__meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.nx-deleg-note {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}

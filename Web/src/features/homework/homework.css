@@ -1,0 +1,187 @@
+/* NEXLI — Homework module styles. Mobile-first; no horizontal scroll at 320px. */
+
+/* ---------------- List ---------------- */
+.nx-hw-title { font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-hw-subtitle { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+.nx-hw-progress { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.nx-hw-progress__count { font-size: 11.5px; color: var(--text-muted); }
+
+/* List toolbar: search grows, filters wrap to a usable grid on small screens. */
+.nx-hw-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.nx-hw-toolbar__search { flex: 1 1 200px; min-width: 160px; }
+.nx-hw-toolbar__filter { width: 170px; flex: 0 1 170px; }
+@media (max-width: 720px) {
+  .nx-hw-toolbar__search { flex-basis: 100%; }
+  .nx-hw-toolbar__filter { flex: 1 1 calc(50% - 5px); width: auto; }
+}
+@media (max-width: 380px) {
+  .nx-hw-toolbar__filter { flex-basis: 100%; }
+}
+
+/* ---------------- Detail header ---------------- */
+.nx-hw-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.nx-hw-head__actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nx-hw-desc { margin-top: 14px; font-size: 13.5px; line-height: 1.65; color: var(--text); white-space: pre-wrap; word-break: break-word; }
+
+.nx-hw-attach {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 14px;
+  font-size: 12.5px; font-weight: 600; color: var(--gold);
+  text-decoration: none; border: 1px solid rgba(212, 175, 55, 0.28);
+  background: rgba(212, 175, 55, 0.08); border-radius: var(--r-pill); padding: 7px 13px;
+  transition: background 0.14s var(--ease); -webkit-tap-highlight-color: transparent;
+}
+.nx-hw-attach:hover { background: rgba(212, 175, 55, 0.14); }
+.nx-hw-attach:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ---------------- Summary chips ---------------- */
+.nx-hw-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.nx-hw-chip {
+  display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px;
+  border: 1px solid var(--border); border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.012); font-size: 12px;
+}
+.nx-hw-chip__dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--text-muted); }
+.nx-hw-chip__n { font-weight: 700; color: var(--text); }
+.nx-hw-chip__l { color: var(--text-muted); }
+.nx-hw-chip--assigned .nx-hw-chip__dot { background: var(--info); }
+.nx-hw-chip--submitted .nx-hw-chip__dot { background: var(--success); }
+.nx-hw-chip--graded .nx-hw-chip__dot { background: var(--success); }
+.nx-hw-chip--late .nx-hw-chip__dot { background: var(--warning); }
+.nx-hw-chip--missing .nx-hw-chip__dot { background: var(--danger); }
+
+/* ---------------- Submission tracker roster ---------------- */
+.nx-hw-roster { display: flex; flex-direction: column; }
+.nx-hw-row {
+  display: grid;
+  grid-template-columns: 26px 32px 1fr auto;
+  grid-template-areas: 'no avatar main status' 'grade grade grade grade';
+  align-items: center; column-gap: 11px; row-gap: 8px;
+  padding: 11px 0; border-bottom: 1px solid var(--border);
+}
+.nx-hw-row:last-child { border-bottom: 0; }
+.nx-hw-row__no { grid-area: no; font-size: 12px; color: var(--text-muted); text-align: center; }
+.nx-hw-row > .nx-avatar { grid-area: avatar; }
+.nx-hw-row__main { grid-area: main; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.nx-hw-row__name { font-size: 13.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-hw-row__fb { font-size: 11.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-hw-row__status { grid-area: status; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nx-hw-row__marks { font-size: 13px; font-weight: 700; color: var(--text); }
+.nx-hw-row__max { font-size: 11.5px; font-weight: 500; color: var(--text-muted); }
+.nx-hw-row__grade { grid-area: grade; justify-self: stretch; min-height: 40px; }
+
+/* From 560px, place the Update button inline at the end of the row. */
+@media (min-width: 560px) {
+  .nx-hw-row {
+    grid-template-columns: 26px 32px 1fr auto auto;
+    grid-template-areas: 'no avatar main status grade';
+    column-gap: 12px;
+  }
+  .nx-hw-row__grade { justify-self: end; }
+}
+
+/* ---------------- Grade modal ---------------- */
+.nx-hw-grade { display: flex; flex-direction: column; gap: 14px; }
+.nx-hw-grade__field { display: flex; flex-direction: column; gap: 6px; }
+.nx-hw-grade__lbl { font-size: 12.5px; font-weight: 600; color: var(--text); }
+
+.nx-hw-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.nx-hw-modal-actions > .nx-btn { min-height: 40px; }
+@media (max-width: 420px) {
+  .nx-hw-modal-actions { flex-direction: column-reverse; }
+  .nx-hw-modal-actions > .nx-btn { width: 100%; }
+}
+
+/* ---------------- Parent / student cards ---------------- */
+.nx-hw-child { display: inline-flex; align-items: center; gap: 9px; }
+.nx-hw-group + .nx-hw-group { margin-top: 18px; }
+.nx-hw-group__title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 10px; }
+.nx-hw-cards { display: flex; flex-direction: column; gap: 10px; }
+
+.nx-hw-card { border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px; background: rgba(255, 255, 255, 0.012); }
+.nx-hw-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.nx-hw-card__title { font-size: 14.5px; font-weight: 600; color: var(--text); line-height: 1.35; min-width: 0; word-break: break-word; }
+.nx-hw-card__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; font-size: 12px; color: var(--text-muted); }
+.nx-hw-card__meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
+.nx-hw-card__desc { margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--text-muted); white-space: pre-wrap; word-break: break-word; }
+.nx-hw-card__foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.nx-hw-card__marks { font-size: 13px; font-weight: 700; color: var(--text); }
+.nx-hw-card__fb { font-size: 12.5px; font-style: italic; color: var(--text-muted); min-width: 0; word-break: break-word; }
+.nx-hw-card__action { margin-top: 12px; }
+.nx-hw-card__action > .nx-btn { min-height: 40px; }
+
+/* ---------------- Attachments — display (detail + cards) ---------------- */
+.nx-hw-attach-block { margin-top: 16px; }
+.nx-hw-attach-block__title {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted);
+}
+.nx-hw-attach-block__count {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px;
+  padding: 0 5px; border-radius: var(--r-pill); background: rgba(255, 255, 255, 0.06);
+  font-size: 11px; font-weight: 700; color: var(--text); letter-spacing: 0;
+}
+
+.nx-hw-attach-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.nx-hw-attach-list--compact { gap: 6px; margin-top: 12px; }
+
+.nx-hw-attach-row { min-width: 0; }
+.nx-hw-attach-row__link {
+  display: flex; align-items: center; gap: 11px; min-width: 0;
+  padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.012); text-decoration: none; color: var(--text);
+  transition: background 0.14s var(--ease), border-color 0.14s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.nx-hw-attach-row__link:hover { background: rgba(255, 255, 255, 0.04); border-color: var(--border-strong, var(--border)); }
+.nx-hw-attach-row__link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.nx-hw-attach-row__icon {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: var(--r-sm); color: var(--gold);
+  background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.22);
+}
+.nx-hw-attach-row__thumb {
+  width: 40px; height: 40px; flex-shrink: 0; object-fit: cover;
+  border-radius: var(--r-sm); border: 1px solid var(--border); background: rgba(255, 255, 255, 0.03);
+}
+.nx-hw-attach-list--compact .nx-hw-attach-row__icon { width: 30px; height: 30px; }
+.nx-hw-attach-row__name {
+  flex: 1 1 auto; min-width: 0; font-size: 13px; font-weight: 500; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.nx-hw-attach-row__open { flex-shrink: 0; color: var(--text-muted); display: inline-flex; }
+.nx-hw-attach-row__link:hover .nx-hw-attach-row__open { color: var(--text); }
+
+/* ---------------- Attachments — authoring (form) ---------------- */
+.nx-hw-att-editor { display: flex; flex-direction: column; gap: 12px; }
+.nx-hw-att-empty { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+.nx-hw-att-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.nx-hw-att-item {
+  display: grid; grid-template-columns: 36px 1fr; column-gap: 11px; row-gap: 10px;
+  grid-template-areas: 'icon fields' 'remove remove';
+  align-items: start; padding: 13px; border: 1px solid var(--border);
+  border-radius: var(--r-md); background: rgba(255, 255, 255, 0.012);
+}
+.nx-hw-att-item__icon {
+  grid-area: icon; display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; margin-top: 24px; border-radius: var(--r-sm); color: var(--gold);
+  background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.22);
+}
+.nx-hw-att-item__icon.is-muted { color: var(--text-muted); background: rgba(255, 255, 255, 0.03); border-color: var(--border); }
+.nx-hw-att-item__fields { grid-area: fields; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.nx-hw-att-item__remove { grid-area: remove; justify-self: start; min-height: 40px; color: var(--danger); }
+
+@media (min-width: 560px) {
+  .nx-hw-att-item {
+    grid-template-columns: 36px 1fr auto;
+    grid-template-areas: 'icon fields remove';
+    column-gap: 12px;
+  }
+  .nx-hw-att-item__remove { justify-self: end; align-self: start; margin-top: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-hw-attach,
+  .nx-hw-attach-row__link { transition: none; }
+}

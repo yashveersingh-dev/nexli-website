@@ -1,0 +1,354 @@
+/* NEXLI — Direct Messaging (1:1) module styles. Mobile-first; 320 → 1920. */
+
+/* The page owns the viewport height so the messenger can use an internal scroll. */
+.nx-msg-page {
+  min-height: 0;
+}
+
+/* ============================ Two-pane shell ============================ */
+.nx-messenger {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg, 14px);
+  background: var(--card);
+  overflow: hidden;
+  /* Fill the area below the page header; never let the whole page scroll. */
+  height: clamp(420px, calc(100dvh - 188px), 760px);
+  min-height: 0;
+}
+
+/* --- Mobile: list and thread are mutually exclusive views --- */
+.nx-messenger__list {
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 8px;
+}
+.nx-messenger__thread { display: none; min-height: 0; }
+.nx-messenger.has-thread .nx-messenger__list { display: none; }
+.nx-messenger.has-thread .nx-messenger__thread { display: flex; flex-direction: column; }
+
+/* ============================ Desktop two-pane ============================ */
+@media (min-width: 768px) {
+  .nx-messenger {
+    grid-template-columns: minmax(280px, 340px) 1fr;
+    height: clamp(480px, calc(100dvh - 196px), 820px);
+  }
+  /* Both panes always visible; selection only changes the right pane. */
+  .nx-messenger__list { display: block; border-right: 1px solid var(--border); }
+  .nx-messenger__thread { display: flex; flex-direction: column; }
+  .nx-messenger.has-thread .nx-messenger__list { display: block; }
+  /* Mobile back button is irrelevant when the list is always visible. */
+  .nx-thread__back { display: none; }
+}
+@media (min-width: 1280px) {
+  .nx-messenger { grid-template-columns: 360px 1fr; }
+}
+
+/* ============================ Conversation list ============================ */
+.nx-conv-list { display: flex; flex-direction: column; gap: 2px; }
+
+.nx-conv {
+  display: flex; align-items: center; gap: 11px; width: 100%; text-align: left;
+  padding: 10px 11px; border: 1px solid transparent; border-radius: var(--r-md, 12px);
+  background: transparent; color: inherit; font: inherit; cursor: pointer;
+  transition: background-color 0.14s var(--ease), border-color 0.14s var(--ease);
+}
+.nx-conv:hover { background: var(--card-hover); }
+.nx-conv:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-conv.is-active { background: var(--gold-glow); border-color: rgba(198, 165, 92, 0.35); }
+.nx-conv--skel { cursor: default; }
+
+.nx-conv__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.nx-conv__row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.nx-conv__name {
+  flex: 1; min-width: 0; font-size: 14px; font-weight: 650; color: var(--text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.nx-conv__time { font-size: 11px; color: var(--text-muted); flex-shrink: 0; }
+.nx-conv__preview {
+  flex: 1; min-width: 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.4;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.nx-conv__preview.is-unread { color: var(--text); font-weight: 600; }
+.nx-conv__badge {
+  flex-shrink: 0; min-width: 18px; height: 18px; padding: 0 5px;
+  display: inline-grid; place-items: center;
+  font-size: 11px; font-weight: 700; line-height: 1; color: #1a1408;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold)); border-radius: 999px;
+}
+
+/* ============================ Thread ============================ */
+.nx-thread { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.nx-thread--empty { justify-content: center; align-items: center; padding: 24px; }
+
+.nx-thread__head {
+  display: flex; align-items: center; gap: 11px; flex-shrink: 0;
+  padding: 12px 14px; border-bottom: 1px solid var(--border); background: var(--card);
+}
+.nx-thread__back {
+  display: inline-grid; place-items: center; width: 34px; height: 34px; flex-shrink: 0;
+  margin-left: -4px; border: none; border-radius: var(--r-md, 10px);
+  background: transparent; color: var(--text); cursor: pointer; transition: background-color 0.14s var(--ease);
+}
+.nx-thread__back:hover { background: var(--card-hover); }
+.nx-thread__back:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-thread__headtext { display: flex; flex-direction: column; min-width: 0; }
+.nx-thread__name {
+  font-size: 14.5px; font-weight: 700; color: var(--text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.nx-thread__sub { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
+
+.nx-thread__log {
+  flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 16px 14px;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(198, 165, 92, 0.04), transparent 60%),
+    var(--bg);
+}
+.nx-thread__loading { flex: 1; display: grid; place-items: center; }
+
+.nx-thread__group { display: flex; flex-direction: column; gap: 4px; }
+.nx-thread__day {
+  display: flex; justify-content: center; margin: 10px 0 6px;
+}
+.nx-thread__day span {
+  font-size: 11px; font-weight: 600; color: var(--text-muted);
+  padding: 3px 10px; border: 1px solid var(--border); border-radius: 999px;
+  background: var(--card);
+}
+
+/* Empty-thread intro */
+.nx-thread__intro {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; text-align: center; padding: 24px;
+}
+.nx-thread__intro-name { font-size: 15px; font-weight: 700; color: var(--text); margin-top: 4px; }
+.nx-thread__intro-hint { font-size: 13px; color: var(--text-muted); max-width: 260px; line-height: 1.5; }
+
+/* ---- Bubbles ---- */
+.nx-msg { display: flex; justify-content: flex-start; }
+.nx-msg--mine { justify-content: flex-end; }
+.nx-msg__bubble {
+  max-width: min(78%, 520px);
+  padding: 8px 12px 7px; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--card-elev);
+  border-bottom-left-radius: 5px;
+}
+.nx-msg--mine .nx-msg__bubble {
+  background: linear-gradient(135deg, rgba(198, 165, 92, 0.20), rgba(198, 165, 92, 0.12));
+  border-color: rgba(198, 165, 92, 0.34);
+  border-bottom-left-radius: 14px; border-bottom-right-radius: 5px;
+}
+.nx-msg__text {
+  font-size: 14px; line-height: 1.5; color: var(--text);
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+}
+.nx-msg__time { display: block; margin-top: 3px; font-size: 10.5px; color: var(--text-muted); }
+.nx-msg--mine .nx-msg__time { text-align: right; }
+
+/* ---- Composer ---- */
+.nx-composer {
+  flex-shrink: 0; display: flex; align-items: flex-end; gap: 9px;
+  padding: 10px 12px; padding-bottom: max(10px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border); background: var(--card);
+}
+.nx-composer__input {
+  flex: 1; min-width: 0; resize: none; max-height: 132px;
+  font: inherit; font-size: 14px; line-height: 1.45; color: var(--text);
+  padding: 9px 13px; border: 1px solid var(--border); border-radius: var(--r-lg, 14px);
+  background: var(--bg); transition: border-color 0.14s var(--ease);
+}
+.nx-composer__input::placeholder { color: var(--text-muted); }
+.nx-composer__input:focus-visible { outline: none; border-color: var(--gold); }
+.nx-composer__input:disabled { opacity: 0.6; cursor: not-allowed; }
+.nx-composer__send {
+  flex-shrink: 0; width: 40px; height: 40px; display: inline-grid; place-items: center;
+  border: none; border-radius: 50%; cursor: pointer; color: #1a1408;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  transition: transform 0.14s var(--ease), opacity 0.14s var(--ease);
+}
+.nx-composer__send:hover:not(:disabled) { transform: scale(1.05); }
+.nx-composer__send:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-composer__send:disabled { opacity: 0.4; cursor: not-allowed; background: var(--card-elev); color: var(--text-muted); }
+
+/* ============================ Empty thread placeholder (desktop) ============================ */
+.nx-messenger__placeholder {
+  flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; text-align: center; padding: 32px;
+}
+@media (min-width: 768px) { .nx-messenger__placeholder { display: flex; } }
+.nx-messenger__placeholder-icon {
+  width: 64px; height: 64px; display: grid; place-items: center; border-radius: 18px;
+  color: var(--gold); border: 1px solid var(--border); background: var(--gold-glow); margin-bottom: 4px;
+}
+.nx-messenger__placeholder-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.nx-messenger__placeholder-hint { font-size: 13px; color: var(--text-muted); max-width: 280px; line-height: 1.5; }
+
+/* ============================ New-message picker ============================ */
+.nx-picker { display: flex; flex-direction: column; gap: 12px; }
+.nx-picker__search {
+  display: flex; align-items: center; gap: 9px;
+  padding: 0 12px; border: 1px solid var(--border); border-radius: var(--r-md, 12px);
+  background: var(--bg); color: var(--text-muted);
+}
+.nx-picker__search:focus-within { border-color: var(--gold); }
+.nx-picker__input {
+  flex: 1; min-width: 0; font: inherit; font-size: 14px; color: var(--text);
+  background: transparent; border: none; outline: none; padding: 11px 0;
+}
+.nx-picker__input::placeholder { color: var(--text-muted); }
+
+.nx-picker__list { display: flex; flex-direction: column; gap: 2px; list-style: none; margin: 0; padding: 0; max-height: 56dvh; overflow-y: auto; overscroll-behavior: contain; }
+.nx-picker__skel { display: flex; align-items: center; gap: 11px; padding: 9px 8px; }
+.nx-picker__item {
+  display: flex; align-items: center; gap: 11px; width: 100%; text-align: left;
+  padding: 9px 8px; border: 1px solid transparent; border-radius: var(--r-md, 12px);
+  background: transparent; color: var(--text-muted); font: inherit; cursor: pointer;
+  transition: background-color 0.14s var(--ease);
+}
+.nx-picker__item:hover { background: var(--card-hover); }
+.nx-picker__item:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-picker__meta { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.nx-picker__name { font-size: 14px; font-weight: 600; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nx-picker__role { font-size: 12px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ============================ Filter tabs (Escalated to me) ============================ */
+.nx-msg-tabs {
+  display: flex; gap: 4px; padding: 2px; margin-bottom: 8px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md, 12px);
+}
+.nx-msg-tab {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 7px 10px; border: none; border-radius: var(--r-sm, 9px);
+  font: inherit; font-size: 12.5px; font-weight: 600; color: var(--text-muted);
+  background: transparent; cursor: pointer; transition: background-color 0.14s var(--ease), color 0.14s var(--ease);
+}
+.nx-msg-tab:hover { color: var(--text); }
+.nx-msg-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.nx-msg-tab.is-active { background: var(--card); color: var(--text); box-shadow: var(--shadow-sm, 0 1px 2px rgba(0,0,0,0.18)); }
+.nx-msg-tab__count {
+  min-width: 17px; height: 17px; padding: 0 5px; display: inline-grid; place-items: center;
+  font-size: 10.5px; font-weight: 700; line-height: 1; color: #1a1408; border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+}
+
+/* ============================ List tags (escalation / overdue) ============================ */
+.nx-conv__tags { gap: 6px; }
+.nx-conv__tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 10.5px; font-weight: 650; line-height: 1; padding: 2.5px 7px 2.5px 5px;
+  border-radius: 999px; border: 1px solid transparent;
+}
+.nx-conv__tag--esc { color: var(--gold); background: var(--gold-glow); border-color: rgba(198, 165, 92, 0.3); }
+.nx-conv__tag--overdue {
+  color: #c0392b; background: rgba(192, 57, 43, 0.1); border-color: rgba(192, 57, 43, 0.28);
+}
+
+/* ============================ Thread header actions ============================ */
+.nx-thread__actions { margin-left: auto; display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+/* Read-only footer when a non-participant reviews an escalation. */
+.nx-thread__review {
+  flex-shrink: 0; display: flex; align-items: center; gap: 8px;
+  padding: 12px 14px; padding-bottom: max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border); background: var(--card);
+  font-size: 12.5px; color: var(--text-muted);
+}
+.nx-thread__review > svg { flex-shrink: 0; }
+
+/* ============================ Escalation banner ============================ */
+.nx-esc-bar {
+  flex-shrink: 0; display: flex; align-items: flex-start; gap: 9px;
+  padding: 9px 14px; border-bottom: 1px solid rgba(198, 165, 92, 0.3);
+  background: var(--gold-glow); color: var(--text);
+}
+.nx-esc-bar > svg { color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+.nx-esc-bar.is-resolved { border-bottom-color: var(--border); background: var(--card-elev); }
+.nx-esc-bar.is-resolved > svg { color: var(--success, #3fa66a); }
+.nx-esc-bar__text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+.nx-esc-bar__title { font-size: 12.5px; font-weight: 650; color: var(--text); }
+.nx-esc-bar__reason {
+  font-size: 12px; color: var(--text-muted); line-height: 1.4;
+  overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.nx-esc-bar__sla {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 3px;
+  font-size: 11px; font-weight: 650; color: #c0392b;
+}
+
+/* ============================ Escalation trail (in log) ============================ */
+.nx-esc-log {
+  margin: 14px 2px 2px; padding: 12px 14px;
+  border: 1px solid var(--border); border-radius: var(--r-md, 12px); background: var(--card);
+}
+.nx-esc-log__head {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 10px;
+  font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.nx-esc-log__items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+.nx-esc-log__item { position: relative; display: flex; gap: 11px; padding-bottom: 12px; }
+.nx-esc-log__item:last-child { padding-bottom: 0; }
+.nx-esc-log__dot {
+  flex-shrink: 0; width: 9px; height: 9px; margin-top: 3px; border-radius: 999px;
+  background: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow);
+}
+.nx-esc-log__item:not(:last-child) .nx-esc-log__dot::after {
+  content: ''; position: absolute; left: 4px; top: 12px; bottom: 0; width: 1px; background: var(--border);
+}
+.nx-esc-log__body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nx-esc-log__line { font-size: 12.5px; color: var(--text); line-height: 1.4; }
+.nx-esc-log__line strong { font-weight: 650; }
+.nx-esc-log__reason { font-size: 12px; color: var(--text-muted); font-style: italic; line-height: 1.4; }
+.nx-esc-log__time { font-size: 10.5px; color: var(--text-muted); }
+
+/* ============================ Escalate sheet ============================ */
+.nx-esc { display: flex; flex-direction: column; gap: 16px; }
+.nx-esc__field { display: flex; flex-direction: column; gap: 7px; }
+.nx-esc__label { font-size: 13px; font-weight: 650; color: var(--text); }
+.nx-esc__optional { font-weight: 500; color: var(--text-muted); }
+.nx-esc__textarea {
+  resize: vertical; min-height: 72px; font: inherit; font-size: 14px; line-height: 1.5;
+  color: var(--text); padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--r-md, 12px);
+  background: var(--bg); transition: border-color 0.14s var(--ease);
+}
+.nx-esc__textarea::placeholder { color: var(--text-muted); }
+.nx-esc__textarea:focus-visible { outline: none; border-color: var(--gold); }
+.nx-esc__none { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+.nx-esc__cands {
+  display: flex; flex-direction: column; gap: 2px; list-style: none; margin: 0; padding: 0;
+  max-height: 38dvh; overflow-y: auto; overscroll-behavior: contain;
+}
+.nx-esc__cand {
+  display: flex; align-items: center; gap: 11px; width: 100%; text-align: left;
+  padding: 8px; border: 1px solid transparent; border-radius: var(--r-md, 12px);
+  background: transparent; color: var(--text); font: inherit; cursor: pointer;
+  transition: background-color 0.14s var(--ease), border-color 0.14s var(--ease);
+}
+.nx-esc__cand:hover { background: var(--card-hover); }
+.nx-esc__cand:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.nx-esc__cand.is-sel { background: var(--gold-glow); border-color: rgba(198, 165, 92, 0.35); }
+.nx-esc__cand.is-sel > svg { color: var(--gold); margin-left: auto; }
+.nx-esc__cand-name { font-size: 14px; font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nx-esc-foot { display: flex; gap: 9px; justify-content: flex-end; }
+
+/* ============================ Picker policy note ============================ */
+.nx-picker__note {
+  display: flex; align-items: center; gap: 8px; margin: 0;
+  padding: 8px 11px; border: 1px solid rgba(198, 165, 92, 0.3); border-radius: var(--r-md, 12px);
+  background: var(--gold-glow); font-size: 12.5px; color: var(--text); line-height: 1.4;
+}
+.nx-picker__note > svg { color: var(--gold); flex-shrink: 0; }
+
+/* ============================ Reduced motion ============================ */
+@media (prefers-reduced-motion: reduce) {
+  .nx-conv, .nx-thread__back, .nx-composer__input, .nx-composer__send, .nx-picker__item,
+  .nx-msg-tab, .nx-esc__cand, .nx-esc__textarea { transition: none; }
+  .nx-composer__send:hover:not(:disabled) { transform: none; }
+}

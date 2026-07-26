@@ -1,0 +1,178 @@
+/* ============================================================================
+ * Medical & Clinic (P6, RESTRICTED) module styles. Sensitive health data —
+ * privacy-first. Reuses the global kit (nx-page, nx-toolbar, panel, kpi-grid,
+ * grid, badge, DataTable, nx-kv) + ops.css; only module-specific bits live here.
+ * ==========================================================================*/
+
+/* ---- Confidentiality note / inline alert ---- */
+.med-confidential {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; margin-bottom: 4px;
+  border-radius: var(--radius-md); border: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--gold) 7%, var(--card));
+  font-size: 12px; color: var(--text-muted); line-height: 1.4;
+}
+.med-confidential svg { color: var(--gold); flex-shrink: 0; }
+
+.med-note {
+  margin-top: 12px; font-size: 11.5px; color: var(--text-muted);
+  display: flex; gap: 6px; align-items: center;
+}
+.med-note--flush { margin-top: 16px; }
+
+.med-alert {
+  display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--warning) 45%, transparent);
+  background: color-mix(in srgb, var(--warning) 12%, var(--card));
+  font-size: 12.5px; color: var(--text); line-height: 1.45;
+}
+.med-alert svg { color: var(--warning); flex-shrink: 0; margin-top: 1px; }
+
+.med-toggle-cell { display: flex; align-items: flex-end; padding-bottom: 8px; }
+
+.med-locked-student {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border-radius: var(--radius-md);
+  border: 1px solid var(--hairline); background: var(--surface, var(--card));
+  font-weight: 600; font-size: 14px;
+}
+.med-locked-student svg { color: var(--gold); flex-shrink: 0; }
+
+/* ---- List / row primitives ---- */
+.med-list { display: flex; flex-direction: column; gap: 10px; }
+
+.med-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.med-row__avatar {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: color-mix(in srgb, var(--gold) 16%, var(--card));
+  color: var(--gold); font-weight: 700; font-size: 13px;
+}
+.med-row__text { display: flex; flex-direction: column; min-width: 0; }
+.med-row__title { font-weight: 600; font-size: 14px; color: var(--text); }
+.med-row__sub {
+  font-size: 12px; color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 38ch;
+}
+
+.med-flag { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; }
+.med-flag--ok { color: var(--success); }
+.med-flag--muted { color: var(--text-muted); }
+
+/* ---- Health record cards (records tab) ---- */
+.med-card {
+  display: flex; flex-direction: column; gap: 12px; width: 100%; text-align: left;
+  padding: 14px; border-radius: var(--radius-md);
+  border: 1px solid var(--hairline); background: var(--card); cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.med-card:hover { border-color: color-mix(in srgb, var(--gold) 45%, var(--hairline)); }
+.med-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.med-card__head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.med-card__head-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.med-card__title { font-weight: 700; font-size: 15px; color: var(--text); }
+.med-card__sub { font-size: 12px; color: var(--text-muted); }
+.med-card__chev { color: var(--text-muted); flex-shrink: 0; }
+.med-card__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.med-card__none { font-size: 12px; color: var(--text-muted); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .med-card:active { transform: scale(0.995); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .med-card { transition: none; }
+}
+
+/* ---- Chip list field (allergies / conditions / medications) ---- */
+.med-chips {
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  min-height: 42px; padding: 6px 8px;
+  border: 1px solid var(--border, var(--hairline)); border-radius: var(--radius-md);
+  background: var(--input-bg, var(--card));
+}
+.med-chips:focus-within { border-color: var(--gold); }
+.med-chips[data-invalid] { border-color: var(--danger); }
+.med-chips__input {
+  flex: 1; min-width: 100px; border: none; background: transparent;
+  color: var(--text); font: inherit; font-size: 14px; padding: 4px 2px; outline: none;
+}
+.med-chips__input::placeholder { color: var(--text-muted); }
+
+.med-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 6px 3px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 14%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  font-size: 12.5px; color: var(--text); max-width: 100%;
+}
+.med-chip__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.med-chip__remove {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border: none; border-radius: 50%;
+  background: transparent; color: var(--text-muted); cursor: pointer; flex-shrink: 0;
+}
+.med-chip__remove:hover { color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent); }
+.med-chip__remove:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+.med-chips--static { min-height: 0; padding: 0; border: none; background: transparent; }
+.med-chip--static { padding: 3px 10px; }
+.med-chips--static[data-tone='danger'] .med-chip--static {
+  background: color-mix(in srgb, var(--danger) 12%, var(--card));
+  border-color: color-mix(in srgb, var(--danger) 30%, transparent);
+}
+
+/* ---- 360 detail panel ---- */
+.med-detail { display: flex; flex-direction: column; gap: 16px; }
+.med-detail__vitals {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+}
+.med-vital {
+  display: flex; flex-direction: column; gap: 2px; padding: 10px;
+  border: 1px solid var(--hairline); border-radius: var(--radius-md);
+  background: var(--surface, var(--card)); text-align: center;
+}
+.med-vital__k { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.med-vital__v { font-size: 16px; font-weight: 700; color: var(--text); }
+
+.med-detail__chips { display: flex; flex-direction: column; gap: 6px; }
+.med-detail__chips-head {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+}
+.med-detail__kv { display: flex; flex-direction: column; }
+
+.med-detail__block { display: flex; flex-direction: column; gap: 6px; }
+.med-detail__block-head {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.med-detail__text {
+  font-size: 13.5px; line-height: 1.55; color: var(--text); margin: 0; white-space: pre-wrap;
+  padding: 10px 12px; border-radius: var(--radius-md);
+  border: 1px solid var(--hairline); background: var(--surface, var(--card));
+}
+.med-detail__shots { display: flex; flex-direction: column; }
+
+.med-shot {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--hairline-soft, rgba(255, 255, 255, 0.05));
+}
+.med-shot:last-child { border-bottom: none; }
+.med-shot__name { font-size: 13.5px; font-weight: 500; color: var(--text); }
+.med-shot__meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+
+/* ---- Immunization rows ---- */
+.med-shot-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.med-shot-row__main { flex: 1; min-width: 0; }
+.med-shot-row__title { font-weight: 600; font-size: 14px; color: var(--text); }
+.med-shot-row__dose { font-weight: 400; color: var(--text-muted); }
+.med-shot-row__sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.med-shot-row__end { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+/* ---- Responsive ---- */
+@media (max-width: 520px) {
+  .med-detail__vitals { grid-template-columns: repeat(2, 1fr); }
+  .med-row__sub { max-width: 24ch; }
+}

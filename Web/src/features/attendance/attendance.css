@@ -1,0 +1,85 @@
+/* NEXLI — Attendance module styles. */
+
+/* Section-scoping note variant: warns a scoped marker they picked a section they
+   don't own. Reuses the shared `.nx-review-note` base; recolours to a warning. */
+.nx-review-note--warn {
+  border-color: color-mix(in srgb, var(--warning) 34%, transparent);
+  background: color-mix(in srgb, var(--warning) 11%, var(--card));
+  color: var(--text);
+}
+.nx-review-note--warn svg { color: var(--warning); }
+
+.nx-att-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.nx-att-summary__stats { display: flex; gap: 8px; flex-wrap: wrap; }
+.nx-att-chip { font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: var(--r-pill); border: 1px solid var(--border); }
+.nx-att-chip--present { color: var(--success); background: var(--success-bg); border-color: rgba(34, 197, 94, 0.25); }
+.nx-att-chip--absent { color: var(--danger); background: var(--danger-bg); border-color: rgba(239, 68, 68, 0.25); }
+.nx-att-chip--late { color: var(--warning); background: var(--warning-bg); border-color: rgba(245, 158, 11, 0.25); }
+.nx-att-chip--leave { color: var(--info); background: var(--info-bg); border-color: rgba(96, 165, 250, 0.25); }
+
+/* Roster */
+.nx-att-roster { display: flex; flex-direction: column; }
+.nx-att-row { display: flex; align-items: center; gap: 11px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.nx-att-row:last-child { border-bottom: 0; }
+.nx-att-row__no { width: 26px; flex-shrink: 0; font-size: 12px; color: var(--text-muted); text-align: center; }
+.nx-att-row__name { flex: 1; min-width: 0; font-size: 13.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.nx-att-seg { display: inline-flex; gap: 3px; flex-shrink: 0; background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 2px; }
+.nx-att-seg__btn {
+  width: 30px; height: 28px; border-radius: 7px; border: 0; background: none; cursor: pointer;
+  font-size: 12px; font-weight: 700; color: var(--text-muted); transition: all 0.14s var(--ease); -webkit-tap-highlight-color: transparent;
+}
+.nx-att-seg__btn:hover:not(:disabled) { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+.nx-att-seg__btn:disabled { cursor: not-allowed; }
+.nx-att-seg__btn.is-active.is-present { background: var(--success); color: #06210f; }
+.nx-att-seg__btn.is-active.is-absent { background: var(--danger); color: #2a0a0a; }
+.nx-att-seg__btn.is-active.is-late { background: var(--warning); color: #2a1c05; }
+.nx-att-seg__btn.is-active.is-half_day { background: var(--warning); color: #2a1c05; }
+.nx-att-seg__btn.is-active.is-leave { background: var(--info); color: #08203a; }
+@media (max-width: 400px) {
+  .nx-att-seg__btn { width: 27px; height: 26px; }
+  .nx-att-row__name { font-size: 12.5px; }
+}
+@media (max-width: 360px) {
+  .nx-att-seg__btn { width: 23px; height: 26px; font-size: 11px; }
+  .nx-att-row { gap: 8px; }
+}
+
+/* Attendance % bar (overview / my-attendance) */
+.nx-att-pct { display: flex; align-items: center; gap: 10px; }
+.nx-att-pct__bar { flex: 1; height: 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; min-width: 60px; }
+.nx-att-pct__fill { height: 100%; border-radius: 999px; transition: width 0.4s var(--ease); }
+.nx-att-pct__val { font-size: 12.5px; font-weight: 700; min-width: 42px; text-align: right; }
+
+/* Pre-selection summaries (Mark Attendance, before a section is chosen) */
+.nx-att-viz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 720px) { .nx-att-viz-grid { grid-template-columns: 1fr; } }
+
+.nx-att-viz-empty { font-size: 13px; color: var(--text-muted); margin: 6px 0; }
+
+/* Viz 1 — horizontal progress bars per section */
+.nx-att-viz-list { display: flex; flex-direction: column; gap: 12px; }
+.nx-att-viz-row { display: flex; align-items: center; gap: 10px; }
+.nx-att-viz-row__label { width: 92px; flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-att-viz-row__track { flex: 1; height: 8px; border-radius: 999px; background: var(--surface); overflow: hidden; min-width: 50px; }
+.nx-att-viz-row__fill { display: block; height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+.nx-att-viz-row__val { width: 44px; flex-shrink: 0; font-size: 13px; font-weight: 700; text-align: right; }
+
+/* Viz 2 — 7-day mini bar chart (sparkline) */
+.nx-att-spark__head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px; }
+.nx-att-spark__avg { font-size: 24px; font-weight: 700; color: var(--gold); line-height: 1; }
+.nx-att-spark__avg-label { font-size: 12px; color: var(--text-muted); }
+.nx-att-spark { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; align-items: end; }
+.nx-att-spark__col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.nx-att-spark__bar-wrap { width: 100%; height: 40px; display: flex; align-items: flex-end; }
+.nx-att-spark__bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 2px; transition: height 0.4s ease; }
+.nx-att-spark__day { font-size: 11px; color: var(--text-muted); }
+
+/* Calendar dots (my attendance) */
+.nx-att-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.nx-att-cal__cell { aspect-ratio: 1; border-radius: 8px; display: grid; place-items: center; font-size: 11.5px; border: 1px solid var(--border); color: var(--text-muted); }
+.nx-att-cal__cell.is-present { background: var(--success-bg); color: var(--success); border-color: rgba(34, 197, 94, 0.3); }
+.nx-att-cal__cell.is-absent { background: var(--danger-bg); color: var(--danger); border-color: rgba(239, 68, 68, 0.3); }
+.nx-att-cal__cell.is-late { background: var(--warning-bg); color: var(--warning); border-color: rgba(245, 158, 11, 0.3); }
+.nx-att-cal__cell.is-half_day { background: var(--warning-bg); color: var(--warning); border-color: rgba(245, 158, 11, 0.3); }
+.nx-att-cal__cell.is-leave { background: var(--info-bg); color: var(--info); border-color: rgba(96, 165, 250, 0.3); }

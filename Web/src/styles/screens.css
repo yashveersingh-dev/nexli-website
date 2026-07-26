@@ -1,0 +1,119 @@
+/* =============================================================
+   NEXLI — app screens: page header, dashboard shortcuts, account
+   sheet, sidebar account footer, splash, status pages.
+   ============================================================= */
+
+/* ---- Generic routed-page header ---- */
+/* Grow to fill the content column so a short page ends cleanly against the
+   shell background instead of leaving a large dark gap on tall phone screens. */
+.nx-page { display: flex; flex-direction: column; gap: 18px; flex: 1 0 auto; }
+.nx-page__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.nx-page__title { font-size: 23px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); line-height: 1.2; }
+.nx-page__sub { font-size: 13px; color: var(--text-muted); margin-top: 5px; line-height: 1.5; }
+@media (max-width: 767.98px) { .nx-page__title { font-size: 20px; } }
+
+/* ---- Dashboard module shortcuts ---- */
+.nx-modgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+@media (max-width: 520px) { .nx-modgrid { grid-template-columns: 1fr; } }
+.nx-modcard {
+  display: flex; align-items: center; gap: 12px; padding: 14px;
+  border: 1px solid var(--border); border-radius: var(--r-md); background: rgba(255, 255, 255, 0.015);
+  color: var(--text); text-decoration: none; transition: border-color 0.16s var(--ease), background 0.16s var(--ease), transform 0.16s var(--ease);
+}
+.nx-modcard:hover { border-color: rgba(198, 165, 92, 0.28); background: rgba(198, 165, 92, 0.04); transform: translateY(-1px); }
+.nx-modcard__icon {
+  width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; flex-shrink: 0;
+  background: rgba(198, 165, 92, 0.09); border: 1px solid rgba(198, 165, 92, 0.16); color: var(--gold);
+}
+.nx-modcard__label { font-size: 13.5px; font-weight: 600; flex: 1; min-width: 0; }
+.nx-modcard__chev { color: var(--text-faint); flex-shrink: 0; }
+
+/* ---- Sidebar account footer ---- */
+.sb-account {
+  display: flex; align-items: center; gap: 10px; width: 100%; margin-top: auto; padding: 12px 14px;
+  border-top: 1px solid var(--border); background: none; border-left: 0; border-right: 0; border-bottom: 0;
+  cursor: pointer; text-align: left; color: var(--text); transition: background 0.16s var(--ease);
+}
+.sb-account:hover { background: rgba(255, 255, 255, 0.02); }
+.sb-account__meta { min-width: 0; flex: 1; }
+.sb-account__meta .n { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-account__meta .r { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+.sb-account__chev { color: var(--text-faint); flex-shrink: 0; }
+
+/* ---- Account sheet ---- */
+.nx-account { display: flex; flex-direction: column; gap: 8px; }
+.nx-account__head { display: flex; align-items: center; gap: 14px; padding-bottom: 14px; margin-bottom: 6px; border-bottom: 1px solid var(--border); }
+.nx-account__name { font-size: 15px; font-weight: 700; color: var(--text); }
+.nx-account__role { font-size: 12.5px; color: var(--gold); margin-top: 2px; }
+.nx-account__row { display: flex; align-items: center; gap: 10px; padding: 9px 0; font-size: 13px; color: var(--text-muted); }
+.nx-account__row svg { color: var(--text-faint); flex-shrink: 0; }
+.nx-account__actions { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+/* ---- Splash ---- */
+.nx-splash {
+  min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  background: radial-gradient(ellipse 80% 50% at 50% 30%, rgba(198, 165, 92, 0.06), transparent 60%), var(--bg);
+  padding: 24px; text-align: center;
+}
+.nx-splash__mark {
+  width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center;
+  background: linear-gradient(135deg, rgba(198, 165, 92, 0.16), rgba(198, 165, 92, 0.03));
+  border: 1px solid var(--gold-deep); color: var(--gold);
+}
+.nx-splash__mark svg { width: 32px; height: 32px; }
+.nx-splash__name { font-size: 20px; font-weight: 700; letter-spacing: 0.18em; color: var(--text); }
+.nx-splash__spin { width: 22px; height: 22px; margin-top: 6px; border: 2px solid var(--gold); border-right-color: transparent; border-radius: 50%; animation: nx-spin 0.7s linear infinite; }
+.nx-splash__msg { font-size: 13px; color: var(--text-muted); }
+
+/* ---- Status pages ---- */
+.nx-status {
+  min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  padding: 40px 24px; text-align: center;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(198, 165, 92, 0.05), transparent 60%), var(--bg);
+}
+.nx-status__icon { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; margin-bottom: 10px; }
+.nx-status__icon--gold { background: rgba(198, 165, 92, 0.1); border: 1px solid rgba(198, 165, 92, 0.24); color: var(--gold); }
+.nx-status__icon--danger { background: var(--danger-bg); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--danger); }
+.nx-status__icon--warning { background: var(--warning-bg); border: 1px solid rgba(245, 158, 11, 0.3); color: var(--warning); }
+.nx-status__icon--info { background: var(--info-bg); border: 1px solid rgba(96, 165, 250, 0.3); color: var(--info); }
+.nx-status__title { font-size: 21px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+.nx-status__msg { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; max-width: 42ch; margin-top: 4px; }
+.nx-status__actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; justify-content: center; }
+.nx-status__foot { font-size: 12px; color: var(--text-faint); margin-top: 18px; }
+
+/* ---- In-route lazy loading ---- */
+.nx-route-loading { display: grid; place-items: center; min-height: 50vh; }
+
+/* =============================================================
+   Shared module primitives (global so every feature can use them
+   without importing a sibling feature's CSS). Toolbar, detail
+   header, key/value rows, stat strip, timeline.
+   ============================================================= */
+.nx-toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.nx-toolbar__search { flex: 1; min-width: 180px; }
+.nx-toolbar__filter { width: 170px; flex-shrink: 0; }
+@media (max-width: 600px) { .nx-toolbar__filter { width: calc(50% - 5px); } }
+@media (max-width: 380px) { .nx-toolbar__filter { width: 100%; } }
+
+.nx-detail__head { display: flex; align-items: center; gap: 12px; }
+.nx-detail__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; font-size: 12.5px; color: var(--text-muted); }
+.nx-detail__meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
+.nx-detail__actions { flex-shrink: 0; display: flex; gap: 8px; }
+@media (max-width: 600px) { .nx-detail__actions .nx-btn span { display: none; } }
+
+.nx-kv { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.nx-kv:last-child { border-bottom: 0; }
+.nx-kv__k { font-size: 12px; color: var(--text-muted); flex-shrink: 0; }
+.nx-kv__v { font-size: 13px; color: var(--text); text-align: right; min-width: 0; word-break: break-word; }
+
+.nx-statstrip { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.nx-statstrip__item { border: 1px solid var(--border); border-radius: var(--r-md); padding: 12px 14px; background: rgba(255, 255, 255, 0.012); }
+.nx-statstrip__val { font-size: 20px; font-weight: 700; color: var(--text); }
+.nx-statstrip__lbl { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+.nx-timeline { display: flex; flex-direction: column; }
+.nx-timeline__item { display: flex; gap: 12px; padding: 10px 0; position: relative; }
+.nx-timeline__item:not(:last-child)::before { content: ''; position: absolute; left: 4px; top: 22px; bottom: -4px; width: 1px; background: var(--border); }
+.nx-timeline__dot { width: 9px; height: 9px; margin-top: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; box-shadow: 0 0 0 3px var(--gold-glow); z-index: 1; }
+.nx-timeline__title { font-size: 13px; color: var(--text); line-height: 1.45; }
+.nx-timeline__time { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }

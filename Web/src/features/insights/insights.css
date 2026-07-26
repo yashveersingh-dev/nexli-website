@@ -1,0 +1,156 @@
+/* ============================================================================
+ * AI Insights hub — module-specific styles. Builds on the global kit + charts +
+ * AILockedOverlay + analytics.css (.an-ai-grid / .an-ai-section / .an-risk /
+ * .an-dist / .an-grid). Everything here is presentational chrome for the
+ * provider-less AI showcase shown beneath the locked veil.
+ * ==========================================================================*/
+
+/* ---- Hero / briefing band ---- */
+.in-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(198, 165, 92, 0.22);
+  border-radius: var(--radius-lg, 16px);
+  padding: 18px 18px 20px;
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(198, 165, 92, 0.12), transparent 60%),
+    linear-gradient(135deg, rgba(198, 165, 92, 0.06), rgba(255, 255, 255, 0.015));
+}
+.in-hero__top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.in-hero__badge {
+  width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(198, 165, 92, 0.2), rgba(198, 165, 92, 0.05));
+  border: 1px solid rgba(198, 165, 92, 0.3); color: var(--gold);
+}
+.in-hero__greeting { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+.in-hero__meta { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+/* ---- 3-point morning summary ---- */
+.in-summary { display: grid; gap: 12px; margin-top: 16px; grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 720px) { .in-summary { grid-template-columns: 1fr; } }
+.in-sumcard {
+  border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 13px 14px;
+  background: var(--card); display: flex; flex-direction: column; gap: 8px; min-width: 0;
+}
+.in-sumcard__head { display: flex; align-items: center; gap: 8px; }
+.in-sumcard__icon {
+  width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0;
+  border: 1px solid var(--hairline);
+}
+.in-sumcard__icon.is-gold { color: var(--gold); border-color: rgba(198, 165, 92, 0.28); background: rgba(198, 165, 92, 0.08); }
+.in-sumcard__icon.is-danger { color: var(--danger); border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.08); }
+.in-sumcard__icon.is-info { color: var(--info, #5b9dd9); border-color: rgba(91, 157, 217, 0.3); background: rgba(91, 157, 217, 0.08); }
+.in-sumcard__label { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+.in-sumcard__value { font-size: 19px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.in-sumcard__note { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+/* ---- "Ask NEXLI" prompt box ---- */
+.in-ask {
+  display: flex; align-items: center; gap: 10px; margin-top: 16px;
+  border: 1px solid rgba(198, 165, 92, 0.28); border-radius: 999px;
+  padding: 7px 8px 7px 16px; background: rgba(255, 255, 255, 0.025);
+}
+.in-ask__icon { color: var(--gold); flex-shrink: 0; }
+.in-ask__input {
+  flex: 1; min-width: 0; border: none; background: transparent; color: var(--text);
+  font-size: 13.5px; outline: none; font-family: inherit;
+}
+.in-ask__input::placeholder { color: var(--text-dim, #6b675f); }
+.in-ask__send {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 999px; border: none;
+  display: grid; place-items: center; color: var(--obsidian, #0b0b0b);
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep, #b08f43));
+}
+
+/* ---- Attention list ---- */
+.in-attention { display: flex; flex-direction: column; gap: 8px; }
+.in-attn {
+  display: flex; align-items: center; gap: 11px; padding: 11px 12px;
+  border: 1px solid var(--hairline); border-radius: var(--radius-md); background: var(--card); min-width: 0;
+}
+.in-attn__dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.in-attn__body { min-width: 0; flex: 1; }
+.in-attn__title { font-size: 13.5px; font-weight: 600; }
+.in-attn__sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+/* ---- Tool cards (assistants) ---- */
+.in-tools { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.in-tool { display: flex; flex-direction: column; gap: 12px; }
+.in-tool__head { display: flex; align-items: flex-start; gap: 11px; }
+.in-tool__icon {
+  width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; flex-shrink: 0;
+  color: var(--gold); border: 1px solid rgba(198, 165, 92, 0.26); background: rgba(198, 165, 92, 0.07);
+}
+.in-tool__title { font-size: 14.5px; font-weight: 700; letter-spacing: -0.005em; }
+.in-tool__desc { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; line-height: 1.5; }
+
+/* ---- Faux form controls (visually present, inert under the veil) ---- */
+.in-control { display: flex; flex-direction: column; gap: 6px; }
+.in-control__label { font-size: 12px; font-weight: 600; color: var(--text); }
+.in-faux-input,
+.in-faux-select,
+.in-faux-area {
+  width: 100%; border: 1px solid var(--hairline); border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02); color: var(--text); font-family: inherit; font-size: 13.5px;
+  padding: 9px 12px; outline: none;
+}
+.in-faux-select { appearance: none; position: relative; }
+.in-faux-area { min-height: 96px; resize: none; line-height: 1.55; }
+.in-faux-area--draft {
+  color: var(--text-muted); font-style: italic;
+  background:
+    linear-gradient(90deg, rgba(198, 165, 92, 0.05), transparent),
+    rgba(255, 255, 255, 0.02);
+}
+.in-selectwrap { position: relative; }
+.in-selectwrap__chev { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none; }
+
+/* ---- Tone / chip row ---- */
+.in-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.in-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; border: 1px solid var(--hairline); color: var(--text-muted);
+  background: transparent;
+}
+.in-chip.is-active { color: var(--gold); border-color: rgba(198, 165, 92, 0.4); background: rgba(198, 165, 92, 0.1); }
+
+.in-tool__action {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 15px; border-radius: var(--radius-md); border: none; font-size: 13px; font-weight: 600;
+  color: var(--obsidian, #0b0b0b);
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep, #b08f43));
+}
+
+/* ---- Risk score list (predictions) ---- */
+.in-riskscore {
+  flex-shrink: 0; min-width: 46px; text-align: center; font-weight: 800; font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Section heading inside a tab ---- */
+.in-section-head { display: flex; align-items: center; gap: 8px; margin: 4px 0 2px; }
+.in-section-head__title { font-size: 15px; font-weight: 700; letter-spacing: -0.005em; }
+.in-stack { display: flex; flex-direction: column; gap: 16px; }
+
+/* ---- Honest "coming soon" preview blocks (no fabricated data) ----
+   Used by the Smart-briefing / Predictions / Assistants tabs to describe what
+   each AI surface WILL do once a provider is connected, without rendering any
+   placeholder names, numbers or sample outputs. */
+.in-preview { display: flex; flex-direction: column; gap: 14px; }
+.in-preview__lead { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin: 0; }
+.in-preview__head { display: flex; align-items: flex-start; gap: 11px; }
+.in-preview__grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.in-preview__card {
+  display: flex; align-items: flex-start; gap: 11px; min-width: 0;
+  border: 1px solid var(--hairline); border-radius: var(--radius-md); background: var(--card); padding: 13px 14px;
+}
+.in-preview__card--tool { background: var(--card); }
+.in-preview__icon {
+  width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; flex-shrink: 0;
+  color: var(--gold); border: 1px solid rgba(198, 165, 92, 0.26); background: rgba(198, 165, 92, 0.07);
+}
+.in-preview__title { font-size: 13.5px; font-weight: 700; letter-spacing: -0.005em; }
+.in-preview__desc { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; line-height: 1.5; }
+
+/* Reduced motion: nothing animates here beyond inherited chart transitions,
+   which already respect prefers-reduced-motion via the chart components. */

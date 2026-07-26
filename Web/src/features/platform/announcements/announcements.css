@@ -1,0 +1,55 @@
+/* =============================================================
+   NEXLI — Platform Announcements module styles.
+   Imported by the announcements route subtree. Mobile-first.
+   ============================================================= */
+
+/* ---- Announcement log list ---- */
+.nx-annlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+
+.nx-anncard {
+  border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px;
+  background: var(--card); transition: border-color 0.16s var(--ease);
+}
+.nx-anncard:hover { border-color: var(--border-2); }
+
+.nx-anncard__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px;
+}
+.nx-anncard__type { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); min-width: 0; }
+.nx-anncard__time { font-size: 11.5px; color: var(--text-muted); text-align: right; flex-shrink: 0; white-space: nowrap; }
+
+.nx-anncard__title {
+  font-size: 15px; font-weight: 650; color: var(--text); line-height: 1.4; margin: 0 0 4px;
+}
+.nx-anncard__body {
+  font-size: 13px; color: var(--text-muted); line-height: 1.55; margin: 0 0 12px;
+  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.nx-anncard__meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.nx-anncard__chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: var(--r-pill);
+  font-size: 11.5px; font-weight: 600; color: var(--text); background: rgba(198, 165, 92, 0.1);
+  border: 1px solid var(--gold-deep);
+}
+.nx-anncard__chip--soft { color: var(--text-muted); background: rgba(255, 255, 255, 0.03); border-color: var(--border); }
+.nx-anncard__chip svg { opacity: 0.7; }
+
+/* ---- Compose: delivery channels ---- */
+.nx-annchannels { display: flex; flex-direction: column; gap: 12px; }
+
+/* ---- Compose: specific-schools checklist ---- */
+.nx-annchecklist {
+  border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; background: rgba(255, 255, 255, 0.012);
+}
+.nx-annchecklist__search { padding: 10px; border-bottom: 1px solid var(--border); }
+.nx-annchecklist__list {
+  display: flex; flex-direction: column; gap: 2px; max-height: 280px; overflow-y: auto; padding: 8px;
+  overscroll-behavior: contain;
+}
+.nx-annchecklist__item { padding: 8px 8px; border-radius: var(--r-sm); }
+.nx-annchecklist__item:hover { background: rgba(255, 255, 255, 0.03); }
+.nx-annchecklist__empty {
+  display: flex; align-items: center; gap: 8px; padding: 18px 12px; justify-content: center;
+  font-size: 12.5px; color: var(--text-muted);
+}

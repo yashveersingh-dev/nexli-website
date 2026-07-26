@@ -1,0 +1,56 @@
+/* =============================================================
+   NEXLI — Platform Activity Feed (module-only styles).
+   Builds on .nx-timeline from platform.css.
+   ============================================================= */
+
+.nx-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.nx-feed__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.nx-feed__day {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 6px;
+}
+
+/* Icon-bearing timeline dot: grow the dot, center the glyph, keep the spine aligned. */
+.nx-timeline__dot.nx-feed__dot {
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  display: grid;
+  place-items: center;
+  background: var(--gold-glow);
+  color: var(--gold);
+  box-shadow: none;
+  border: 1px solid var(--border);
+}
+
+/* Re-center the connector spine under the larger dot. */
+.nx-feed .nx-timeline__item:not(:last-child)::before {
+  left: 10px;
+  top: 26px;
+}
+
+.nx-feed__chip {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 600;
+  vertical-align: middle;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}

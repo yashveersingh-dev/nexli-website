@@ -1,0 +1,83 @@
+/* ============================================================================
+ * Operations & Safety (P6) shared styles. Reuses the global kit (nx-page,
+ * nx-toolbar, nx-statstrip, nx-savebar, panel, kpi-grid, grid, badge, DataTable).
+ * ==========================================================================*/
+
+/* ---- Leaflet live map ---- */
+.ops-map {
+  width: 100%; height: clamp(280px, 50vh, 460px);
+  border-radius: var(--radius-md); border: 1px solid var(--hairline); overflow: hidden;
+  background: var(--card);
+}
+.ops-map .leaflet-container { width: 100%; height: 100%; background: #0d0d0d; font: inherit; }
+.ops-map .leaflet-control-attribution { background: rgba(0,0,0,0.5); color: var(--text-muted); }
+.ops-map .leaflet-bar a { background: var(--card); color: var(--text); border-color: var(--hairline); }
+.ops-bus-marker {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: #1a1a1a;
+  border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+/* ---- SOS banner ---- */
+.ops-sos {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px; margin-bottom: 16px;
+  border-radius: var(--radius-md); border: 1px solid color-mix(in srgb, var(--danger) 50%, transparent);
+  background: color-mix(in srgb, var(--danger) 12%, var(--card));
+}
+.ops-sos__icon { color: var(--danger); flex-shrink: 0; }
+.ops-sos__title { font-weight: 700; font-size: 14px; }
+.ops-sos__meta { font-size: 12px; color: var(--text-muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .ops-sos__icon { animation: ops-pulse 1.6s ease-in-out infinite; }
+}
+@keyframes ops-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+/* ---- Visitor gate pass ---- */
+.ops-pass {
+  max-width: 420px; margin-inline: auto; padding: 20px; border-radius: var(--radius-lg, 16px);
+  border: 1px solid var(--gold-dim, var(--hairline)); background: var(--card); text-align: center;
+}
+.ops-pass__no { font-family: var(--mono, monospace); font-size: 13px; color: var(--gold); letter-spacing: 0.08em; }
+.ops-pass__name { font-size: 20px; font-weight: 700; margin: 8px 0 2px; }
+.ops-pass__otp { font-size: 30px; font-weight: 800; letter-spacing: 0.18em; color: var(--gold-light, var(--gold)); margin: 12px 0; font-variant-numeric: tabular-nums; }
+
+/* ---- Menu / meal blocks ---- */
+.ops-menu-day { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.ops-meal {
+  border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 12px 14px; background: var(--surface, var(--card));
+}
+.ops-meal__head { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+.ops-meal__item { display: flex; align-items: center; gap: 6px; font-size: 13.5px; padding: 2px 0; }
+.ops-veg { width: 10px; height: 10px; border: 1.5px solid var(--success); border-radius: 2px; position: relative; flex-shrink: 0; }
+.ops-veg::after { content: ''; position: absolute; inset: 2px; border-radius: 50%; background: var(--success); }
+.ops-veg.is-nonveg { border-color: var(--danger); }
+.ops-veg.is-nonveg::after { background: var(--danger); }
+
+/* ---- Roster rows (rollcall / bus attendance) reuse nx-att-* from attendance,
+ * but keep an ops fallback so the module doesn't depend on attendance.css ---- */
+.ops-roster { display: flex; flex-direction: column; }
+.ops-roster__row {
+  display: flex; align-items: center; gap: 10px; padding: 10px 4px;
+  border-bottom: 1px solid var(--hairline-soft, rgba(255,255,255,0.05));
+}
+.ops-roster__row:last-child { border-bottom: none; }
+.ops-roster__name { flex: 1; min-width: 0; font-weight: 500; font-size: 14px; }
+.ops-seg { display: inline-flex; gap: 2px; border: 1px solid var(--hairline); border-radius: 9px; padding: 2px; }
+.ops-seg__btn {
+  min-width: 34px; height: 30px; border: none; background: transparent; color: var(--text-muted);
+  border-radius: 7px; font-weight: 700; font-size: 12px; cursor: pointer;
+}
+.ops-seg__btn.is-active { color: #fff; }
+.ops-seg__btn:disabled { cursor: default; opacity: 0.7; }
+
+/* ---- Occupancy meter ---- */
+.ops-meter { height: 6px; border-radius: 3px; background: var(--hairline); overflow: hidden; }
+.ops-meter__fill { height: 100%; background: var(--gold); border-radius: 3px; }
+
+/* ---- Print (gate pass) — mirrors finance fin-print so ops is self-sufficient ---- */
+@media print {
+  body * { visibility: hidden; }
+  .fin-print, .fin-print * { visibility: visible; }
+  .fin-print { position: absolute; inset: 0; margin: 0; border: none; max-width: none; }
+  .fin-noprint { display: none !important; }
+}

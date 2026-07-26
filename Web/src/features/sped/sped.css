@@ -1,0 +1,605 @@
+/* ============================================================================
+ * Special Education / IEP — module-only styles. Reuses the global kit + the
+ * shared analytics.css. Only adds what is unique to this module. Mobile-first,
+ * reduced-motion safe, AA contrast.
+ * ==========================================================================*/
+
+/* ---- Confidentiality note ---- */
+.sped-confidential {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border: 1px solid color-mix(in srgb, var(--gold) 28%, var(--hairline));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--gold) 8%, var(--card));
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.sped-confidential svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--gold);
+}
+
+/* ---- Warning / review banner ---- */
+.sped-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.sped-banner--warn {
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, var(--hairline));
+  background: color-mix(in srgb, var(--warning) 12%, var(--card));
+  color: var(--text);
+}
+.sped-banner--warn svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--warning);
+}
+
+/* ---- List row (IEP plans) ---- */
+.sped-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.sped-row:hover {
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--hairline));
+}
+.sped-row:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.sped-row__main {
+  min-width: 0;
+  flex: 1;
+}
+.sped-row__no {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+}
+.sped-row__meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+.sped-row__badges {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+@media (max-width: 480px) {
+  .sped-row {
+    flex-wrap: wrap;
+  }
+  .sped-row__badges {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* ---- Review-due flag pill ---- */
+.sped-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--warning);
+}
+
+/* ---- Chip list field (accommodations / team members) ---- */
+.sped-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-height: 42px;
+  padding: 6px 8px;
+  border: 1px solid var(--border, var(--hairline));
+  border-radius: var(--radius-md);
+  background: var(--input-bg, var(--card));
+}
+.sped-chips:focus-within {
+  border-color: var(--gold);
+}
+.sped-chips[data-invalid] {
+  border-color: var(--danger);
+}
+.sped-chips__input {
+  flex: 1;
+  min-width: 110px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  padding: 4px 2px;
+  outline: none;
+}
+.sped-chips__input::placeholder {
+  color: var(--text-muted);
+}
+.sped-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 14%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+  font-size: 12.5px;
+  color: var(--text);
+  max-width: 100%;
+}
+.sped-chip__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sped-chip__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.sped-chip__remove:hover {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 14%, transparent);
+}
+.sped-chip__remove:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+.sped-chip--static {
+  padding: 3px 10px;
+}
+.sped-chiplist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ---- Goal editor (form) ---- */
+.sped-goal {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--text) 2%, var(--card));
+}
+.sped-goal + .sped-goal {
+  margin-top: 12px;
+}
+.sped-goal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.sped-goal__title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.sped-goal__remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm, 6px);
+}
+.sped-goal__remove:hover {
+  color: var(--danger);
+}
+.sped-goal__remove:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+/* ---- Detail layout ---- */
+.sped-detail-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 880px) {
+  .sped-detail-grid {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+.sped-detail-main,
+.sped-detail-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.sped-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sped-field__label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+.sped-field__value {
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.sped-field__value--pre {
+  white-space: pre-wrap;
+}
+
+/* ---- Goal cards (detail) ---- */
+.sped-goalcount {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.sped-goals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sped-goalcard {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  background: var(--card);
+}
+.sped-goalcard__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.sped-goalcard__area {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  font-weight: 700;
+}
+.sped-goalcard__goal {
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+.sped-goalcard__strategy {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.sped-goalcard__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.sped-goalcard__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.sped-goalcard__set {
+  margin-left: auto;
+  min-width: 150px;
+}
+@media (max-width: 480px) {
+  .sped-goalcard__set {
+    width: 100%;
+    min-width: 0;
+  }
+}
+.sped-goalcard__note {
+  margin-top: 10px;
+}
+
+/* ---- Goal progress timeline (append-only history) ---- */
+.sped-goalcard__log {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--hairline);
+}
+.sped-goalcard__log-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.sped-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sped-timeline__item {
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+.sped-timeline__item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  bottom: -10px;
+  width: 1px;
+  background: var(--hairline);
+}
+.sped-timeline__dot {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.sped-timeline__body {
+  min-width: 0;
+  flex: 1;
+}
+.sped-timeline__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.sped-timeline__when {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.sped-timeline__who {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.sped-timeline__note {
+  font-size: 13px;
+  line-height: 1.45;
+  margin-top: 3px;
+  white-space: pre-wrap;
+}
+
+/* ---- Therapy sessions list ---- */
+.sped-sessions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sped-session {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--card);
+}
+.sped-session__icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--gold) 14%, var(--card));
+  color: var(--gold);
+}
+.sped-session__main {
+  flex: 1;
+  min-width: 0;
+}
+.sped-session__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sped-session__name {
+  font-size: 14px;
+  font-weight: 700;
+}
+.sped-session__type {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 600;
+}
+.sped-session__meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+.sped-session__focus {
+  font-size: 13px;
+  margin-top: 6px;
+}
+.sped-session__notes {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.sped-session__badge {
+  flex-shrink: 0;
+}
+
+/* ---- Therapy modal form ---- */
+.sped-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sped-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ---- CWSN register table → responsive cards under 720px ---- */
+.sped-table-wrap {
+  overflow-x: auto;
+}
+.sped-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.sped-table thead th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+.sped-table__num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.sped-table tbody td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: middle;
+}
+.sped-table__row {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.sped-table__row:hover {
+  background: color-mix(in srgb, var(--gold) 6%, transparent);
+}
+.sped-table__row:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+.sped-table__student {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.sped-table__chev {
+  text-align: right;
+  color: var(--text-muted);
+  width: 28px;
+}
+
+@media (max-width: 720px) {
+  .sped-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .sped-table,
+  .sped-table tbody,
+  .sped-table tr,
+  .sped-table td {
+    display: block;
+    width: 100%;
+  }
+  .sped-table__row {
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
+    background: var(--card);
+    padding: 6px 12px;
+    margin-bottom: 10px;
+  }
+  .sped-table tbody td {
+    border-bottom: 1px solid var(--hairline-soft, rgba(255, 255, 255, 0.05));
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: right;
+  }
+  .sped-table tbody td:last-child {
+    border-bottom: none;
+  }
+  .sped-table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-align: left;
+  }
+  .sped-table__num {
+    text-align: right;
+  }
+  .sped-table__chev {
+    display: none;
+  }
+}

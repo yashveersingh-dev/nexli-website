@@ -1,0 +1,131 @@
+/* =============================================================
+   NEXLI — Plans & Pricing (spec §12.4). Mobile-first pricing cards
+   + a chip grid for the module multi-select. Module-only styles.
+   ============================================================= */
+
+/* ---- Pricing card grid ---- */
+.nx-plans-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .nx-plans-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1100px) {
+  .nx-plans-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---- Pricing card ---- */
+.nx-plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+.nx-plan:hover { border-color: var(--border-2); }
+.nx-plan.is-highlighted {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), 0 8px 30px rgba(0, 0, 0, 0.28);
+  background: linear-gradient(180deg, rgba(198, 165, 92, 0.06), var(--card) 120px);
+}
+.nx-plan.is-inactive { opacity: 0.66; }
+
+.nx-plan__ribbon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #1a1408;
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+}
+
+.nx-plan__head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; padding-right: 90px; }
+.nx-plan__name { font-size: 16px; font-weight: 700; color: var(--text); }
+.nx-plan__desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; min-height: 19px; margin-bottom: 14px; }
+
+.nx-plan__price { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.nx-plan__amount { font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; }
+.nx-plan__per { font-size: 12.5px; color: var(--text-muted); }
+.nx-plan__annual { font-size: 12px; color: var(--gold-light); margin-top: 4px; }
+.nx-plan__free { font-size: 14px; font-weight: 700; color: var(--gold-light); }
+
+.nx-plan__limits {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.nx-plan__limit { display: flex; flex-direction: column; gap: 2px; }
+.nx-plan__limit-val { font-size: 15px; font-weight: 700; color: var(--text); }
+.nx-plan__limit-k { font-size: 11px; color: var(--text-muted); }
+
+.nx-plan__modules { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.nx-plan__module { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text); }
+.nx-plan__module svg { color: var(--gold); flex-shrink: 0; }
+.nx-plan__module--none { font-size: 12.5px; color: var(--text-muted); font-style: italic; }
+
+.nx-plan__foot {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.nx-plan__foot .nx-btn { flex: 1; }
+
+/* ---- Module multi-select (chip grid) inside the plan form ---- */
+.nx-modulepick { display: grid; gap: 8px; grid-template-columns: 1fr; }
+@media (min-width: 560px) {
+  .nx-modulepick { grid-template-columns: repeat(2, 1fr); }
+}
+.nx-modulepick__chip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 13px;
+  text-align: left;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  transition: border-color 0.16s var(--ease), background 0.16s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.nx-modulepick__chip:hover { border-color: var(--border-2); }
+.nx-modulepick__chip.is-on { border-color: var(--gold); background: rgba(198, 165, 92, 0.08); }
+.nx-modulepick__chip:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-modulepick__tick {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border-2);
+  background: rgba(255, 255, 255, 0.03);
+  color: transparent;
+}
+.nx-modulepick__chip.is-on .nx-modulepick__tick {
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  border-color: var(--gold);
+  color: #1a1408;
+}
+.nx-modulepick__label { font-size: 12.5px; font-weight: 600; color: var(--text); }
+.nx-modulepick__desc { font-size: 11px; color: var(--text-muted); line-height: 1.45; margin-top: 2px; }

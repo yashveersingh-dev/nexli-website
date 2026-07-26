@@ -1,0 +1,54 @@
+/* ============================================================================
+ * Payroll (P5) module-only styles. Reuses the finance + global kit
+ * (fin-doc, fin-pay-cols, fin-amount, nx-page, kpi-grid, panel, badge, nx-kv).
+ * Only patterns unique to payroll live here.
+ * ==========================================================================*/
+
+/* Live deduction preview / earnings-deduction tally inside a form aside. */
+.pay-preview { display: flex; flex-direction: column; gap: 2px; }
+.pay-preview__row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13.5px; padding: 4px 0; }
+.pay-preview__row span:first-child { color: var(--text-muted); }
+.pay-preview__total {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  margin-top: 8px; padding-top: 10px; border-top: 2px solid var(--hairline);
+  font-weight: 700; font-size: 15px;
+}
+
+/* Earnings / deductions blocks on the printable payslip. */
+.pay-block__head {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-muted); font-weight: 600; margin-bottom: 8px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--hairline);
+}
+.pay-block__row { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 5px 0; }
+.pay-block__row span:first-child { color: var(--text-soft, var(--text-muted)); }
+.pay-block__sub {
+  display: flex; justify-content: space-between; gap: 12px; margin-top: 6px;
+  padding-top: 8px; border-top: 1px solid var(--hairline); font-weight: 650; font-size: 13.5px;
+}
+
+/* Net pay banner on the payslip. */
+.pay-net {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-top: 18px; padding: 14px 16px; border-radius: var(--radius-md);
+  border: 1px solid var(--hairline); background: var(--surface, var(--card));
+}
+.pay-net__label { font-size: 13px; color: var(--text-muted); }
+.pay-net__value { font-size: clamp(20px, 5vw, 26px); font-weight: 750; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.pay-net__words { width: 100%; font-size: 12px; color: var(--text-muted); }
+
+/* Statutory caption under toggles. */
+.pay-caption { font-size: 11.5px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+
+/* Earnings line-item rows in the structure form (name + amount). */
+.pay-earnrow {
+  display: grid; gap: 8px; align-items: end;
+  grid-template-columns: 1fr 120px 36px;
+  padding: 8px 0; border-bottom: 1px solid var(--hairline-soft, rgba(255,255,255,0.05));
+}
+.pay-earnrow:last-child { border-bottom: none; }
+@media (max-width: 480px) {
+  .pay-earnrow { grid-template-columns: 1fr auto; }
+  .pay-earnrow__rm { grid-column: 2; justify-self: end; }
+}
+.pay-earnrow__rm { display: inline-flex; align-items: center; justify-content: center; }

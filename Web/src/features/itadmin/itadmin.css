@@ -1,0 +1,103 @@
+/* ============================================================================
+ * IT Administration — module-only styles. Global classes (nx-page, panel,
+ * kpi-grid, badge, nx-toolbar, DataTable, nx-savebar, nx-info-card, Modal) come
+ * from nexli/app css. Only patterns unique to this module live here.
+ * ==========================================================================*/
+
+.ita-stack { display: flex; flex-direction: column; gap: 16px; }
+
+/* 4-up KPI grid — self-contained so it never depends on another module's CSS
+ * being loaded. Reflows 4 → 2 → 1 as the viewport narrows. */
+.ita .kpi-grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .ita .kpi-grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .ita .kpi-grid--4 { grid-template-columns: 1fr; } }
+.ita-muted { color: var(--text-muted); }
+.ita-action {
+  font-family: var(--mono, monospace);
+  font-size: 12px; letter-spacing: 0.02em; color: var(--gold);
+  word-break: break-all;
+}
+
+/* ---- Name cell (devices / tickets / backups / integrations) ---- */
+.ita-name { display: flex; gap: 10px; align-items: center; min-width: 0; }
+.ita-name__icon {
+  flex-shrink: 0;
+  width: 30px; height: 30px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold);
+}
+.ita-name__text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ita-name__title { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-weight: 600; line-height: 1.25; }
+.ita-name__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.ita-name__sub { font-size: 12px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- "What IT manages" intro ---- */
+.ita-intro { margin-top: 16px; }
+.ita-intro__lede { font-size: 13.5px; line-height: 1.55; color: var(--text-2, var(--text-muted)); margin: 0 0 16px; }
+.ita-manage-grid {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+/* Narrow phones: avoid the 240px min track overflowing once padding is removed. */
+@media (max-width: 480px) { .ita-manage-grid { grid-template-columns: 1fr; } }
+.ita-manage {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px; border: 1px solid var(--hairline); border-radius: var(--radius-md, 12px);
+  background: var(--surface, var(--card));
+}
+.ita-manage__icon {
+  flex-shrink: 0; width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold);
+}
+.ita-manage__title { font-weight: 700; font-size: 14px; line-height: 1.3; }
+.ita-manage__body { font-size: 12.5px; color: var(--text-muted); margin: 3px 0 0; line-height: 1.45; }
+
+/* ---- System links (Users / Audit pointers) ---- */
+.ita-links { display: flex; flex-direction: column; gap: 10px; }
+.ita-link {
+  display: flex; gap: 12px; align-items: center; width: 100%; text-align: left;
+  padding: 12px 14px; border: 1px solid var(--hairline); border-radius: var(--radius-md, 12px);
+  background: var(--surface, var(--card)); color: inherit; cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.ita-link:hover:not(:disabled) { border-color: color-mix(in srgb, var(--gold) 45%, var(--hairline)); }
+.ita-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ita-link:disabled { opacity: 0.55; cursor: not-allowed; }
+.ita-link__icon {
+  flex-shrink: 0; width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold);
+}
+.ita-link__text { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ita-link__title { font-weight: 700; font-size: 14px; }
+.ita-link__sub { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; }
+
+/* ---- Modal form grid (raise ticket / triage / backup / integration) ---- */
+.ita-form-grid {
+  display: grid; gap: 12px 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ita-col-full { grid-column: 1 / -1; }
+@media (max-width: 480px) {
+  .ita-form-grid { grid-template-columns: 1fr; }
+  .ita-col-full { grid-column: auto; }
+}
+
+/* ---- Triage modal extras ---- */
+.ita-triage__desc {
+  font-size: 13px; color: var(--text-2, var(--text-muted)); line-height: 1.5;
+  padding: 10px 12px; margin: 0 0 12px;
+  border: 1px solid var(--hairline); border-radius: var(--radius-md, 10px);
+  background: var(--surface, var(--card));
+}
+.ita-triage__hint {
+  display: flex; gap: 6px; align-items: center;
+  font-size: 12px; color: var(--text-muted); margin: 12px 0 0;
+}

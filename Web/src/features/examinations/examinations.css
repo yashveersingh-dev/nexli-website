@@ -1,0 +1,262 @@
+/* NEXLI — Examinations module styles (module-only; reuses the shared kit). */
+
+/* ---- Exam term cards (list) ---- */
+.nx-exam-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.nx-exam-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  cursor: pointer;
+  transition: border-color 0.14s var(--ease), transform 0.14s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.nx-exam-card:hover { border-color: var(--gold); }
+.nx-exam-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-exam-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.nx-exam-card__name { font-size: 15px; font-weight: 700; color: var(--text); min-width: 0; word-break: break-word; }
+.nx-exam-card__year { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.nx-exam-card__meta { display: flex; flex-direction: column; gap: 6px; }
+.nx-exam-card__row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-muted); }
+.nx-exam-card__row svg { flex-shrink: 0; color: var(--gold); }
+.nx-exam-card__grades { display: flex; flex-wrap: wrap; gap: 6px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .nx-exam-card:active { transform: scale(0.99); }
+}
+
+/* ---- Exam detail header ---- */
+.nx-exam-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.nx-exam-head__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.nx-exam-head__item { font-size: 12.5px; color: var(--text-muted); }
+.nx-exam-head__item::before { content: '·'; margin-right: 8px; color: var(--border); }
+.nx-exam-head__item:first-child::before { content: none; }
+.nx-exam-head__actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
+
+/* ---- Multi-select chips (form: pick grades) ---- */
+.nx-chipset { display: flex; flex-wrap: wrap; gap: 8px; }
+.nx-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 40px; padding: 8px 14px;
+  font-size: 13px; font-weight: 600; color: var(--text-muted);
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r-pill);
+  cursor: pointer; transition: all 0.14s var(--ease); -webkit-tap-highlight-color: transparent;
+}
+.nx-chip:hover:not(:disabled) { color: var(--text); border-color: var(--text-muted); }
+.nx-chip:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-chip:disabled { opacity: 0.6; cursor: not-allowed; }
+.nx-chip.is-on {
+  color: var(--gold); background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.4);
+}
+.nx-chip__check { width: 16px; height: 16px; }
+
+/* ---- Tab toolbar (count + add action) ---- */
+.nx-exam-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+
+/* ---- Datesheet schedule ---- */
+.nx-ds-list { display: flex; flex-direction: column; gap: 10px; }
+.nx-ds-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.012);
+}
+.nx-ds-row__date { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
+.nx-ds-row__day { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
+.nx-ds-row__dnum { font-size: 19px; font-weight: 700; color: var(--text); line-height: 1; }
+.nx-ds-row__mon { font-size: 11px; color: var(--text-muted); }
+.nx-ds-row__main { min-width: 0; }
+.nx-ds-row__subject { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-ds-row__sub { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 3px; }
+.nx-ds-row__chip { font-size: 12px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px; }
+.nx-ds-row__chip svg { color: var(--gold); flex-shrink: 0; }
+.nx-ds-row__actions { display: flex; gap: 2px; flex-shrink: 0; }
+@media (max-width: 480px) {
+  .nx-ds-row { grid-template-columns: 52px 1fr; grid-template-areas: 'date main' 'actions actions'; row-gap: 8px; }
+  .nx-ds-row__date { grid-area: date; }
+  .nx-ds-row__main { grid-area: main; }
+  .nx-ds-row__actions { grid-area: actions; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: 8px; }
+}
+
+/* ---- Results: section picker + grid ---- */
+.nx-exam-pickrow { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+@media (max-width: 480px) { .nx-exam-pickrow { grid-template-columns: 1fr; } }
+
+.nx-res-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: var(--r-md); }
+.nx-res-table { width: 100%; border-collapse: collapse; min-width: 520px; }
+.nx-res-table th, .nx-res-table td { padding: 9px 10px; text-align: center; font-size: 12.5px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.nx-res-table thead th { position: sticky; top: 0; background: var(--card); font-weight: 600; color: var(--text-muted); z-index: 1; }
+.nx-res-table th.nx-res-name, .nx-res-table td.nx-res-name { text-align: left; position: sticky; left: 0; background: var(--card); z-index: 2; min-width: 150px; }
+.nx-res-table thead th.nx-res-name { z-index: 3; }
+.nx-res-table tbody tr:last-child td { border-bottom: 0; }
+.nx-res-table__total { font-weight: 700; color: var(--text); }
+.nx-res-input {
+  width: 56px; padding: 6px 6px; text-align: center;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm);
+  color: var(--text); font-size: 12.5px; font-variant-numeric: tabular-nums;
+}
+.nx-res-input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+.nx-res-input:disabled { opacity: 0.55; }
+.nx-res-input.is-invalid { border-color: var(--danger); }
+
+/* ---- Hall ticket / printable student datesheet ---- */
+.nx-ticket {
+  border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px; background: var(--card);
+}
+.nx-ticket__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.nx-ticket__title { font-size: 16px; font-weight: 700; color: var(--text); }
+.nx-ticket__sub { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+.nx-ticket__id { font-size: 12px; color: var(--text-muted); }
+.nx-ticket__id strong { color: var(--text); }
+
+/* ---- Board-result viewer (per-student statement) ---- */
+.nx-brs-filters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (max-width: 720px) { .nx-brs-filters { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 420px) { .nx-brs-filters { grid-template-columns: 1fr; } }
+
+.nx-brs-results { display: flex; flex-direction: column; gap: 16px; }
+.nx-brs-result__head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.nx-brs-totals {
+  display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: flex-end;
+  align-items: center; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border);
+}
+.nx-brs-totals__item { display: flex; align-items: center; gap: 8px; }
+.nx-brs-totals__lbl { font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.nx-brs-totals__val { font-size: 15px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* ---- Report card (student/parent published view) ---- */
+.nx-report__grid { width: 100%; }
+.nx-report-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.nx-report-row:last-child { border-bottom: 0; }
+.nx-report-row__sub { font-size: 13px; color: var(--text); min-width: 0; }
+.nx-report-row__marks { font-size: 13px; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.nx-report-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--border); }
+.nx-report-foot__big { font-size: 24px; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; }
+.nx-report-foot__lbl { font-size: 11.5px; color: var(--text-muted); }
+
+/* =====================================================================
+   Planning + Analytics tabs (review surfaces — no writes)
+   ===================================================================== */
+
+/* 4-up KPI grid (nexli.css only ships --5/--6). Auto-fit so it never overflows. */
+.kpi-grid--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .kpi-grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px) { .kpi-grid--4 { grid-template-columns: 1fr; } }
+
+.nx-plan, .nx-analytics { display: flex; flex-direction: column; gap: 18px; }
+.nx-analytics__grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+/* ---- Readiness checklist ---- */
+.nx-checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.nx-checklist__row {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+  padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--r-md);
+  background: rgba(255, 255, 255, 0.012);
+}
+.nx-checklist__row.is-ok { border-color: rgba(34, 197, 94, 0.22); background: rgba(34, 197, 94, 0.04); }
+.nx-checklist__mark { display: grid; place-items: center; color: var(--warning); flex-shrink: 0; }
+.nx-checklist__mark.is-ok { color: var(--success); }
+.nx-checklist__body { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.nx-checklist__label { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.nx-checklist__detail { font-size: 12px; color: var(--text-muted); }
+.nx-checklist__status { flex-shrink: 0; }
+@media (max-width: 420px) {
+  .nx-checklist__row { grid-template-columns: auto 1fr; row-gap: 6px; }
+  .nx-checklist__status { grid-column: 2; justify-self: start; }
+}
+
+.nx-plan__hint {
+  display: flex; align-items: flex-start; gap: 8px; margin-top: 12px;
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+}
+.nx-plan__hint svg { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+.nx-plan__hint strong { color: var(--text); font-weight: 600; }
+
+/* ---- Chronological timeline ---- */
+.nx-timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.nx-timeline__row { display: grid; grid-template-columns: 20px 52px 1fr; align-items: stretch; gap: 12px; }
+.nx-timeline__rail { display: flex; flex-direction: column; align-items: center; position: relative; }
+.nx-timeline__rail::before {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 2px; background: var(--border);
+}
+.nx-timeline__row:first-child .nx-timeline__rail::before { top: 18px; }
+.nx-timeline__row:last-child .nx-timeline__rail::before { bottom: calc(100% - 18px); }
+.nx-timeline__dot {
+  width: 10px; height: 10px; border-radius: 50%; background: var(--gold);
+  border: 2px solid var(--card); margin-top: 12px; z-index: 1; flex-shrink: 0;
+}
+.nx-timeline__date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 8px; }
+.nx-timeline__dnum { font-size: 18px; font-weight: 700; color: var(--text); line-height: 1; font-variant-numeric: tabular-nums; }
+.nx-timeline__mon { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.nx-timeline__main { min-width: 0; padding: 8px 0 14px; border-bottom: 1px solid var(--border); }
+.nx-timeline__row:last-child .nx-timeline__main { border-bottom: 0; }
+.nx-timeline__subject { font-size: 14px; font-weight: 600; color: var(--text); }
+.nx-timeline__grade { color: var(--text-muted); font-weight: 500; }
+.nx-timeline__meta { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 4px; }
+.nx-timeline__chip { font-size: 12px; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px; }
+.nx-timeline__chip svg { color: var(--gold); flex-shrink: 0; }
+
+/* ---- Analytics: distribution bars (self-contained; not imported from analytics.css) ---- */
+.an-dist { display: flex; flex-direction: column; gap: 12px; }
+.an-dist__row { display: grid; grid-template-columns: 110px 1fr 78px; align-items: center; gap: 10px; font-size: 13px; color: var(--text); }
+.an-dist__bar { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.an-dist__fill { display: block; height: 100%; border-radius: 4px; background: var(--gold); transition: width 0.9s var(--ease); }
+.an-dist__val { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-muted); }
+@media (max-width: 420px) { .an-dist__row { grid-template-columns: 92px 1fr 64px; gap: 8px; } }
+@media (prefers-reduced-motion: reduce) { .an-dist__fill { transition: none; } }
+
+.nx-seccomp__name { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.nx-seccomp__sub { font-size: 11px; color: var(--text-muted); }
+
+/* ---- Subject bar chart labels under the chart ---- */
+.nx-analytics__barlabels { display: flex; justify-content: space-around; gap: 8px; padding: 6px 12px 0; }
+.nx-analytics__barlabel {
+  flex: 1; min-width: 0; text-align: center; font-size: 11px; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ---- Top / bottom performers ---- */
+.nx-perf { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.nx-perf__row {
+  display: grid; grid-template-columns: 24px 1fr auto auto; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: var(--r-sm); background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+}
+.nx-perf__rank {
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 12px; font-weight: 700; color: var(--gold); background: rgba(198, 165, 92, 0.1);
+  font-variant-numeric: tabular-nums; flex-shrink: 0;
+}
+.nx-perf__main { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.nx-perf__name { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-perf__meta { font-size: 11px; color: var(--text-muted); }
+.nx-perf__pct { font-size: 13px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+@media (max-width: 420px) {
+  .nx-perf__row { grid-template-columns: 24px 1fr auto; }
+  .nx-perf__row .badge { display: none; }
+}
+
+/* ---- SR-only (accessible chart data table fallback) ---- */
+.nx-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}

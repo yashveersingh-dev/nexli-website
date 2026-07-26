@@ -1,0 +1,40 @@
+/* =============================================================
+   NEXLI — Subscriptions overview (spec §12.3). Platform billing
+   overview: KPIs, renewals-due panel, full subscription table.
+   ============================================================= */
+
+/* ---- Renewals-due rows ---- */
+.nx-renewal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  background: none;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.nx-renewal:last-child { border-bottom: 0; }
+.nx-renewal:hover .nx-renewal__name { color: var(--gold-light); }
+.nx-renewal:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: var(--r-sm); }
+
+.nx-renewal__body { min-width: 0; flex: 1; }
+.nx-renewal__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s var(--ease);
+}
+.nx-renewal__meta { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+.nx-renewal__right { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.nx-renewal__date { font-size: 12px; font-weight: 600; color: var(--text); }
+.nx-renewal__date.is-soon { color: var(--warning); }

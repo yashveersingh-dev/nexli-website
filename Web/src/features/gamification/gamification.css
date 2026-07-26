@@ -1,0 +1,156 @@
+/* Gamification (Rewards) — student-facing dashboard styles.
+   Uses the global NEXLI tokens (--gold, --surface, --border, --success…). */
+
+.gm-stack { display: flex; flex-direction: column; gap: 16px; }
+
+/* ----------------------------- Hero ----------------------------- */
+.gm-hero {
+  background: linear-gradient(135deg, rgba(198, 165, 92, 0.16), rgba(156, 126, 63, 0.05));
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl, 18px);
+  padding: 18px 18px 16px;
+}
+.gm-hero__top { display: flex; align-items: center; gap: 14px; }
+.gm-hero__level {
+  flex: none;
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  font-size: 22px; font-weight: 800;
+  color: #1a1408;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+  box-shadow: 0 4px 14px rgba(198, 165, 92, 0.35);
+}
+.gm-hero__main { min-width: 0; flex: 1; }
+.gm-hero__hi { font-size: 13px; color: var(--text-muted); }
+.gm-hero__rank { font-size: 20px; font-weight: 700; color: var(--text); }
+.gm-hero__xp { text-align: right; flex: none; }
+.gm-hero__xpval { display: block; font-size: 24px; font-weight: 800; color: var(--gold-light); line-height: 1; }
+.gm-hero__xplbl { font-size: 11px; color: var(--text-muted); }
+.gm-hero__bar {
+  margin-top: 14px;
+  height: 9px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.gm-hero__fill {
+  display: block; height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-light));
+  transition: width 0.5s ease;
+}
+.gm-hero__next { margin-top: 7px; font-size: 12px; color: var(--text-muted); }
+
+/* ----------------------------- Streaks ----------------------------- */
+.gm-streaks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gm-streak {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg, 14px);
+  padding: 14px 12px;
+  text-align: center;
+}
+.gm-streak.is-active { border-color: rgba(198, 165, 92, 0.4); }
+.gm-streak__icon {
+  display: inline-grid; place-items: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+}
+.gm-streak.is-active .gm-streak__icon { color: var(--gold-light); background: rgba(198, 165, 92, 0.16); }
+.gm-streak__val { font-size: 26px; font-weight: 800; color: var(--text); margin-top: 6px; }
+.gm-streak__lbl { font-size: 12px; font-weight: 600; color: var(--text); }
+.gm-streak__sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ----------------------------- Points ----------------------------- */
+.gm-points { display: flex; flex-direction: column; gap: 12px; }
+.gm-point { display: flex; gap: 11px; align-items: flex-start; }
+.gm-point__icon {
+  flex: none; display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 9px;
+  color: var(--gold-light); background: rgba(198, 165, 92, 0.12);
+}
+.gm-point__body { flex: 1; min-width: 0; }
+.gm-point__head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.gm-point__label { font-size: 13px; font-weight: 600; color: var(--text); }
+.gm-point__val { font-size: 13px; font-weight: 700; color: var(--gold-light); }
+.gm-point__track { margin-top: 6px; height: 6px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+.gm-point__fill { display: block; height: 100%; border-radius: 999px; background: var(--gold); transition: width 0.4s ease; }
+.gm-point__how { margin-top: 6px; font-size: 11.5px; color: var(--text-muted); }
+
+.gm-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: none; border: none; cursor: pointer;
+  color: var(--gold-light); font-size: 12px; font-weight: 600;
+  padding: 0;
+}
+
+/* ----------------------------- Badges ----------------------------- */
+.gm-badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+.gm-badge {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: 7px; padding: 14px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg, 14px);
+}
+.gm-badge.is-locked { opacity: 0.62; }
+.gm-badge__medal {
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  color: #1a1408;
+  background: linear-gradient(135deg, #d8d8d8, #9a9a9a);
+}
+.gm-badge.is-locked .gm-badge__medal { color: var(--text-dim); background: rgba(255, 255, 255, 0.06); }
+.gm-badge__medal--bronze { background: linear-gradient(135deg, #d9a36a, #a9743b); }
+.gm-badge__medal--silver { background: linear-gradient(135deg, #e2e2e2, #a5a5a5); }
+.gm-badge__medal--gold { background: linear-gradient(135deg, var(--gold-light), var(--gold-deep)); }
+.gm-badge__medal--platinum { background: linear-gradient(135deg, #cfe6ff, #7fb2e6); }
+.gm-badge.is-locked .gm-badge__medal[class*='gm-badge__medal--'] { background: rgba(255, 255, 255, 0.06); }
+.gm-badge__label { font-size: 12.5px; font-weight: 700; color: var(--text); }
+.gm-badge__how { font-size: 11px; color: var(--text-muted); line-height: 1.35; }
+.gm-badge__track { width: 100%; height: 5px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+.gm-badge__fill { display: block; height: 100%; border-radius: 999px; background: var(--gold); }
+.gm-badge__progress { font-size: 10.5px; color: var(--text-muted); }
+
+/* ----------------------------- Honours ----------------------------- */
+.gm-honours { display: flex; flex-direction: column; gap: 10px; }
+.gm-honour {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(198, 165, 92, 0.3);
+  border-radius: var(--r-lg, 14px);
+  background: linear-gradient(135deg, rgba(198, 165, 92, 0.1), transparent);
+}
+.gm-honour__crest {
+  flex: none; display: grid; place-items: center;
+  width: 40px; height: 40px; border-radius: 50%;
+  color: #1a1408; background: linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+}
+.gm-honour__title { font-size: 14px; font-weight: 700; color: var(--text); }
+.gm-honour__blurb { font-size: 12px; color: var(--text-muted); }
+
+/* ----------------------------- Houses ----------------------------- */
+.gm-houses { display: flex; flex-direction: column; gap: 6px; }
+.gm-houserow {
+  display: flex; align-items: center; gap: 11px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.gm-houserow.is-mine { background: rgba(96, 165, 250, 0.08); border-color: rgba(96, 165, 250, 0.3); }
+.gm-houserow__rank { width: 24px; text-align: center; font-weight: 800; color: var(--text-muted); }
+.gm-houserow__crest {
+  flex: none; display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  color: var(--house, var(--gold-light));
+  background: rgba(255, 255, 255, 0.05);
+}
+.gm-houserow__name { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13.5px; color: var(--text); }
+.gm-houserow__pts { font-weight: 800; font-size: 15px; color: var(--gold-light); }
+
+@media (max-width: 560px) {
+  .gm-streaks { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .gm-streak { padding: 11px 6px; }
+  .gm-streak__val { font-size: 22px; }
+}

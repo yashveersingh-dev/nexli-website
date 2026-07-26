@@ -1,0 +1,42 @@
+/* ============================================================================
+ * Hostel & Residential — module-only styles. Reuses the global kit (nx-page,
+ * nx-toolbar, nx-savebar, panel, grid, badge, DataTable) and the shared ops.css
+ * helpers (ops-meter, ops-seg, ops-roster, ops-sos). Only block-expand chrome
+ * and the exeat overdue accent live here.
+ * ==========================================================================*/
+
+/* ---- Expandable block card ---- */
+.hostel-block__head {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  background: none; border: none; padding: 2px; margin: 0; cursor: pointer;
+  color: inherit; text-align: left; font: inherit;
+  border-radius: var(--radius-sm, 8px);
+}
+.hostel-block__head:focus-visible {
+  outline: 2px solid var(--gold); outline-offset: 3px;
+}
+.hostel-block__chev { display: inline-flex; flex-shrink: 0; color: var(--text-muted); }
+.hostel-block__chev--open { transform: rotate(90deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .hostel-block__chev svg { transition: transform 0.18s ease; }
+}
+
+.hostel-block__body {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--hairline, rgba(255, 255, 255, 0.08));
+}
+
+/* ---- Rooms list inside a block ---- */
+.hostel-rooms { display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.hostel-room {
+  display: flex; align-items: center; gap: 8px;
+  border: 1px solid var(--hairline, rgba(255, 255, 255, 0.08));
+  border-radius: var(--radius-md, 12px); padding: 10px 12px;
+  background: var(--surface, var(--card));
+}
+
+/* ---- Exeat overdue accent ---- */
+.hostel-exeat--overdue {
+  border-color: color-mix(in srgb, var(--danger) 50%, transparent);
+  background: color-mix(in srgb, var(--danger) 7%, var(--card));
+}

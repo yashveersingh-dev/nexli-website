@@ -1,0 +1,100 @@
+/* ============================================================================
+ * UDISE+ Reporting (P7) — module-only styles. Reuses the global kit + the
+ * shared compliance classes (cmp-udise-grid / cmp-stat). Only the enrolment
+ * matrix, facility toggles and print rules live here.
+ * ==========================================================================*/
+
+/* Vertical rhythm between report / profile panels. */
+.udise-stack { display: flex; flex-direction: column; gap: 16px; }
+.udise-panel__body { display: flex; flex-direction: column; gap: 14px; }
+
+/* ---- Enrolment matrix (grade x gender) ---- */
+.udise-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md, 12px);
+}
+.udise-table-wrap:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.udise-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+.udise-matrix th,
+.udise-matrix td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+.udise-matrix thead th {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border, var(--hairline));
+}
+.udise-matrix__num { text-align: right; }
+.udise-matrix__grade { font-weight: 600; }
+.udise-matrix tbody tr:hover { background: color-mix(in srgb, var(--gold) 5%, transparent); }
+.udise-matrix__total { font-weight: 700; }
+.udise-matrix tfoot th,
+.udise-matrix tfoot td {
+  font-weight: 700;
+  border-bottom: none;
+  border-top: 1.5px solid var(--border, var(--hairline));
+  background: color-mix(in srgb, var(--gold) 6%, transparent);
+}
+/* Short gender headers (M/F/O) only on narrow screens to keep the matrix tidy. */
+.udise-matrix__th-short { display: none; }
+@media (max-width: 480px) {
+  .udise-matrix th,
+  .udise-matrix td { padding: 9px 8px; }
+  .udise-matrix__th-full { display: none; }
+  .udise-matrix__th-short { display: inline; }
+}
+
+/* ---- Facility toggles ---- */
+.udise-fac-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.udise-fac {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md, 12px);
+  background: var(--card);
+}
+.udise-fac__icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold);
+}
+.udise-fac .nx-switch-row { flex: 1; min-width: 0; }
+
+/* ---- Print: clean single-column report, hide chrome ---- */
+@media print {
+  .udise-noprint { display: none !important; }
+  .udise-table-wrap { overflow: visible; }
+  .udise-matrix { font-size: 11px; }
+  .udise-matrix__th-full { display: inline; }
+  .udise-matrix__th-short { display: none; }
+  .udise-matrix tbody tr:hover { background: none; }
+}

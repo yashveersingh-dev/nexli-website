@@ -1,0 +1,63 @@
+/* ============================================================================
+ * P8 — Analytics, Special & AI surfaces shared styles. Reuses the global kit
+ * + charts (Donut/Ring/LineChart/BarChart) + AILockedOverlay.
+ * ==========================================================================*/
+
+/* ---- Tab vertical rhythm (keeps KPI strip, chart grid, panels + AI panel from crowding) ---- */
+.an-tab { display: flex; flex-direction: column; gap: 20px; }
+
+/* ---- Chart panel grid ---- */
+.an-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.an-chart-wrap { display: flex; align-items: center; justify-content: center; padding: 8px 0; min-height: 180px; }
+
+/* ---- Distribution / breakdown rows ---- */
+.an-dist { display: flex; flex-direction: column; gap: 10px; }
+.an-dist__row { display: grid; grid-template-columns: 110px 1fr 48px; align-items: center; gap: 10px; font-size: 13px; }
+.an-dist__bar { height: 8px; border-radius: 4px; background: var(--hairline); overflow: hidden; }
+.an-dist__fill { height: 100%; border-radius: 4px; background: var(--gold); }
+.an-dist__val { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-muted); }
+@media (max-width: 420px) { .an-dist__row { grid-template-columns: 84px 1fr 40px; } }
+
+/* ---- At-risk / list rows ---- */
+.an-risk { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--hairline); border-radius: var(--radius-md); }
+.an-risk__score { flex-shrink: 0; width: 44px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---- Report builder ---- */
+.an-builder { display: grid; gap: 16px; grid-template-columns: 280px 1fr; align-items: start; }
+@media (max-width: 860px) { .an-builder { grid-template-columns: 1fr; } }
+.an-builder__panel { border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 14px; background: var(--card); }
+.an-field-pick { display: flex; align-items: center; gap: 8px; padding: 7px 4px; border-bottom: 1px solid var(--hairline-soft, rgba(255,255,255,0.05)); font-size: 13.5px; }
+.an-field-pick:last-child { border-bottom: none; }
+
+/* ---- HPC card ---- */
+.an-hpc { max-width: 760px; margin-inline: auto; }
+.an-hpc__radar { display: flex; justify-content: center; }
+.an-domain-list { display: flex; flex-direction: column; gap: 8px; }
+.an-domain { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; font-size: 13.5px; }
+.an-domain__dots { display: inline-flex; gap: 3px; }
+.an-domain__dot { width: 11px; height: 11px; border-radius: 50%; background: var(--hairline); }
+.an-domain__dot.is-on { background: var(--gold); }
+
+/* ---- Event calendar / cards ---- */
+.an-events { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.an-event {
+  border: 1px solid var(--hairline); border-radius: var(--radius-md); overflow: hidden; background: var(--card);
+  display: flex; flex-direction: column;
+}
+.an-event__date {
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+  border-bottom: 1px solid var(--hairline);
+}
+.an-event__d { font-size: 22px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.an-event__m { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.an-event__body { padding: 12px 14px; flex: 1; }
+
+/* ---- Alumni cards ---- */
+.an-alumni { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.an-alum { border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 14px; background: var(--card); text-align: center; }
+.an-alum__role { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+.an-mentor-badge { color: var(--gold); }
+
+/* ---- AI surface chrome ---- */
+.an-ai-section { position: relative; }
+.an-ai-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }

@@ -1,0 +1,170 @@
+/* ============================================================================
+ * Expense & Procurement — module-only styles.
+ * Reuses the global kit + finance.css (fin-itemrow, fin-summary, fin-lines,
+ * nx-kv, nx-toolbar, kpi-grid). Only patterns unique to this module live here.
+ * ==========================================================================*/
+
+/* ---- Editable line-item rows (requisition / PO builders) ----
+   Wider than fin-itemrow: name + qty + unit + cost (+ amount on PO). */
+.exp-itemrow {
+  display: grid;
+  gap: 8px;
+  align-items: end;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hairline-soft, rgba(255, 255, 255, 0.05));
+}
+.exp-itemrow:last-of-type { border-bottom: none; }
+
+.exp-itemrow--req { grid-template-columns: minmax(0, 1fr) 72px 72px 96px 36px; }
+.exp-itemrow--po { grid-template-columns: minmax(0, 1fr) 64px 64px 88px minmax(72px, auto) 36px; }
+
+/* Computed line amount on the PO builder. */
+.exp-itemrow__amt {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 13.5px;
+  text-align: right;
+  padding-bottom: 9px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .exp-itemrow--req,
+  .exp-itemrow--po { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; }
+  .exp-itemrow__amt {
+    grid-column: 1 / -1;
+    text-align: left;
+    padding-bottom: 0;
+    border-top: 1px dashed var(--hairline-soft, rgba(255, 255, 255, 0.06));
+    padding-top: 6px;
+  }
+  .exp-itemrow .fin-itemrow__rm { grid-column: 2; justify-self: end; }
+}
+
+/* ---- Mobile item list (detail pages: shown < 1024, table shown >= 1024) ---- */
+.exp-mlist { display: none; flex-direction: column; gap: 8px; }
+.exp-mrow {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  background: var(--surface, var(--card));
+}
+.exp-mrow__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.exp-mrow__meta { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+/* The detail tables live in .nx-dt-tablewrap which the kit hides < 1024;
+   surface the card list there instead. */
+@media (max-width: 1023px) {
+  .panel .nx-dt-tablewrap { display: none; }
+  .exp-mlist { display: flex; }
+}
+
+/* ---- Approval-rules editor (Settings tab) ---- */
+.exp-rules { display: flex; flex-direction: column; gap: 12px; }
+.exp-rule {
+  border: 1px solid var(--hairline, var(--border));
+  border-radius: var(--radius-md, var(--r-sm));
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.015);
+}
+.exp-rule__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.exp-rule__no {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Routing explainer + live preview (right column) */
+.exp-rule-help { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+.exp-rule-help p { margin: 0 0 8px; }
+.exp-rule-help p:last-child { margin-bottom: 0; }
+.exp-rule-help strong { color: var(--text); font-weight: 600; }
+
+.exp-rule-preview { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+.exp-rule-preview__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 10px;
+  border-radius: var(--r-sm, 8px);
+  border: 1px solid var(--hairline, var(--border));
+  font-size: 13px;
+}
+.exp-rule-preview__row svg { color: var(--gold); flex-shrink: 0; }
+.exp-rule-preview__label { font-weight: 600; color: var(--text); }
+.exp-rule-preview__band {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.exp-rule-preview__who { font-size: 12.5px; color: var(--gold); font-weight: 600; }
+
+/* ---- "How this works" step indicator (hub + requisition pages) ----
+   A compact, non-interactive flow: Raise → Approve → PO → Receive → Expense.
+   Wraps gracefully on phones; arrows hidden when stacked. */
+.exp-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.exp-flow__step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 168px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--hairline, var(--border));
+  border-radius: var(--radius-md, var(--r-sm));
+  background: rgba(255, 255, 255, 0.015);
+}
+.exp-flow__num {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.12);
+  color: var(--info);
+  font-size: 12.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.exp-flow__body { min-width: 0; display: flex; flex-direction: column; }
+.exp-flow__title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.25; }
+.exp-flow__who { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* ---- Goods-receipt modal: one row per line, qty input on the right ---- */
+.exp-grn-list { display: flex; flex-direction: column; gap: 4px; }
+.exp-grn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hairline-soft, rgba(255, 255, 255, 0.05));
+}
+.exp-grn-row:last-child { border-bottom: none; }
+.exp-grn-row__name { min-width: 0; flex: 1; font-size: 14px; }
+.exp-grn-row__sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.exp-grn-row__input { width: 92px; flex-shrink: 0; }

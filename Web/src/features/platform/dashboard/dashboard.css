@@ -1,0 +1,32 @@
+/* NEXLI — Super Admin dashboard styles. */
+.nx-statusdot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px;
+  background: var(--success); box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18); vertical-align: middle;
+}
+
+/* Alerts list */
+.nx-alertlist { display: flex; flex-direction: column; gap: 6px; }
+.nx-alertrow {
+  display: flex; align-items: center; gap: 11px; width: 100%; padding: 11px 12px; border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.015); border: 1px solid var(--border); cursor: pointer; text-align: left;
+  transition: border-color 0.16s var(--ease), background 0.16s var(--ease); -webkit-tap-highlight-color: transparent;
+}
+.nx-alertrow:hover { border-color: var(--border-2); background: rgba(255, 255, 255, 0.03); }
+.nx-alertrow__icon { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; flex-shrink: 0; }
+.nx-alertrow__icon.is-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.25); }
+.nx-alertrow__icon.is-warning { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.25); }
+.nx-alertrow__name { font-size: 13.5px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-alertrow__detail { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
+.nx-alertrow__chev { color: var(--text-faint); flex-shrink: 0; }
+
+/* Renewals list */
+.nx-renewlist { display: flex; flex-direction: column; }
+.nx-renewrow {
+  display: flex; align-items: center; gap: 11px; padding: 10px 0; border-bottom: 1px solid var(--border);
+  text-decoration: none; color: var(--text); transition: opacity 0.15s;
+}
+.nx-renewrow:last-child { border-bottom: 0; }
+.nx-renewrow:hover { opacity: 0.85; }
+.nx-renewrow__name { font-size: 13.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-renewrow__plan { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }
+.nx-renewrow__date { font-size: 12px; color: var(--text-muted); flex-shrink: 0; white-space: nowrap; }

@@ -1,0 +1,45 @@
+# dependencies
+node_modules
+
+# build output
+dist
+dist-ssr
+*.local
+
+# env (secrets) — keep .env.example tracked
+.env
+.env.*
+!.env.example
+
+# Firebase Admin service-account keys (NEVER commit — private keys)
+serviceAccount.json
+serviceAccount*.json
+*-service-account.json
+**/serviceAccountKey.json
+# Firebase Console download pattern: <project>-firebase-adminsdk-<id>.json
+*firebase-adminsdk*.json
+
+# editor / os
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# logs / caches
+logs
+*.log
+npm-debug.log*
+.vite
+coverage
+
+# firebase
+.firebase
+firebase-debug.log
+*-debug.log
+
+# continuity checkpoints are intentionally tracked (disaster recovery)

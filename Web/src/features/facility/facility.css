@@ -1,0 +1,54 @@
+/* ============================================================================
+ * Asset & Facility — module-only styles. Global classes (panel, kpi-grid, grid,
+ * badge, nx-toolbar, nx-kv, DataTable, nx-savebar) come from nexli/app/ops css.
+ * Only patterns unique to this module live here.
+ * ==========================================================================*/
+
+/* Asset / facility card (DataTable→cards reinforcement and standalone lists). */
+.fac-card { display: flex; gap: 12px; align-items: flex-start; }
+.fac-card__icon {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold);
+}
+.fac-card__body { min-width: 0; flex: 1; }
+.fac-card__title { font-weight: 700; font-size: 14.5px; line-height: 1.3; }
+.fac-card__meta { font-size: 12.5px; color: var(--text-muted); margin-top: 3px; }
+.fac-card__tag {
+  font-family: var(--mono, monospace);
+  font-size: 11.5px; letter-spacing: 0.04em;
+  color: var(--gold); margin-top: 3px;
+}
+
+/* Row of badges/metrics that wrap cleanly on phones. */
+.fac-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+/* Asset name cell inside the DataTable (mirrors lib-book layout). */
+.fac-name { display: flex; gap: 10px; align-items: center; min-width: 0; }
+.fac-name__icon {
+  flex-shrink: 0;
+  width: 30px; height: 30px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  color: var(--gold);
+}
+.fac-name__text { min-width: 0; display: flex; flex-direction: column; }
+.fac-name__title { font-weight: 600; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fac-name__sub { font-size: 12px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Maintenance ticket card. */
+.fac-ticket { display: flex; flex-direction: column; gap: 8px; }
+.fac-ticket__head { display: flex; gap: 10px; align-items: flex-start; }
+.fac-ticket__no {
+  font-family: var(--mono, monospace);
+  font-size: 11.5px; letter-spacing: 0.05em;
+  color: var(--gold); flex-shrink: 0;
+}
+.fac-ticket__title { font-weight: 700; font-size: 14.5px; line-height: 1.3; min-width: 0; flex: 1; }
+.fac-ticket__desc { font-size: 13px; color: var(--text-2, var(--text-muted)); }
+.fac-ticket__meta { font-size: 12px; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.fac-ticket__foot { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2px; }

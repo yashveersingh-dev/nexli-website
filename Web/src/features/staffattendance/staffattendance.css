@@ -1,0 +1,174 @@
+/* NEXLI — Staff Attendance module styles. Mobile-first; kiosk surfaces use large
+   tap targets and read well on a tablet/phone. Animates transform/opacity only. */
+
+/* ---------------- Hub header actions ---------------- */
+.nx-page__head-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+@media (max-width: 480px) { .nx-page__head-actions { width: 100%; } }
+
+/* ---------------- Manual page: leading back affordance ----------------
+   Back lives at the top-left in normal flow (standard sub-page pattern) so it is
+   always reachable and never sits under the sticky `.nx-savebar` at the bottom. */
+.nx-sa-manual__heading { display: flex; align-items: flex-start; gap: 12px; min-width: 0; }
+
+/* ---------------- Schedule settings: breaks editor ---------------- */
+.nx-sa-breaks { display: flex; flex-direction: column; gap: 12px; }
+.nx-sa-break {
+  display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 10px; align-items: end;
+  padding: 12px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--card);
+}
+@media (max-width: 560px) { .nx-sa-break { grid-template-columns: 1fr 1fr; } }
+.nx-sa-break__del {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border: 1px solid var(--border); border-radius: var(--r-sm);
+  background: var(--card); color: var(--text-muted); cursor: pointer;
+  transition: color 0.16s var(--ease), border-color 0.16s var(--ease);
+}
+.nx-sa-break__del:hover { color: var(--danger, #c0443a); border-color: rgba(192, 68, 58, 0.4); }
+.nx-sa-break__del:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ---------------- Mode launcher (hub) ---------------- */
+.nx-sa-modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 640px) { .nx-sa-modes { grid-template-columns: 1fr; } }
+.nx-sa-mode {
+  display: flex; align-items: flex-start; gap: 12px; text-align: left;
+  padding: 16px; border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--card); cursor: pointer; width: 100%;
+  transition: border-color 0.16s var(--ease), transform 0.16s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.nx-sa-mode:hover { border-color: rgba(198, 165, 92, 0.4); transform: translateY(-2px); }
+.nx-sa-mode:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-sa-mode__icon {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center;
+  background: rgba(198, 165, 92, 0.12); color: var(--gold);
+}
+.nx-sa-mode__title { font-size: 14px; font-weight: 600; color: var(--text); }
+.nx-sa-mode__desc { font-size: 12px; color: var(--text-muted); margin-top: 3px; line-height: 1.45; }
+
+/* ---------------- Summary chips (manual roster) — self-contained ---------------- */
+.nx-att-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.nx-att-summary__stats { display: flex; gap: 8px; flex-wrap: wrap; }
+.nx-att-chip { font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: var(--r-pill); border: 1px solid var(--border); }
+.nx-att-chip--present { color: var(--success); background: var(--success-bg); border-color: rgba(34, 197, 94, 0.25); }
+.nx-att-chip--absent { color: var(--danger); background: var(--danger-bg); border-color: rgba(239, 68, 68, 0.25); }
+.nx-att-chip--late { color: var(--warning); background: var(--warning-bg); border-color: rgba(245, 158, 11, 0.25); }
+.nx-att-chip--leave { color: var(--info); background: var(--info-bg); border-color: rgba(96, 165, 250, 0.25); }
+
+/* ---------------- Staff status list (hub + manual roster) ---------------- */
+.nx-sa-list { display: flex; flex-direction: column; }
+.nx-sa-row { display: flex; align-items: center; gap: 11px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+.nx-sa-row:last-child { border-bottom: 0; }
+.nx-sa-row__main { flex: 1; min-width: 0; }
+.nx-sa-row__name { font-size: 13.5px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-sa-row__meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.nx-sa-row__right { flex-shrink: 0; display: flex; align-items: center; gap: 8px; }
+
+/* Segmented status control (manual mode) */
+.nx-sa-seg { display: inline-flex; gap: 3px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 2px; }
+.nx-sa-seg__btn {
+  min-width: 34px; height: 30px; padding: 0 7px; border-radius: 7px; border: 0; background: none; cursor: pointer;
+  font-size: 12px; font-weight: 700; color: var(--text-muted); transition: background 0.14s var(--ease), color 0.14s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.nx-sa-seg__btn:hover:not(:disabled) { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+.nx-sa-seg__btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.nx-sa-seg__btn:disabled { cursor: not-allowed; }
+.nx-sa-seg__btn.is-active.is-present { background: var(--success); color: #06210f; }
+.nx-sa-seg__btn.is-active.is-absent { background: var(--danger); color: #2a0a0a; }
+.nx-sa-seg__btn.is-active.is-late { background: var(--warning); color: #2a1c05; }
+.nx-sa-seg__btn.is-active.is-leave { background: var(--info); color: #08203a; }
+.nx-sa-seg__btn.is-active.is-onduty { background: var(--info); color: #08203a; }
+@media (max-width: 480px) {
+  .nx-sa-seg { width: 100%; justify-content: space-between; }
+  .nx-sa-seg__btn { flex: 1; min-width: 0; }
+  .nx-sa-row { flex-wrap: wrap; }
+  .nx-sa-row__right { width: 100%; }
+  .nx-sa-seg-wrap { width: 100%; }
+}
+
+/* Status pill (compact, used in hub list + recent feed) */
+.nx-sa-pill { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: var(--r-pill); border: 1px solid var(--border); white-space: nowrap; }
+.nx-sa-pill--present { color: var(--success); background: var(--success-bg); border-color: rgba(34, 197, 94, 0.25); }
+.nx-sa-pill--absent { color: var(--danger); background: var(--danger-bg); border-color: rgba(239, 68, 68, 0.25); }
+.nx-sa-pill--late, .nx-sa-pill--half { color: var(--warning); background: var(--warning-bg); border-color: rgba(245, 158, 11, 0.25); }
+.nx-sa-pill--leave, .nx-sa-pill--onduty { color: var(--info); background: var(--info-bg); border-color: rgba(96, 165, 250, 0.25); }
+.nx-sa-pill--none { color: var(--text-muted); }
+
+/* ---------------- Kiosk surfaces (device + OTP) ---------------- */
+.nx-kiosk { max-width: 560px; margin: 0 auto; width: 100%; }
+.nx-kiosk__head { text-align: center; margin-bottom: 18px; }
+.nx-kiosk__badge {
+  display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border-radius: var(--r-pill);
+  background: rgba(198, 165, 92, 0.1); color: var(--gold); font-size: 12px; font-weight: 600; margin-bottom: 12px;
+}
+.nx-kiosk__title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+.nx-kiosk__sub { font-size: 13px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+@media (max-width: 480px) { .nx-kiosk__title { font-size: 19px; } }
+
+/* Big result/identity card */
+.nx-kiosk-found { display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--card); }
+.nx-kiosk-found__main { flex: 1; min-width: 0; }
+.nx-kiosk-found__name { font-size: 17px; font-weight: 700; color: var(--text); }
+.nx-kiosk-found__meta { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+
+/* Big action buttons (huge tap targets) */
+.nx-kiosk-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+@media (max-width: 420px) { .nx-kiosk-actions { grid-template-columns: 1fr; } }
+.nx-kiosk-big {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  min-height: 116px; border-radius: var(--r-lg); border: 1px solid var(--border); cursor: pointer;
+  font-size: 17px; font-weight: 700; color: var(--text); background: var(--card);
+  transition: transform 0.14s var(--ease), box-shadow 0.14s var(--ease), background 0.14s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.nx-kiosk-big:hover:not(:disabled) { transform: translateY(-2px); }
+.nx-kiosk-big:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-kiosk-big:disabled { opacity: 0.5; cursor: not-allowed; }
+.nx-kiosk-big--in { background: linear-gradient(135deg, var(--gold), var(--gold-deep)); color: #1a1407; border-color: transparent; }
+.nx-kiosk-big--in:hover:not(:disabled) { box-shadow: 0 10px 26px rgba(198, 165, 92, 0.3); }
+.nx-kiosk-big--out { background: var(--surface); }
+.nx-kiosk-big__icon { display: grid; place-items: center; }
+
+/* Search results (device kiosk picker) */
+.nx-kiosk-results { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.nx-kiosk-pick {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; cursor: pointer;
+  padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--card);
+  transition: border-color 0.14s var(--ease), transform 0.14s var(--ease); -webkit-tap-highlight-color: transparent;
+}
+.nx-kiosk-pick:hover { border-color: rgba(198, 165, 92, 0.4); transform: translateX(2px); }
+.nx-kiosk-pick:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.nx-kiosk-pick__main { flex: 1; min-width: 0; }
+.nx-kiosk-pick__name { font-size: 14.5px; font-weight: 600; color: var(--text); }
+.nx-kiosk-pick__meta { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+/* Confirmation flash */
+.nx-kiosk-confirm { text-align: center; padding: 22px 16px; }
+.nx-kiosk-confirm__icon {
+  width: 72px; height: 72px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--success-bg); color: var(--success);
+}
+.nx-kiosk-confirm__icon.is-out { background: var(--info-bg); color: var(--info); }
+.nx-kiosk-confirm__title { font-size: 20px; font-weight: 700; color: var(--text); }
+.nx-kiosk-confirm__sub { font-size: 13.5px; color: var(--text-muted); margin-top: 6px; }
+
+/* Recent check-ins feed */
+.nx-sa-feed { display: flex; flex-direction: column; }
+.nx-sa-feed__row { display: flex; align-items: center; gap: 11px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.nx-sa-feed__row:last-child { border-bottom: 0; }
+.nx-sa-feed__main { flex: 1; min-width: 0; }
+.nx-sa-feed__name { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nx-sa-feed__time { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+/* OTP step layout */
+.nx-otp-step { display: flex; flex-direction: column; gap: 14px; }
+.nx-otp-step__resend { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12.5px; color: var(--text-muted); }
+.nx-otp-step__resend button { color: var(--gold); font-weight: 600; background: none; border: 0; cursor: pointer; padding: 0; }
+.nx-otp-step__resend button:disabled { color: var(--text-muted); cursor: not-allowed; }
+.nx-otp-step__resend button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nx-sa-mode, .nx-kiosk-big, .nx-kiosk-pick, .nx-sa-seg__btn { transition: none; }
+  .nx-sa-mode:hover, .nx-kiosk-big:hover, .nx-kiosk-pick:hover { transform: none; }
+}

@@ -1,0 +1,910 @@
+rules_version = '2';
+
+// =============================================================
+// NEXLI — Firestore security rules.
+//
+// Principles:
+//  - DENY BY DEFAULT. Every path is explicitly allowed or refused.
+//  - STRUCTURAL TENANT ISOLATION: all school data lives under
+//    /schools/{schoolId}/… and is reachable only by that school's members
+//    (or a platform super admin). No app bug can cross tenants.
+//  - LEAST PRIVILEGE: each sensitive collection has its own role allowlist,
+//    matched to the data-driven role catalogue ("only what they need").
+//    Families (parent/student) see only their OWN records.
+//  - AUDIT is append-only (create only; no update/delete).
+//  - PLATFORM collections are super-admin only (with a few read-only exceptions
+//    the app needs at boot, e.g. global feature flags).
+//
+// Phase A · Danger 1 (2026-06-17): the old catch-all let ANY active member read
+// every non-sensitive collection and ANY staff write them. It is now replaced by
+// per-collection rules for fees, payroll, student records, staff records, consent,
+// special-education/therapy, and the academic write paths, plus own-record scoping
+// for parents/students. Read-scoping of the "whole-class-in-one-doc" academic data
+// (attendance/marks/exam results/HPC) is deferred to Danger 2 (data reshape); for
+// now those keep member-read but writes are limited to academic staff.
+// =============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- identity / auth helpers ----------
+    function signedIn() {
+      return request.auth != null;
+    }
+    function uid() {
+      return request.auth.uid;
+    }
+    function idxPath() {
+      return /databases/$(database)/documents/userIndex/$(uid());
+    }
+    function hasIdx() {
+      return signedIn() && exists(idxPath());
+    }
+    function idx() {
+      return get(idxPath()).data;
+    }
+    function isSuperAdmin() {
+      // Safe field access: a normal user's userIndex has no `isSuperAdmin` field,
+      // so read it with a default to avoid an evaluation error on every rule.
+      return hasIdx() && (idx().get('isSuperAdmin', false) == true || idx().roleId == 'super_admin');
+    }
+
+    // ---------- membership / role helpers ----------
+    function memberPath(sid) {
+      return /databases/$(database)/documents/schools/$(sid)/members/$(uid());
+    }
+    function isMember(sid) {
+      return signedIn() && exists(memberPath(sid));
+    }
+    function memberData(sid) {
+      return get(memberPath(sid)).data;
+    }
+    function isActiveMember(sid) {
+      return isMember(sid) && memberData(sid).status == 'active';
+    }
+    function myRole(sid) {
+      return memberData(sid).roleId;
+    }
+    function hasAnyRole(sid, roles) {
+      return isActiveMember(sid) && (myRole(sid) in roles);
+    }
+    // Any staff member (i.e. not a parent / student / alumni).
+    function isStaff(sid) {
+      return isActiveMember(sid) && !(myRole(sid) in ['parent', 'student', 'alumni']);
+    }
+
+    // ---------- role-group helpers (kept in sync with lib/roles/catalog.ts) ----------
+
+    // Full-trust school leadership (the wildcard roles in the catalogue).
+    function isPrincipalLike(sid) {
+      return hasAnyRole(sid, [
+        'principal', 'head_of_school', 'headmaster', 'headmistress',
+        'director', 'regional_director', 'cluster_director'
+      ]);
+    }
+    // Administrative leadership (ADMIN_LEAD matrix: fees/payroll approve, hr/expense manage).
+    function isAdminLeadership(sid) {
+      return hasAnyRole(sid, ['vp_admin', 'administrator', 'school_manager', 'admin_manager']);
+    }
+    // Every role that holds the `fees` permission in the catalogue (+ leadership).
+    function isFeesStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'finance_manager', 'bursar', 'chief_accountant', 'accountant_senior', 'school_accountant',
+        'accountant_junior', 'accounts_clerk', 'accounts_assistant', 'billing_executive', 'cashier',
+        'hostel_accountant', 'admin_officer', 'admissions_officer'
+      ]);
+    }
+    // Every role that holds the `payroll` permission in the catalogue (+ leadership).
+    function isPayrollStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'finance_manager', 'bursar', 'chief_accountant', 'accountant_senior',
+        'hr_director', 'hr_manager', 'hr_executive', 'payroll_specialist'
+      ]);
+    }
+    // Roles that create/edit staff (HR) records (+ leadership).
+    function isHrStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'hr_director', 'hr_manager', 'hr_executive', 'hr_assistant', 'recruitment_coordinator'
+      ]);
+    }
+    // Roles that handle consent (DPDP) records (+ leadership).
+    function isConsentStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, ['dpo', 'consent_officer']);
+    }
+    // Finance/procurement desk: every role that already holds `fees` PLUS the
+    // expense/procurement approvers. Used for vendors / PO / GRN / requisitions /
+    // expenses / fee_heads / fee_structures / *_settings. Leadership always included.
+    function isProcurementStaff(sid) {
+      return isFeesStaff(sid) || hasAnyRole(sid, [
+        'procurement_officer', 'purchase_officer', 'store_keeper', 'inventory_manager',
+        'estate_manager', 'facilities_manager'
+      ]);
+    }
+    // Governance / statutory-compliance desk (SMC, UDISE+, compliance register):
+    // leadership + admin leadership + the compliance/admin officers who maintain it.
+    function isGovernanceStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'compliance_officer', 'admin_officer', 'registrar', 'dpo', 'it_admin', 'it_manager'
+      ]);
+    }
+    // Admissions desk (RTE applications/claims): admissions staff + admin leadership.
+    function isAdmissionsStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'admissions_officer', 'admissions_receptionist', 'admin_officer', 'registrar'
+      ]);
+    }
+    // Gate / front-desk security (visitor register + blacklist): every security role
+    // plus the reception/front-desk that operates the gate, plus admin leadership.
+    function isSecurityStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'security_supervisor', 'security_officer', 'security_guard', 'visitor_officer',
+        'cctv_admin', 'front_desk', 'main_receptionist', 'admissions_receptionist',
+        'office_assistant', 'admin_officer'
+      ]);
+    }
+    // Data-breach notification handlers (DPDP §8 / CERT-In): DPO + IT + leadership.
+    function isBreachStaff(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'dpo', 'it_admin', 'it_manager'
+      ]);
+    }
+    // Roles that handle special-education (IEP) / therapy records (+ leadership).
+    function isSpedStaff(sid) {
+      return isPrincipalLike(sid) || hasAnyRole(sid, [
+        'special_educator', 'nurse_sped', 'academic_director', 'vp_academic'
+      ]);
+    }
+    // Teaching / academic staff that record attendance, marks, exam results, HPC
+    // (generous, so a legitimate teacher is never blocked from saving their class).
+    function isAcademicStaff(sid) {
+      return isPrincipalLike(sid) || hasAnyRole(sid, [
+        'class_teacher', 'subject_teacher', 'substitute_teacher', 'hod', 'exam_controller',
+        'academic_coordinator', 'academic_coordinator_junior', 'academic_coordinator_associate',
+        'sports_teacher', 'arts_teacher', 'activity_coordinator', 'club_coordinator',
+        'special_educator', 'lab_assistant', 'registrar', 'dean_of_students',
+        'academic_director', 'vp_academic'
+      ]);
+    }
+    // Exam/paper staff ONLY — question bank/papers/blueprints carry answer keys, so
+    // this is narrower than isAcademicStaff (excludes sports/arts/substitute/lab/club/
+    // activity/special-educator/dean, none of whom hold `exams.read` in the catalogue).
+    function isExamStaff(sid) {
+      return isPrincipalLike(sid) || hasAnyRole(sid, [
+        'subject_teacher', 'class_teacher', 'hod', 'exam_controller',
+        'academic_coordinator', 'academic_coordinator_junior', 'academic_coordinator_associate',
+        'registrar', 'academic_director', 'vp_academic'
+      ]);
+    }
+    // Career-counselling staff who may read the cohort + review aptitude profiles
+    // (mirrors the client `counseling.read`/`counseling.write` gate). A student reads
+    // their OWN assessment via ownsStudentId at the collection.
+    function isCounselingStaff(sid) {
+      return isPrincipalLike(sid) || hasAnyRole(sid, [
+        'counselor', 'guidance_counselor', 'cpo', 'academic_director', 'vp_academic'
+      ]);
+    }
+    // Line counsellors who own confidential case notes. A non-oversight counsellor
+    // sees only their OWN stamped sessions (per-counsellor confidentiality); legacy
+    // sessions with no `counselorUid` stay readable by any counsellor.
+    function isCounselor(sid) {
+      return hasAnyRole(sid, ['counselor', 'guidance_counselor', 'special_educator']);
+    }
+    // Counselling oversight = leadership/principal-equivalents who see EVERY
+    // counsellor's sessions. Mirrors the data-layer `isCounselingOversight`
+    // (LEADERSHIP_ROLES via isReviewer('counseling')).
+    function isCounselingOversight(sid) {
+      return isPrincipalLike(sid) || hasAnyRole(sid, [
+        'vp_admin', 'vp_academic', 'academic_director', 'director',
+        'regional_director', 'cluster_director'
+      ]);
+    }
+    // Authorized certificate issuers (Bonafide/TC/Character/Conduct/Leaving): school +
+    // academic + admin leadership and the registry/admissions/office staff who run the
+    // certificate desk. Deliberately EXCLUDES teachers and operational/health/hostel/
+    // library/transport/canteen/security/finance roles (they don't issue certificates).
+    // Kept in lockstep with the `certificates` permission granted in lib/roles/catalog.ts.
+    function isCertificateIssuer(sid) {
+      return isPrincipalLike(sid) || isAdminLeadership(sid) || hasAnyRole(sid, [
+        'academic_director', 'vp_academic', 'hod',
+        'academic_coordinator', 'academic_coordinator_junior', 'academic_coordinator_associate',
+        'registrar', 'admissions_officer', 'admin_officer', 'dean_of_students',
+        'front_desk', 'office_assistant', 'main_receptionist', 'admissions_receptionist'
+      ]);
+    }
+
+    // School leadership / admin roles allowed to manage users, settings, profile.
+    // Kept in sync with the data-driven catalogue: every role that holds the
+    // "Users — manage" permission must be here, or it would be wrongly blocked
+    // from creating/editing members + settings.
+    function isSchoolAdmin(sid) {
+      return hasAnyRole(sid, [
+        'principal', 'head_of_school', 'headmaster', 'headmistress',
+        'vp_admin', 'vp_academic', 'academic_director', 'director',
+        'regional_director', 'cluster_director', 'it_admin', 'it_manager',
+        'academic_coordinator', 'hr_manager', 'hr_director',
+        'administrator', 'school_manager', 'admin_manager'
+      ]);
+    }
+    // Roles permitted to read audit logs (leadership + IT + data protection).
+    function canReadAudit(sid) {
+      return isSuperAdmin() || hasAnyRole(sid, [
+        'principal', 'head_of_school', 'headmaster', 'headmistress',
+        'director', 'academic_director', 'vp_admin', 'it_admin', 'it_manager', 'dpo'
+      ]);
+    }
+
+    // ---------- own-record helpers (parent ↔ children, student ↔ self) ----------
+
+    // True if `studentId` is one the signed-in member owns: a parent's child, or a
+    // student's own linked record. Sentinels avoid matching an absent field.
+    function ownsStudentId(sid, studentId) {
+      return isActiveMember(sid) && (
+        studentId == memberData(sid).get('studentId', '__none__')
+        || (studentId in memberData(sid).get('childStudentIds', []))
+      );
+    }
+
+    // Collections with their own explicit rules — excluded from the generic
+    // tenant wildcard so the wildcard can never widen their access (Firestore
+    // grants if ANY matching rule allows).
+    function isRestrictedCollection(c) {
+      return c in [
+        // identity / governance
+        'members', 'settings', 'audit_log', 'roleDefinitions',
+        // already-sensitive (unchanged)
+        'medical', 'immunization', 'counseling', 'pocso', 'grievances',
+        // Danger 1 — newly locked
+        'fee_invoices', 'fee_payments', 'fee_refunds', 'finance_counters',
+        'payroll_runs', 'payslips', 'salary_structures',
+        'students', 'staff', 'consent_records', 'consent_purposes',
+        'iep_plans', 'therapy_logs',
+        'attendance_days', 'assessment_results', 'exam_results', 'hpc_cards',
+        'certificates', 'certificate_counters',
+        'questionBank', 'questionPapers', 'paperBlueprints',
+        'reportCards', 'reportCardSchemes', 'portfolio', 'careerAssessments',
+        // Pre-launch security pass — direct messaging (POCSO escalations live here).
+        'conversations', 'messages',
+        // Pre-launch security pass — finance / procurement (carry vendor + cost data).
+        'vendors', 'purchase_orders', 'goods_receipts', 'requisitions',
+        'expenses', 'expense_settings', 'fee_heads', 'fee_structures', 'finance_settings',
+        // Pre-launch security pass — governance / statutory.
+        'smc_members', 'smc_meetings', 'smc_budget',
+        'compliance_items', 'compliance_documents', 'udise_profile',
+        'rte_applications', 'rte_claims',
+        // Pre-launch security pass — visitor / gate security.
+        'visitors', 'visitor_blacklist',
+        // Pre-launch security pass — temporary operational delegation.
+        'delegations',
+        // Pre-launch security pass — DPDP / child-protection counters & requests
+        // (collections introduced by the Legal pass).
+        'pocso_counters', 'erasure_requests', 'breach_notifications',
+        // This session — new family/parent-writable + exam collections.
+        // (counseling / fee_invoices already listed above.) ptm_meetings is listed
+        // so its booking subcollections are governed by their explicit rules, not
+        // the generic wildcard (which would block parents from the booking docs).
+        'board_results', 'student_leave_requests', 'ptm_meetings', 'ptm_bookings',
+        // Timetable cover — member read, academic-staff write (was wildcard).
+        'substitutions'
+      ];
+    }
+
+    // ============================================================
+    // PLATFORM (super admin) collections
+    // ============================================================
+
+    // userIndex: auth → tenant/role resolution. Self-readable; written only by
+    // admins (or the Admin-SDK bootstrap, which bypasses rules).
+    match /userIndex/{userId} {
+      allow read: if isSuperAdmin() || (signedIn() && userId == uid());
+      // CREATE: a school admin may provision a NEW index pointing at THEIR school.
+      allow create: if isSuperAdmin()
+        || (signedIn() && request.resource.data.schoolId is string
+            && isSchoolAdmin(request.resource.data.schoolId)
+            // a school admin can never mint a platform super admin.
+            && request.resource.data.get('isSuperAdmin', false) == false);
+      // UPDATE: the tenant is IMMUTABLE (schoolId can't change), and the writer must
+      // be an admin of the EXISTING doc's school — not the target school. Without
+      // this a school admin could rewrite ANY user's index into their own tenant and
+      // hijack/move that account across schools. Super-admin escalation is also
+      // blocked. (Super admin keeps full control.)
+      allow update: if isSuperAdmin()
+        || (signedIn()
+            && request.resource.data.schoolId == resource.data.schoolId
+            && resource.data.schoolId is string
+            && isSchoolAdmin(resource.data.schoolId)
+            && request.resource.data.get('isSuperAdmin', false) == false);
+      allow delete: if isSuperAdmin();
+    }
+
+    match /schools/{schoolId} {
+      // School profile.
+      allow read: if isSuperAdmin() || isMember(schoolId);
+      allow create: if isSuperAdmin();
+      // Full profile edits: super admin or school leadership. Active members may
+      // ALSO write usage telemetry only (denormalized counts + last-active), so the
+      // platform can show live usage without Cloud Functions.
+      allow update: if isSuperAdmin() || isSchoolAdmin(schoolId)
+        || (isActiveMember(schoolId)
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['studentCount', 'staffCount', 'lastActiveAt', 'lastModifiedAt', 'lastModifiedBy']));
+      allow delete: if isSuperAdmin();
+
+      // ----- tenant subcollections -----
+
+      // Member directory (identity + role + scope).
+      match /members/{memberUid} {
+        allow read: if isSuperAdmin()
+          || (signedIn() && memberUid == uid())   // own profile (needed at boot)
+          || isStaff(schoolId);                    // staff directory
+        allow create: if isSuperAdmin() || isSchoolAdmin(schoolId);
+        allow update: if isSuperAdmin()
+          || isSchoolAdmin(schoolId)
+          // self-service profile edit: a member may update their own contact/profile
+          // fields ONLY. They must NOT be able to change identity/role/tenant OR any
+          // privilege-bearing field — otherwise a member could self-grant
+          // `grantedPermissions` (or a second role / wider scope) and escalate to full
+          // access. All such fields are pinned to their existing value via
+          // `.get(field, <default>)` so an absent field stays absent and a present one
+          // is frozen. (Defaults match the data layer: arrays → [], roles → '', bools
+          // → false, scope object → {}.)
+          || (signedIn() && memberUid == uid()
+              && request.resource.data.roleId == resource.data.roleId
+              && request.resource.data.status == resource.data.status
+              && request.resource.data.schoolId == resource.data.schoolId
+              && request.resource.data.get('grantedPermissions', [])
+                   == resource.data.get('grantedPermissions', [])
+              && request.resource.data.get('permissions', [])
+                   == resource.data.get('permissions', [])
+              && request.resource.data.get('secondaryRoleId', '')
+                   == resource.data.get('secondaryRoleId', '')
+              && request.resource.data.get('secondaryRole', '')
+                   == resource.data.get('secondaryRole', '')
+              && request.resource.data.get('delegatedModules', [])
+                   == resource.data.get('delegatedModules', [])
+              && request.resource.data.get('scope', {})
+                   == resource.data.get('scope', {})
+              && request.resource.data.get('isSuperAdmin', false)
+                   == resource.data.get('isSuperAdmin', false));
+        allow delete: if isSuperAdmin() || isSchoolAdmin(schoolId);
+      }
+
+      // Settings (incl. per-school feature flags). Readable by members.
+      match /settings/{docId} {
+        allow read: if isSuperAdmin() || isMember(schoolId);
+        allow write: if isSuperAdmin() || isSchoolAdmin(schoolId);
+      }
+
+      // Per-school role overrides/custom roles (data-driven RBAC): any active
+      // member reads (the session resolves their role's permissions); only school
+      // admins / super admin write. (Previously these fell through the generic
+      // tenant wildcard, which let ANY staff edit role definitions — too open.)
+      match /roleDefinitions/{rid} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isSchoolAdmin(schoolId);
+      }
+
+      // Append-only audit log.
+      match /audit_log/{entryId} {
+        allow read: if canReadAudit(schoolId);
+        allow create: if isActiveMember(schoolId);
+        allow update, delete: if false;
+      }
+
+      // ----- SENSITIVE: strict role allowlists -----
+
+      // Medical / clinic records — all nurse/doctor variants + leadership.
+      match /medical/{docId} {
+        allow read, write: if isSuperAdmin()
+          || hasAnyRole(schoolId, [
+            'nurse', 'doctor', 'nurse_residential', 'nurse_sped', 'nurse_pediatric',
+            'nurse_practitioner', 'nurse_community', 'nurse_visiting',
+            'principal', 'head_of_school', 'headmaster', 'headmistress', 'vp_admin'
+          ]);
+      }
+      match /immunization/{docId} {
+        allow read, write: if isSuperAdmin()
+          || hasAnyRole(schoolId, [
+            'nurse', 'doctor', 'nurse_residential', 'nurse_sped', 'nurse_pediatric',
+            'nurse_practitioner', 'nurse_community', 'nurse_visiting',
+            'principal', 'head_of_school', 'headmaster', 'headmistress', 'vp_admin'
+          ]);
+      }
+      // Counseling case notes — PER-COUNSELLOR confidentiality.
+      // Oversight (leadership/principal-equivalents) sees every counsellor's notes.
+      // A line counsellor (counselor / guidance_counselor / special_educator) sees a
+      // STAMPED doc only if it is their own (`counselorUid == uid`); LEGACY docs with
+      // no `counselorUid` (sentinel '') stay readable by any counsellor so historic
+      // notes aren't orphaned. On create, the stamp must be the author's own uid (or
+      // left blank, e.g. a backfill). Mirrors the data layer's `counselorUid` scoping.
+      match /counseling/{docId} {
+        allow read, update, delete: if isSuperAdmin()
+          || isCounselingOversight(schoolId)
+          || (isCounselor(schoolId)
+              && (resource.data.get('counselorUid', '') == ''
+                  || resource.data.get('counselorUid', '') == uid()));
+        allow create: if isSuperAdmin()
+          || isCounselingOversight(schoolId)
+          || (isCounselor(schoolId)
+              && (request.resource.data.get('counselorUid', '') == uid()
+                  || request.resource.data.get('counselorUid', '') == ''));
+      }
+      // Child protection (POCSO) — most restricted: CPO/Alternate CPO + principal-equivalents.
+      // NOTE: the POSH/POCSO Committee and ICC are deliberately NOT here — they get
+      // grievances only (decision 2026-06-17).
+      match /pocso/{docId} {
+        allow read, write: if isSuperAdmin()
+          || hasAnyRole(schoolId, [
+            'cpo', 'alternate_cpo', 'principal', 'head_of_school', 'headmaster', 'headmistress'
+          ]);
+      }
+      // Grievance / complaints redressal — CPO + DPO + leadership AND the
+      // POSH/POCSO Committee + ICC (the staff-complaints/grievance side only).
+      match /grievances/{docId} {
+        allow read, write: if isSuperAdmin()
+          || hasAnyRole(schoolId, [
+            'cpo', 'alternate_cpo', 'dpo', 'principal', 'head_of_school', 'vp_admin',
+            'posh_committee', 'icc_member'
+          ]);
+      }
+
+      // ----- FEES & FINANCE: accounts/leadership + family own-records -----
+
+      // Per-student fee invoices: finance/leadership read all; a parent/student
+      // reads ONLY their own (their query must filter `studentId == <own>`).
+      match /fee_invoices/{docId} {
+        allow read: if isSuperAdmin() || isFeesStaff(schoolId)
+          || ownsStudentId(schoolId, resource.data.studentId);
+        // create: role gate only (figures are computed by the data layer on issue).
+        allow create: if isSuperAdmin() || isFeesStaff(schoolId);
+        // update/delete: role gate PLUS two defence-in-depth invariants that mirror
+        // the data layer (`cancelInvoice` / payment posting):
+        //   (a) never CANCEL an invoice that already has money against it — a paid
+        //       invoice must be refunded (paidAmount → 0) before cancel;
+        //   (b) never let paidAmount exceed netAmount (overpay). netAmount defaults to
+        //       paidAmount when absent so a doc without netAmount can't trip the guard.
+        allow update: if (isSuperAdmin() || isFeesStaff(schoolId))
+          && !(request.resource.data.get('status', '') == 'cancelled'
+               && resource.data.get('paidAmount', 0) > 0)
+          && request.resource.data.get('paidAmount', 0)
+               <= request.resource.data.get('netAmount', request.resource.data.get('paidAmount', 0));
+        allow delete: if isSuperAdmin() || isFeesStaff(schoolId);
+      }
+      match /fee_payments/{docId} {
+        allow read: if isSuperAdmin() || isFeesStaff(schoolId)
+          || ownsStudentId(schoolId, resource.data.studentId);
+        allow write: if isSuperAdmin() || isFeesStaff(schoolId);
+      }
+      // Refund records (carry student financial PII) — accounts read all / family own; accounts write.
+      match /fee_refunds/{docId} {
+        allow read: if isSuperAdmin() || isFeesStaff(schoolId)
+          || ownsStudentId(schoolId, resource.data.studentId);
+        allow write: if isSuperAdmin() || isFeesStaff(schoolId);
+      }
+      // Receipt-number counter (internal) — accounts/leadership only.
+      match /finance_counters/{docId} {
+        allow read, write: if isSuperAdmin() || isFeesStaff(schoolId);
+      }
+
+      // ----- PAYROLL: HR / accounts / leadership only (never families) -----
+      match /payroll_runs/{docId} {
+        allow read, write: if isSuperAdmin() || isPayrollStaff(schoolId);
+      }
+      // NOTE: "no payslip edit after the run is finalized/paid" is enforced in the
+      // DATA LAYER (`savePayslipGuarded` reads the parent run's status in the same
+      // transaction as the write and rejects a non-draft run). A rules-side guard
+      // would have to dereference the run via the payslip's `runId` + read its
+      // `status`, which the current fixtures don't carry — so it stays data-layer
+      // enforced (per task #6's "skip if not clean without fragile fixtures").
+      match /payslips/{docId} {
+        allow read, write: if isSuperAdmin() || isPayrollStaff(schoolId);
+      }
+      match /salary_structures/{docId} {
+        allow read, write: if isSuperAdmin() || isPayrollStaff(schoolId);
+      }
+
+      // ----- STUDENT RECORDS: staff (broad) + family own-records -----
+      // Student docs carry Aadhaar/address/guardians — parents/students read ONLY
+      // their own (doc id == studentId). Staff retain broad access (lists, profiles).
+      match /students/{docId} {
+        allow read: if isSuperAdmin() || isStaff(schoolId) || ownsStudentId(schoolId, docId);
+        allow write: if isSuperAdmin() || isStaff(schoolId);
+      }
+
+      // ----- STAFF (HR) RECORDS: staff read directory; HR/leadership write -----
+      match /staff/{docId} {
+        allow read: if isSuperAdmin() || isStaff(schoolId);
+        allow write: if isSuperAdmin() || isHrStaff(schoolId);
+      }
+
+      // ----- CERTIFICATES: issued docs + serial counters — staff only (no families) -----
+      // Bonafide/TC/character etc. carry student PII; the issuance register and the
+      // serial counters are internal office records. Staff read/write; parents/students
+      // have no access (a future parent "my certificates" view would add own-scoping).
+      match /certificates/{docId} {
+        allow read, write: if isSuperAdmin() || isCertificateIssuer(schoolId);
+      }
+      match /certificate_counters/{docId} {
+        allow read, write: if isSuperAdmin() || isCertificateIssuer(schoolId);
+      }
+
+      // ----- QUESTION PAPERS: academic staff only (papers must NEVER reach students) -----
+      match /questionBank/{docId} {
+        allow read, write: if isSuperAdmin() || isExamStaff(schoolId);
+      }
+      match /questionPapers/{docId} {
+        allow read, write: if isSuperAdmin() || isExamStaff(schoolId);
+      }
+      match /paperBlueprints/{docId} {
+        allow read, write: if isSuperAdmin() || isExamStaff(schoolId);
+      }
+
+      // ----- REPORT CARDS: academic staff write; families read OWN PUBLISHED only -----
+      match /reportCards/{docId} {
+        allow read: if isSuperAdmin() || isAcademicStaff(schoolId)
+          || (ownsStudentId(schoolId, resource.data.studentId) && resource.data.published == true);
+        allow write: if isSuperAdmin() || isAcademicStaff(schoolId);
+      }
+      match /reportCardSchemes/{docId} {
+        allow read, write: if isSuperAdmin() || isAcademicStaff(schoolId);
+      }
+
+      // ----- SKILLS PASSPORT (portfolio): student owns own; staff verify; no self-verify -----
+      match /portfolio/{docId} {
+        allow read: if isSuperAdmin() || isStaff(schoolId) || ownsStudentId(schoolId, resource.data.studentId);
+        allow create: if isSuperAdmin() || isStaff(schoolId)
+          || (ownsStudentId(schoolId, request.resource.data.studentId) && request.resource.data.status != 'verified');
+        allow update: if isSuperAdmin() || isStaff(schoolId)
+          || (ownsStudentId(schoolId, resource.data.studentId)
+              && request.resource.data.studentId == resource.data.studentId
+              && request.resource.data.status != 'verified');
+        allow delete: if isSuperAdmin() || isStaff(schoolId) || ownsStudentId(schoolId, resource.data.studentId);
+      }
+
+      // ----- CAREER ASSESSMENTS: student creates/reads OWN; counsellor/staff read cohort + review -----
+      match /careerAssessments/{docId} {
+        allow read: if isSuperAdmin() || isCounselingStaff(schoolId) || ownsStudentId(schoolId, resource.data.studentId);
+        allow create: if isSuperAdmin() || isCounselingStaff(schoolId) || ownsStudentId(schoolId, request.resource.data.studentId);
+        allow update: if isSuperAdmin() || isCounselingStaff(schoolId);
+      }
+
+      // ----- CONSENT (DPDP): consent/data-protection staff + leadership -----
+      match /consent_records/{docId} {
+        allow read, write: if isSuperAdmin() || isConsentStaff(schoolId);
+      }
+      // Consent PURPOSE catalogue (DPDP): any active member may READ the purpose list
+      // (e.g. parents need it to respond to consent); only consent staff + leadership WRITE.
+      match /consent_purposes/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isConsentStaff(schoolId);
+      }
+
+      // ----- SPECIAL EDUCATION (IEP) / THERAPY: special-ed + leadership -----
+      match /iep_plans/{docId} {
+        allow read, write: if isSuperAdmin() || isSpedStaff(schoolId);
+      }
+      match /therapy_logs/{docId} {
+        allow read, write: if isSuperAdmin() || isSpedStaff(schoolId);
+      }
+
+      // ----- ACADEMIC RECORDS (attendance / marks / exam results / HPC) -----
+      // These store a whole class in one document (entries keyed by studentId), so
+      // per-family READ scoping must wait for the Danger-2 reshape; for now reads
+      // stay member-wide but WRITES are limited to academic staff (no more "any
+      // staff can edit marks"). HPC co-scholastic writes include sports/arts
+      // teachers (decision 2026-06-17, via isAcademicStaff).
+      match /attendance_days/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isAcademicStaff(schoolId);
+      }
+      match /assessment_results/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isAcademicStaff(schoolId);
+      }
+      match /exam_results/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isAcademicStaff(schoolId);
+      }
+      match /hpc_cards/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isAcademicStaff(schoolId);
+      }
+
+      // ----- DIRECT MESSAGING: participants only (POCSO escalations live here) -----
+      // conversations carry escalation threads (incl. safeguarding hand-offs), so a
+      // member may read/write ONLY a thread they participate in. Previously these
+      // fell through the tenant wildcard, letting ANY active member read EVERY
+      // conversation + message in the school. The doc id is deterministic
+      // (sorted uids) but access is gated on the `participantUids` array, not the id.
+      match /conversations/{convId} {
+        allow read: if isSuperAdmin()
+          || (isActiveMember(schoolId) && uid() in resource.data.participantUids);
+        // create: the author must be one of the two participants.
+        allow create: if isSuperAdmin()
+          || (isActiveMember(schoolId) && uid() in request.resource.data.participantUids);
+        // update: only an existing participant (send bumps lastMessage/unread, the
+        // other party marks read, leadership escalates a thread they are in).
+        allow update: if isSuperAdmin()
+          || (isActiveMember(schoolId) && uid() in resource.data.participantUids);
+        allow delete: if isSuperAdmin();
+      }
+      // Messages are a flat collection tagged with conversationId. There is no
+      // participant array on the message itself, so membership is resolved by a
+      // lookup to the parent conversation. On create the sender must be the
+      // signed-in user AND a participant of that conversation; reads require
+      // participation. (Messages are immutable once written: no update/delete.)
+      match /messages/{msgId} {
+        function convOf(cid) {
+          return get(/databases/$(database)/documents/schools/$(schoolId)/conversations/$(cid)).data;
+        }
+        allow read: if isSuperAdmin()
+          || (isActiveMember(schoolId)
+              && uid() in convOf(resource.data.conversationId).participantUids);
+        allow create: if isSuperAdmin()
+          || (isActiveMember(schoolId)
+              && request.resource.data.senderUid == uid()
+              && uid() in convOf(request.resource.data.conversationId).participantUids);
+        allow update, delete: if isSuperAdmin();
+      }
+
+      // ----- FINANCE / PROCUREMENT: finance & procurement desk + leadership -----
+      // Vendors, purchase orders, goods receipts, requisitions, expenses and the
+      // fee-head / fee-structure catalogues + finance/expense settings carry vendor
+      // bank details and cost data — never families, never general staff.
+      match /vendors/{docId} {
+        allow read, write: if isSuperAdmin() || isProcurementStaff(schoolId);
+      }
+      match /purchase_orders/{docId} {
+        allow read, write: if isSuperAdmin() || isProcurementStaff(schoolId);
+      }
+      match /goods_receipts/{docId} {
+        allow read, write: if isSuperAdmin() || isProcurementStaff(schoolId);
+      }
+      match /requisitions/{docId} {
+        allow read, write: if isSuperAdmin() || isProcurementStaff(schoolId);
+      }
+      match /expenses/{docId} {
+        allow read, write: if isSuperAdmin() || isProcurementStaff(schoolId);
+      }
+      match /expense_settings/{docId} {
+        allow read, write: if isSuperAdmin() || isProcurementStaff(schoolId);
+      }
+      match /fee_heads/{docId} {
+        allow read, write: if isSuperAdmin() || isFeesStaff(schoolId);
+      }
+      match /fee_structures/{docId} {
+        allow read, write: if isSuperAdmin() || isFeesStaff(schoolId);
+      }
+      // finance_settings holds the "how to pay" bank block parents need to see, so
+      // any active member READS it; only the fees desk WRITES it. (Matches the
+      // existing rules-test expectation: a parent can read finance_settings/main.)
+      match /finance_settings/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isFeesStaff(schoolId);
+      }
+
+      // ----- GOVERNANCE / STATUTORY: SMC, compliance register, UDISE+ -----
+      match /smc_members/{docId} {
+        allow read, write: if isSuperAdmin() || isGovernanceStaff(schoolId);
+      }
+      match /smc_meetings/{docId} {
+        allow read, write: if isSuperAdmin() || isGovernanceStaff(schoolId);
+      }
+      match /smc_budget/{docId} {
+        allow read, write: if isSuperAdmin() || isGovernanceStaff(schoolId);
+      }
+      match /compliance_items/{docId} {
+        allow read, write: if isSuperAdmin() || isGovernanceStaff(schoolId);
+      }
+      match /compliance_documents/{docId} {
+        allow read, write: if isSuperAdmin() || isGovernanceStaff(schoolId);
+      }
+      match /udise_profile/{docId} {
+        allow read, write: if isSuperAdmin() || isGovernanceStaff(schoolId);
+      }
+
+      // ----- RTE (Right to Education): admissions desk + leadership -----
+      match /rte_applications/{docId} {
+        allow read, write: if isSuperAdmin() || isAdmissionsStaff(schoolId);
+      }
+      match /rte_claims/{docId} {
+        allow read, write: if isSuperAdmin() || isAdmissionsStaff(schoolId);
+      }
+
+      // ----- VISITOR / GATE: security / front-desk + leadership -----
+      // The gate register and the blacklist carry visitor PII (phone, ID last-4).
+      match /visitors/{docId} {
+        allow read, write: if isSuperAdmin() || isSecurityStaff(schoolId);
+      }
+      match /visitor_blacklist/{docId} {
+        allow read, write: if isSuperAdmin() || isSecurityStaff(schoolId);
+      }
+
+      // ----- DELEGATIONS: temporary operate grants — admin writes; staff read -----
+      // Any active member READS (the session subscribes to its own active grants to
+      // resolve `delegatedModules`); only a school admin WRITES (grants/revokes).
+      // NOTE: per-rule enforcement of what a delegation actually unlocks is a larger
+      // follow-up — today this only secures the delegation register itself.
+      match /delegations/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isSchoolAdmin(schoolId);
+      }
+
+      // ----- DPDP / CHILD-PROTECTION (Legal pass collections) -----
+      // POCSO serial counter — same gate as the `pocso` register above (CPO + principal).
+      match /pocso_counters/{docId} {
+        allow read, write: if isSuperAdmin()
+          || hasAnyRole(schoolId, [
+            'cpo', 'alternate_cpo', 'principal', 'head_of_school', 'headmaster', 'headmistress'
+          ]);
+      }
+      // DPDP erasure / data-subject requests — consent desk + leadership.
+      match /erasure_requests/{docId} {
+        allow read, write: if isSuperAdmin() || isConsentStaff(schoolId);
+      }
+      // Personal-data breach notifications (DPDP §8 / CERT-In) — DPO + IT + leadership.
+      match /breach_notifications/{docId} {
+        allow read, write: if isSuperAdmin() || isBreachStaff(schoolId);
+      }
+
+      // ----- BOARD RESULTS (external CBSE/ICSE/State imports) -----
+      // Carry per-student board marks; exam staff manage, and a family reads ONLY
+      // their own child's result (their query must filter studentId == <own>).
+      match /board_results/{docId} {
+        allow read: if isSuperAdmin() || isExamStaff(schoolId)
+          || ownsStudentId(schoolId, resource.data.studentId);
+        allow write: if isSuperAdmin() || isExamStaff(schoolId);
+      }
+
+      // ----- STUDENT LEAVE REQUESTS: parent files; staff decide -----
+      // A parent/student reads their OWN child's requests (scoped query) and may
+      // CREATE a new request for their own child (must start 'pending'); staff read
+      // all and are the ONLY ones who approve/reject (update) or delete.
+      // Defense-in-depth: ON ANY UPDATE, the identity/ownership fields are IMMUTABLE
+      // — neither a parent nor a staff member correcting a decision may rewrite WHICH
+      // child the request is for (`studentId`) or WHO filed it (`requestedByUid`).
+      // (Update is staff/super only today, so this is belt-and-suspenders; defaults
+      // pin an absent field to absent so a doc without the field can't trip the guard.)
+      match /student_leave_requests/{docId} {
+        allow read: if isSuperAdmin() || isStaff(schoolId)
+          || ownsStudentId(schoolId, resource.data.studentId);
+        allow create: if isSuperAdmin() || isStaff(schoolId)
+          || (ownsStudentId(schoolId, request.resource.data.studentId)
+              && request.resource.data.get('status', '') == 'pending');
+        allow update: if (isSuperAdmin() || isStaff(schoolId))
+          && request.resource.data.get('studentId', '') == resource.data.get('studentId', '')
+          && request.resource.data.get('requestedByUid', '') == resource.data.get('requestedByUid', '');
+        allow delete: if isSuperAdmin() || isStaff(schoolId);
+      }
+
+      // ----- PTM (Parent-Teacher Meeting) scheduling -----
+      // Meeting docs are visible to every active member (parents must see what's on
+      // offer); only staff create/edit meetings. The booking transaction increments
+      // the per-slot counter + per-child guard docs in the subcollections below;
+      // those are bookkeeping docs an active member (parent) must be able to write.
+      // NOTE: capacity is enforced INSIDE the client booking transaction (it reads
+      // `slot_counters/{slotId}.count` vs slot capacity and rejects when full). The
+      // rules deliberately allow any active member to write the counter/guard docs
+      // (MVP) — residual risk: a hand-crafted write could tamper with a counter; the
+      // transaction's read-modify-write still prevents two parents overbooking a seat.
+      match /ptm_meetings/{meetingId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isStaff(schoolId);
+
+        // Per-slot occupancy counter (doc id == slotId). Booking/cancel transactions
+        // (run by a parent, who is an active member) bump this; staff are members too.
+        match /slot_counters/{slotId} {
+          allow read: if isSuperAdmin() || isActiveMember(schoolId);
+          allow write: if isSuperAdmin() || isActiveMember(schoolId);
+        }
+        // Per-child booking guard (doc id == studentId) — set by the same transaction
+        // so a second booking for the same child + meeting is rejected client-side.
+        match /booked_students/{studentId} {
+          allow read: if isSuperAdmin() || isActiveMember(schoolId);
+          allow write: if isSuperAdmin() || isActiveMember(schoolId);
+        }
+      }
+
+      // ----- TIMETABLE SUBSTITUTIONS: member read; academic staff write -----
+      // Cover for absent teachers. Any active member READS (students/parents see
+      // that the timetable changed); only academic staff (the `academics.write`
+      // holders) create/remove cover. Previously rode the wildcard (any staff wrote).
+      match /substitutions/{docId} {
+        allow read: if isSuperAdmin() || isActiveMember(schoolId);
+        allow write: if isSuperAdmin() || isAcademicStaff(schoolId);
+      }
+
+      // ----- PTM BOOKINGS: a parent owns their own bookings -----
+      // Staff read every booking (roster). A parent reads/cancels only their OWN
+      // bookings (parentUid == uid) and may CREATE a booking only for their own
+      // child (and stamped with their own parentUid). Only staff hard-delete.
+      // On the PARENT-cancel update path the identity/ownership fields are PINNED:
+      // a parent may flip `status` (e.g. → 'cancelled') but may NOT move the booking
+      // to another child/slot/meeting or reassign ownership. Without these pins a
+      // parent could rewrite `studentId`/`slotId`/`meetingId` to steal another seat,
+      // or `parentUid` to dump the booking on (or claim it from) another parent.
+      // Staff/super keep an unconstrained update (the roster desk fixes anything).
+      match /ptm_bookings/{docId} {
+        allow read: if isSuperAdmin() || isStaff(schoolId)
+          || resource.data.get('parentUid', '') == uid();
+        allow create: if isSuperAdmin() || isStaff(schoolId)
+          || (request.resource.data.get('parentUid', '') == uid()
+              && ownsStudentId(schoolId, request.resource.data.studentId));
+        allow update: if isSuperAdmin() || isStaff(schoolId)
+          || (resource.data.get('parentUid', '') == uid()
+              && request.resource.data.get('studentId', '') == resource.data.get('studentId', '')
+              && request.resource.data.get('meetingId', '') == resource.data.get('meetingId', '')
+              && request.resource.data.get('slotId', '') == resource.data.get('slotId', '')
+              && request.resource.data.get('parentUid', '') == resource.data.get('parentUid', ''));
+        allow delete: if isSuperAdmin() || isStaff(schoolId);
+      }
+
+      // ----- DEFAULT tenant data -----
+      // Any other school subcollection (NOT one of the restricted ones above):
+      // tenant-scoped. Active members read; staff write. Modules refine these
+      // per-collection as they are built.
+      match /{collection}/{docId} {
+        allow read: if !isRestrictedCollection(collection)
+          && (isSuperAdmin() || isActiveMember(schoolId));
+        allow write: if !isRestrictedCollection(collection)
+          && (isSuperAdmin() || isStaff(schoolId));
+
+        // Nested grandchild docs inherit the same tenant boundary.
+        match /{document=**} {
+          allow read: if !isRestrictedCollection(collection)
+            && (isSuperAdmin() || isActiveMember(schoolId));
+          allow write: if !isRestrictedCollection(collection)
+            && (isSuperAdmin() || isStaff(schoolId));
+        }
+      }
+    }
+
+    // Platform subscriptions / plans / settings / flags / announcements.
+    match /subscriptions/{id} {
+      allow read: if isSuperAdmin();
+      allow write: if isSuperAdmin();
+    }
+    match /plans/{id} {
+      allow read: if signedIn();          // shown in-app
+      allow write: if isSuperAdmin();
+    }
+    match /platform_settings/{id} {
+      allow read: if signedIn();
+      allow write: if isSuperAdmin();
+    }
+    // Feature flags: any signed-in user reads (SessionProvider resolves flags at
+    // boot); only super admin writes.
+    match /feature_flags/{id} {
+      allow read: if signedIn();
+      allow write: if isSuperAdmin();
+    }
+    // Data-driven role definitions: any signed-in user reads (the session resolves
+    // their role's permissions at boot); only a super admin creates/edits roles.
+    match /roleDefinitions/{id} {
+      allow read: if signedIn();
+      allow write: if isSuperAdmin();
+    }
+    match /platform_announcements/{id} {
+      allow read: if signedIn();
+      allow write: if isSuperAdmin();
+    }
+    // Platform activity feed — super-admin readable; append-only.
+    match /platform_activity/{id} {
+      allow read: if isSuperAdmin();
+      allow create: if isSuperAdmin();
+      allow update, delete: if false;
+    }
+    // Impersonation sessions — super-admin only; create + end (update endedAt).
+    match /impersonation_sessions/{id} {
+      allow read, create, update: if isSuperAdmin();
+      allow delete: if false;
+    }
+    // Platform audit log: append-only, super-admin readable.
+    match /platform_audit_log/{id} {
+      allow read: if isSuperAdmin();
+      allow create: if isSuperAdmin();
+      allow update, delete: if false;
+    }
+
+    // Anything not matched above is denied.
+  }
+}

@@ -1,0 +1,99 @@
+/* ============================================================================
+ * SMC (School Management Committee) module styles. Reuses the global kit
+ * (nx-page, nx-toolbar, panel, kpi-grid, grid, badge) and the shared
+ * compliance budget bar (.cmp-bar / .cmp-bar__fill, imported in routes.tsx).
+ * Only module-specific surfaces live here.
+ * ==========================================================================*/
+
+/* ---- RTE composition hint ---- */
+.smc-hint {
+  display: flex; align-items: flex-start; gap: 9px; padding: 10px 13px;
+  border-radius: var(--radius-md); font-size: 12.5px; line-height: 1.45;
+  border: 1px solid var(--hairline); background: var(--card); color: var(--text);
+}
+.smc-hint svg { flex-shrink: 0; margin-top: 1px; }
+.smc-hint.is-ok { border-color: color-mix(in srgb, var(--success) 38%, transparent); background: color-mix(in srgb, var(--success) 8%, var(--card)); }
+.smc-hint.is-ok svg { color: var(--success); }
+.smc-hint.is-warn { border-color: color-mix(in srgb, var(--warning) 40%, transparent); background: color-mix(in srgb, var(--warning) 9%, var(--card)); }
+.smc-hint.is-warn svg { color: var(--warning); }
+.smc-hint strong { font-variant-numeric: tabular-nums; }
+
+/* ---- Roster (members) ---- */
+.smc-roster { display: flex; flex-direction: column; gap: 22px; }
+.smc-group__head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--text); }
+.smc-group__head svg { color: var(--gold); }
+.smc-group__title { font-size: 13px; font-weight: 600; letter-spacing: 0.01em; margin: 0; }
+.smc-group__count {
+  font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums;
+  min-width: 20px; padding: 1px 7px; border-radius: 999px; text-align: center;
+  background: var(--hairline); color: var(--text-muted);
+}
+
+.smc-card {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 13px 14px; border: 1px solid var(--hairline); border-radius: var(--radius-md); background: var(--card);
+}
+.smc-card.is-chair {
+  border-color: color-mix(in srgb, var(--gold) 45%, transparent);
+  background: color-mix(in srgb, var(--gold) 6%, var(--card));
+}
+.smc-card.is-inactive { opacity: 0.62; }
+.smc-card__name { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.smc-card__chair {
+  display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600;
+  padding: 1px 8px; border-radius: 999px; color: var(--gold);
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+}
+.smc-card__chair svg { color: var(--gold); }
+.smc-card__meta { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+.smc-card__term { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
+.smc-card__actions { display: flex; gap: 2px; flex-shrink: 0; }
+
+/* ---- Meetings list ---- */
+.smc-section-title { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 0 0 10px; }
+.smc-section-title svg { color: var(--gold); }
+.smc-meeting-list { display: flex; flex-direction: column; gap: 10px; }
+.smc-meeting {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  padding: 12px; border: 1px solid var(--hairline); border-radius: var(--radius-md);
+  background: var(--card); color: inherit; cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.smc-meeting:hover { border-color: color-mix(in srgb, var(--gold) 40%, var(--hairline)); }
+.smc-meeting:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.smc-meeting__date {
+  flex-shrink: 0; width: 52px; text-align: center; border-radius: var(--radius-sm, 8px);
+  background: var(--card); border: 1px solid var(--hairline); padding: 6px 4px;
+}
+.smc-meeting__day { font-size: 18px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.smc-meeting__mon { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-top: 2px; }
+.smc-meeting__date.is-cancelled { opacity: 0.55; }
+.smc-meeting__title { font-weight: 600; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.smc-meeting__meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.smc-meeting__chev { color: var(--text-muted); flex-shrink: 0; }
+@media (max-width: 520px) {
+  .smc-meeting { flex-wrap: wrap; }
+  .smc-meeting__chev { display: none; }
+}
+
+/* ---- Meeting detail ---- */
+.smc-stack { margin-top: 16px; }
+.smc-prose { font-size: 13.5px; line-height: 1.55; color: var(--text); white-space: pre-wrap; margin: 0; }
+.smc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 4px; }
+.smc-muted { color: var(--text-muted); }
+.smc-attendees { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.smc-attend-readonly { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.smc-attend-readonly li { display: flex; align-items: center; gap: 7px; font-size: 13px; }
+.smc-attend-readonly svg { color: var(--success); flex-shrink: 0; }
+
+/* ---- Budget cards ---- */
+.smc-budget { padding: 14px; border: 1px solid var(--hairline); border-radius: var(--radius-md); background: var(--card); }
+.smc-budget__top { display: flex; align-items: flex-start; gap: 10px; }
+.smc-budget__head { font-weight: 600; font-size: 14px; }
+.smc-budget__meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.smc-budget__actions { display: flex; gap: 2px; flex-shrink: 0; }
+.smc-budget__figures { display: flex; align-items: baseline; gap: 8px; margin-top: 10px; font-size: 13px; flex-wrap: wrap; }
+.smc-budget__figures strong { font-variant-numeric: tabular-nums; }
+.smc-budget__pct { margin-left: auto; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--text-muted); }
+.smc-budget__pct.is-over { color: var(--danger); }
+.smc-budget__notes { font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.45; }

@@ -1,0 +1,55 @@
+/* =============================================================
+   NEXLI — System Health module styles. Mobile-first.
+   Honest service status board (no synthetic metrics).
+   ============================================================= */
+
+/* ---- Header status dot ---- */
+.hl-statusdot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--text-muted); margin-right: 7px; vertical-align: middle;
+}
+.hl-statusdot.is-ok { background: var(--success); box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18); }
+
+/* ---- Service board ---- */
+.hl-board { display: flex; flex-direction: column; }
+.hl-row {
+  display: flex; align-items: center; gap: 12px; padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.hl-row:last-child { border-bottom: 0; }
+.hl-row:first-child { padding-top: 4px; }
+
+.hl-row__icon {
+  width: 38px; height: 38px; border-radius: var(--r-sm); flex-shrink: 0;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); color: var(--text-muted);
+}
+.hl-row__icon.is-operational { background: var(--success-bg); border-color: rgba(34, 197, 94, 0.32); color: var(--success); }
+.hl-row__icon.is-configured { background: rgba(96, 165, 250, 0.12); border-color: rgba(96, 165, 250, 0.32); color: #60a5fa; }
+.hl-row__icon.is-pending { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: var(--warning); }
+
+.hl-row__body { flex: 1; min-width: 0; }
+.hl-row__name { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.hl-row__detail { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; line-height: 1.45; }
+
+/* ---- Status pill ---- */
+.hl-pill {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+  padding: 5px 10px; border-radius: var(--r-pill); font-size: 11.5px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--text-muted); white-space: nowrap;
+}
+.hl-pill__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.hl-pill.is-operational { background: var(--success-bg); border-color: rgba(34, 197, 94, 0.32); color: var(--success); }
+.hl-pill.is-configured { background: rgba(96, 165, 250, 0.1); border-color: rgba(96, 165, 250, 0.3); color: #60a5fa; }
+.hl-pill.is-pending { background: rgba(245, 158, 11, 0.08); border-color: rgba(245, 158, 11, 0.28); color: var(--warning); }
+
+@media (max-width: 480px) {
+  .hl-row { flex-wrap: wrap; }
+  .hl-pill { margin-left: 50px; }
+}
+
+/* ---- Footer note ---- */
+.hl-foot {
+  font-size: 11.5px; color: var(--text-muted); line-height: 1.55;
+  padding: 2px 2px 4px; margin: 0;
+}

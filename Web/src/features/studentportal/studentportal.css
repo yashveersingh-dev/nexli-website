@@ -1,0 +1,352 @@
+/* ============================================================================
+ * Student Portal — read-only student screens (profile, timetable, academics,
+ * calendar, achievements, wellness, support). Builds on the shared kit
+ * (.nx-page, .panel, .kpi, .badge, .nx-avatar). Mobile-first; only adds what the
+ * portal surfaces need. Prefixed `sp-` to stay isolated from other modules.
+ * ==========================================================================*/
+
+.sp-stack { display: flex; flex-direction: column; gap: 16px; }
+
+.sp-muted { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+.sp-dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--text-faint); display: inline-block; flex-shrink: 0;
+}
+
+.sp-footnote {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--text-dim); line-height: 1.5; padding: 2px 2px 4px;
+}
+.sp-footnote svg { color: var(--gold); flex-shrink: 0; }
+
+/* ---------------- Profile hero ---------------- */
+.sp-hero {
+  display: flex; align-items: center; gap: 18px;
+  padding: 20px; border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(198, 165, 92, 0.10), transparent 60%),
+    var(--surface);
+  border: 1px solid var(--border);
+}
+.sp-hero .nx-avatar { flex-shrink: 0; }
+.sp-hero__main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.sp-hero__name { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.sp-hero__chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.sp-hero__school {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; color: var(--text-muted);
+}
+.sp-hero__school svg { color: var(--gold); flex-shrink: 0; }
+
+.sp-house {
+  --house: var(--gold);
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+  padding: 3px 9px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--house) 35%, transparent);
+  background: color-mix(in srgb, var(--house) 10%, transparent);
+}
+.sp-house__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--house); flex-shrink: 0; }
+
+/* ---------------- Fact grid (dl) ---------------- */
+.sp-facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px 24px; margin: 0;
+}
+.sp-fact { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.sp-fact__label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-muted); margin: 0;
+}
+.sp-fact__label svg { color: var(--gold); flex-shrink: 0; }
+.sp-fact__value { font-size: 14px; color: var(--text); margin: 0; line-height: 1.4; word-break: break-word; }
+
+/* ---------------- Guardians ---------------- */
+.sp-guardians { display: flex; flex-direction: column; gap: 12px; }
+.sp-guardian {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px; border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+.sp-guardian__main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.sp-guardian__name {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 14px; font-weight: 650; color: var(--text);
+}
+.sp-guardian__rel { font-size: 12.5px; color: var(--text-muted); }
+.sp-guardian__contacts { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 4px; }
+.sp-guardian__contacts span { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-muted); }
+.sp-guardian__contacts svg { color: var(--text-faint); flex-shrink: 0; }
+
+/* ---------------- Timetable grid (≥768px) ---------------- */
+.sp-tt-grid { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.sp-tt-grid table { width: 100%; border-collapse: separate; border-spacing: 6px; min-width: 640px; }
+.sp-tt-grid th {
+  font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-muted); padding: 6px 4px; text-align: center;
+}
+.sp-tt-grid th.is-today { color: var(--gold); }
+.sp-tt-grid td { vertical-align: top; }
+.sp-tt-grid__period { width: 96px; text-align: right; padding-right: 8px; white-space: nowrap; }
+.sp-tt-grid__plabel { font-size: 12.5px; font-weight: 600; color: var(--text); }
+.sp-tt-grid__ptime { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+.sp-tt-grid td.is-today .sp-tt-cell { border-color: rgba(198, 165, 92, 0.32); }
+
+.sp-tt-cell {
+  display: flex; flex-direction: column; gap: 3px; min-height: 52px;
+  padding: 9px 10px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface-2);
+}
+.sp-tt-cell__subject { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.25; }
+.sp-tt-cell__meta { font-size: 11.5px; color: var(--text-muted); line-height: 1.3; }
+.sp-tt-cell--free { color: var(--text-faint); font-size: 12px; align-items: flex-start; justify-content: center; }
+.sp-tt-break {
+  text-align: center; font-size: 12px; font-weight: 600; color: var(--text-muted);
+  padding: 8px; border-radius: 10px; background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--border-2); letter-spacing: 0.04em;
+}
+
+/* ---------------- Timetable per-day list (<768px) ---------------- */
+.sp-tt-daylist { display: none; }
+.sp-day-tabs {
+  display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px; margin-bottom: 4px; scrollbar-width: none;
+}
+.sp-day-tabs::-webkit-scrollbar { display: none; }
+.sp-day-tab {
+  flex-shrink: 0; padding: 7px 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  color: var(--text-muted); font: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: color 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+}
+.sp-day-tab.is-active { color: var(--gold-light); border-color: var(--gold-deep); background: var(--gold-glow); }
+.sp-day-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.sp-period-list { display: flex; flex-direction: column; gap: 8px; }
+.sp-period-card {
+  display: flex; align-items: stretch; gap: 12px;
+  padding: 11px 12px; border-radius: var(--r-md);
+  border: 1px solid var(--border); border-left: 3px solid var(--gold-deep);
+  background: var(--surface-2);
+}
+.sp-period-card--break { border-left-color: var(--border-2); opacity: 0.85; }
+.sp-period-card__no {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  min-width: 44px; gap: 2px;
+}
+.sp-period-card__pno { font-size: 12px; font-weight: 700; color: var(--gold); }
+.sp-period-card__time { font-size: 11px; color: var(--text-dim); }
+.sp-period-card__body { display: flex; flex-direction: column; justify-content: center; gap: 3px; min-width: 0; flex: 1; }
+.sp-period-card__subject { font-size: 14px; font-weight: 600; color: var(--text); }
+.sp-period-card__meta { font-size: 12px; color: var(--text-muted); }
+.sp-period-card__free { font-size: 12.5px; color: var(--text-faint); }
+
+/* ---------------- Subjects ---------------- */
+.sp-subjects { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.sp-subject {
+  --sub: var(--gold);
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 12px; border-radius: var(--r-md);
+  border: 1px solid var(--border); background: var(--surface-2);
+}
+.sp-subject__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--sub); flex-shrink: 0; }
+.sp-subject__name { font-size: 13.5px; font-weight: 600; color: var(--text); flex: 1; min-width: 0; }
+.sp-subject__code { font-size: 11px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+
+/* ---------------- Marks ---------------- */
+.sp-marks { display: flex; flex-direction: column; }
+.sp-mark {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 2px; border-bottom: 1px solid var(--border);
+}
+.sp-mark:last-child { border-bottom: 0; }
+.sp-mark__main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.sp-mark__title { font-size: 14px; font-weight: 600; color: var(--text); }
+.sp-mark__meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); }
+.sp-mark__remark { font-size: 12px; color: var(--text-dim); font-style: italic; }
+.sp-mark__score { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+.sp-mark__val { font-size: 16px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+.sp-mark__max { font-size: 12px; font-weight: 500; color: var(--text-dim); }
+.sp-mark__pct { font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ---------------- Calendar / agenda ---------------- */
+.sp-holidays { display: flex; flex-direction: column; }
+.sp-holiday {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 2px; border-bottom: 1px solid var(--border);
+}
+.sp-holiday:last-child { border-bottom: 0; }
+.sp-holiday__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 8px;
+  background: rgba(198, 165, 92, 0.10); color: var(--gold); flex-shrink: 0;
+}
+.sp-holiday__name { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; min-width: 0; }
+.sp-holiday__date { font-size: 12.5px; color: var(--text-muted); white-space: nowrap; }
+
+.sp-agenda { display: flex; flex-direction: column; gap: 18px; }
+.sp-agenda__month {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--gold); margin: 0 0 10px;
+}
+.sp-agenda__list { display: flex; flex-direction: column; gap: 10px; }
+
+.sp-event {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px; border-radius: var(--r-md);
+  border: 1px solid var(--border); background: var(--surface-2);
+}
+.sp-event__chip {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 48px; flex-shrink: 0; gap: 2px; padding: 6px 4px; border-radius: 10px;
+  background: rgba(198, 165, 92, 0.08); border: 1px solid rgba(198, 165, 92, 0.18);
+}
+.sp-event__d { font-size: 17px; font-weight: 700; color: var(--text); line-height: 1; }
+.sp-event__m { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: var(--gold); }
+.sp-event__main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.sp-event__type { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 600; color: var(--text-muted); }
+.sp-event__type svg { color: var(--gold); flex-shrink: 0; }
+.sp-event__title { font-size: 14.5px; font-weight: 650; color: var(--text); line-height: 1.3; margin: 0; }
+.sp-event__facts { display: flex; flex-direction: column; gap: 4px; }
+.sp-event__facts span { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.sp-event__facts svg { color: var(--text-faint); flex-shrink: 0; }
+
+/* ---------------- Achievements ---------------- */
+.sp-house-card {
+  --house: var(--gold);
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px; border-radius: var(--r-md);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--house) 14%, transparent), transparent 70%), var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--house) 30%, var(--border));
+}
+.sp-house-card__crest {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+  background: color-mix(in srgb, var(--house) 18%, transparent); color: var(--house);
+}
+.sp-house-card__main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.sp-house-card__name { font-size: 16px; font-weight: 700; color: var(--text); }
+.sp-house-card__motto { font-size: 12.5px; color: var(--text-muted); font-style: italic; }
+.sp-house-card__master { font-size: 11.5px; color: var(--text-dim); }
+.sp-house-card__pts { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.sp-house-card__val { font-size: 24px; font-weight: 800; color: var(--house); line-height: 1; font-variant-numeric: tabular-nums; }
+.sp-house-card__lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-top: 3px; }
+
+.sp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.sp-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: var(--text);
+  background: rgba(198, 165, 92, 0.10); border: 1px solid rgba(198, 165, 92, 0.22);
+}
+.sp-tag svg { color: var(--gold); flex-shrink: 0; }
+
+.sp-participation { display: flex; flex-direction: column; }
+.sp-part {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 2px; border-bottom: 1px solid var(--border);
+}
+.sp-part:last-child { border-bottom: 0; }
+.sp-part__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0;
+  background: rgba(198, 165, 92, 0.10); color: var(--gold);
+}
+.sp-part__main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.sp-part__title { font-size: 14px; font-weight: 600; color: var(--text); }
+.sp-part__meta { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-muted); }
+
+/* ---------------- Wellness tips ---------------- */
+.sp-tips { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.sp-tip {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px; border-radius: var(--r-md);
+  border: 1px solid var(--border); background: var(--surface-2);
+}
+.sp-tip__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(198, 165, 92, 0.10); color: var(--gold);
+}
+.sp-tip__main { min-width: 0; flex: 1; }
+.sp-tip__title { font-size: 14px; font-weight: 650; color: var(--text); margin-bottom: 4px; }
+.sp-tip__body { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+.sp-help-row { display: flex; align-items: flex-start; gap: 14px; }
+.sp-help-row__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0;
+  background: var(--danger-bg); color: var(--danger);
+}
+.sp-help-row__title { font-size: 14px; font-weight: 650; color: var(--text); margin-bottom: 4px; }
+.sp-help-row__body { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+
+/* ---------------- Support links + FAQs ---------------- */
+.sp-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.sp-link {
+  display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
+  padding: 13px 14px; border-radius: var(--r-md);
+  border: 1px solid var(--border); background: var(--surface-2);
+  color: inherit; font: inherit; cursor: pointer;
+  transition: border-color 0.14s ease, transform 0.14s ease;
+}
+.sp-link:hover { border-color: rgba(198, 165, 92, 0.32); transform: translateY(-1px); }
+.sp-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.sp-link__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(198, 165, 92, 0.10); color: var(--gold);
+}
+.sp-link__main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.sp-link__title { font-size: 14px; font-weight: 600; color: var(--text); }
+.sp-link__desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+.sp-link__chev { color: var(--text-faint); flex-shrink: 0; }
+
+.sp-faqs { display: flex; flex-direction: column; }
+.sp-faq { border-bottom: 1px solid var(--border); }
+.sp-faq:last-child { border-bottom: 0; }
+.sp-faq__q {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%;
+  padding: 14px 2px; background: none; border: 0; color: var(--text);
+  font: inherit; font-size: 14px; font-weight: 600; text-align: left; cursor: pointer;
+}
+.sp-faq__q:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+.sp-faq__q svg { color: var(--text-muted); flex-shrink: 0; }
+.sp-faq.is-open .sp-faq__q svg { color: var(--gold); }
+.sp-faq__a { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin: 0 0 14px; padding-right: 28px; }
+
+.sp-contact { display: flex; flex-direction: column; gap: 4px; }
+.sp-contact__row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 2px; color: var(--text); text-decoration: none;
+}
+.sp-contact__row--link { border-radius: 8px; transition: background 0.14s ease; }
+.sp-contact__row--link:hover { background: rgba(255, 255, 255, 0.025); }
+.sp-contact__row--link:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.sp-contact__icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+  background: rgba(198, 165, 92, 0.10); color: var(--gold);
+}
+.sp-contact__val { font-size: 14px; color: var(--text); }
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 767px) {
+  .sp-tt-grid { display: none; }
+  .sp-tt-daylist { display: block; }
+  .sp-hero { flex-direction: column; text-align: center; gap: 14px; }
+  .sp-hero__chips { justify-content: center; }
+  .sp-hero__school { justify-content: center; }
+  .sp-hero__name { font-size: 18px; }
+}
+
+/* Narrow phones (≈320px): the card grids' min track (≤280px) can exceed the
+ * available content width once page + panel padding is subtracted, causing
+ * horizontal overflow. Collapse them to a single column. */
+@media (max-width: 480px) {
+  .sp-links,
+  .sp-tips,
+  .sp-subjects,
+  .sp-facts { grid-template-columns: 1fr; }
+}

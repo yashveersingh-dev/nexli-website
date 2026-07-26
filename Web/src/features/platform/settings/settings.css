@@ -1,0 +1,78 @@
+/* Platform Settings module — local styles only.
+   Reuses platform.css classes (.nx-switchlist, .nx-kv, .nx-page__*) + nexli.css panels.
+   Mobile-first: every flag row stacks cleanly at 320px; no horizontal scroll. */
+
+/* Flag row: switch on the left, text in the middle, badges + hint on the right.
+   Built on top of .nx-switchlist__row (border/padding handled there). */
+.nx-flagrow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.nx-flagrow__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.nx-flagrow__text {
+  min-width: 0;
+  flex: 1;
+}
+.nx-flagrow__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.nx-flagrow__desc {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.nx-flagrow__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+.nx-flagrow__hint strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.nx-flagrow .nx-switch {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Compact uppercase section eyebrow used inside panels. */
+.nx-settings__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+/* Subtle "saving…" affordance in panel headers. */
+.nx-settings__saving {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* School picker row sits above the per-school flag list. */
+.nx-settings__picker {
+  max-width: 420px;
+}
