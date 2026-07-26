@@ -1,0 +1,991 @@
+# NEXLI — Demo Test Plan
+
+_Generated 2026-06-16 for the demo school **Nexli Demo International School** (tenant `nexli-demo`)._
+
+## 1. Shared password & how to start the app
+
+- **Shared password for EVERY demo account below:** `NexliDemo@2026`
+- Your real owner Super Admin **yashveersr4@gmail.com** is untouched — keep using it as before.
+- Start the app: open a terminal in the `Web` folder and run `npm run dev`, then open the printed URL (usually **http://localhost:5173/**).
+- Sign in at the login screen with any email + the shared password above.
+
+## 2. Testing on a phone-size screen (Galaxy S20)
+
+1. Open the app in **Google Chrome**.
+2. Press **F12** (opens DevTools).
+3. Click the **device toolbar** icon (the little phone/tablet icon, top-left of DevTools) — or press **Ctrl+Shift+M**.
+4. In the device dropdown at the top of the page, choose **"Galaxy S20"**.
+5. Reload the page. You now see the mobile layout (bottom tab bar + drawer). Test the same steps as on desktop.
+
+## 3. Every account created
+
+> All passwords are the shared password above (`NexliDemo@2026`). Phone numbers are demo contact numbers.
+
+### Test Super Admin
+- **Super Admin (test)** — Test Super Admin · testadmin@nexlidemo.test · +919870000931
+
+### Staff (300)
+- **Chairman** — Advik Das · advik.das1@nexlidemo.test · +919870000001
+- **Academic Director** — Pari Patel · pari.patel10@nexlidemo.test · +919870000010
+- **Principal** — Advik Chauhan · advik.chauhan7@nexlidemo.test · +919870000007
+- **Headmistress** — Diya Das · diya.das9@nexlidemo.test · +919870000009
+- **Head of School (HoS)** — Aleena Malhotra · aleena.malhotra6@nexlidemo.test · +919870000006
+- **Director / CEO** — Shaurya Gupta · shaurya.gupta3@nexlidemo.test · +919870000003
+- **Vice Principal (Academic)** — Varun Gupta · varun.gupta11@nexlidemo.test · +919870000011
+- **Trustee** — Riya Patel · riya.patel2@nexlidemo.test · +919870000002
+- **Regional Director** — Prisha Bajaj · prisha.bajaj4@nexlidemo.test · +919870000004
+- **Headmaster** — Varun Bose · varun.bose8@nexlidemo.test · +919870000008
+- **Cluster Director** — Varun Trivedi · varun.trivedi5@nexlidemo.test · +919870000005
+- **Vice Principal (Admin)** — Anvi Bajaj · anvi.bajaj12@nexlidemo.test · +919870000012
+- **Administrative Manager** — Shaurya Chauhan · shaurya.chauhan15@nexlidemo.test · +919870000015
+- **Dean of Students** — Varun Das · varun.das17@nexlidemo.test · +919870000017
+- **School Manager** — Trisha Malhotra · trisha.malhotra14@nexlidemo.test · +919870000014
+- **Academic Coordinator (Senior) 2** — Sara Nair · sara.nair20@nexlidemo.test · +919870000020
+- **Registrar** — Diya Patel · diya.patel18@nexlidemo.test · +919870000018
+- **Administrator** — Advik Trivedi · advik.trivedi13@nexlidemo.test · +919870000013
+- **Administrative Officer** — Gauri Bose · gauri.bose16@nexlidemo.test · +919870000016
+- **Academic Coordinator (Senior) 1** — Advik Gupta · advik.gupta19@nexlidemo.test · +919870000019
+- **Academic Coordinator (Senior) 3** — Rudra Rao · rudra.rao21@nexlidemo.test · +919870000021
+- **Academic Coordinator (Junior) 1** — Prisha Malhotra · prisha.malhotra22@nexlidemo.test · +919870000022
+- **Academic Coordinator (Junior) 2** — Daksh Pandey · daksh.pandey23@nexlidemo.test · +919870000023
+- **Academic Coordinator (Junior) 3** — Charvi Sinha · charvi.sinha24@nexlidemo.test · +919870000024
+- **Academic Coordinator (Associate / Assistant) 1** — Advik Das · advik.das25@nexlidemo.test · +919870000025
+- **Academic Coordinator (Associate / Assistant) 2** — Sia Banerjee · sia.banerjee26@nexlidemo.test · +919870000026
+- **Academic Coordinator (Associate / Assistant) 3** — Rudra Pillai · rudra.pillai27@nexlidemo.test · +919870000027
+- **Head of Department 1** — Pari Bajaj · pari.bajaj28@nexlidemo.test · +919870000028
+- **Head of Department 2** — Daksh Dube · daksh.dube29@nexlidemo.test · +919870000029
+- **Head of Department 3** — Inaya Verma · inaya.verma30@nexlidemo.test · +919870000030
+- **Exam Controller 1** — Advik Chauhan · advik.chauhan31@nexlidemo.test · +919870000031
+- **Exam Controller 3** — Rudra Kapoor · rudra.kapoor33@nexlidemo.test · +919870000033
+- **Finance Manager 2** — Daksh Khan · daksh.khan35@nexlidemo.test · +919870000035
+- **Finance Manager 1** — Gauri Patel · gauri.patel34@nexlidemo.test · +919870000034
+- **Exam Controller 2** — Vanya Ghosh · vanya.ghosh32@nexlidemo.test · +919870000032
+- **Finance Manager 3** — Ishita Joshi · ishita.joshi36@nexlidemo.test · +919870000036
+- **Bursar 1** — Advik Trivedi · advik.trivedi37@nexlidemo.test · +919870000037
+- **Bursar 3** — Rudra Naidu · rudra.naidu39@nexlidemo.test · +919870000039
+- **Bursar 2** — Sara Mishra · sara.mishra38@nexlidemo.test · +919870000038
+- **Chief Accountant 2** — Daksh Menon · daksh.menon41@nexlidemo.test · +919870000041
+- **Chief Accountant 1** — Prisha Bose · prisha.bose40@nexlidemo.test · +919870000040
+- **HR Manager 1** — Pari Malhotra · pari.malhotra46@nexlidemo.test · +919870000046
+- **Chief Accountant 3** — Charvi Bhat · charvi.bhat42@nexlidemo.test · +919870000042
+- **HR Director 2** — Sia Nair · sia.nair44@nexlidemo.test · +919870000044
+- **HR Director 3** — Rudra Rao · rudra.rao45@nexlidemo.test · +919870000045
+- **HR Director 1** — Advik Gupta · advik.gupta43@nexlidemo.test · +919870000043
+- **HR Manager 2** — Daksh Pandey · daksh.pandey47@nexlidemo.test · +919870000047
+- **HR Manager 3** — Inaya Sinha · inaya.sinha48@nexlidemo.test · +919870000048
+- **HR Executive 1** — Advik Das · advik.das49@nexlidemo.test · +919870000049
+- **HR Assistant 1** — Gauri Bajaj · gauri.bajaj52@nexlidemo.test · +919870000052
+- **HR Executive 3** — Rudra Pillai · rudra.pillai51@nexlidemo.test · +919870000051
+- **HR Executive 2** — Vanya Banerjee · vanya.banerjee50@nexlidemo.test · +919870000050
+- **HR Assistant 3** — Ishita Verma · ishita.verma54@nexlidemo.test · +919870000054
+- **HR Assistant 2** — Daksh Dube · daksh.dube53@nexlidemo.test · +919870000053
+- **Payroll Specialist 1** — Advik Chauhan · advik.chauhan55@nexlidemo.test · +919870000055
+- **Payroll Specialist 2** — Sara Ghosh · sara.ghosh56@nexlidemo.test · +919870000056
+- **Recruitment Coordinator 1** — Prisha Patel · prisha.patel58@nexlidemo.test · +919870000058
+- **Payroll Specialist 3** — Rudra Kapoor · rudra.kapoor57@nexlidemo.test · +919870000057
+- **Recruitment Coordinator 2** — Daksh Khan · daksh.khan59@nexlidemo.test · +919870000059
+- **Recruitment Coordinator 3** — Charvi Joshi · charvi.joshi60@nexlidemo.test · +919870000060
+- **IT Manager 1** — Advik Trivedi · advik.trivedi61@nexlidemo.test · +919870000061
+- **IT Manager 2** — Sia Mishra · sia.mishra62@nexlidemo.test · +919870000062
+- **IT Administrator 1** — Pari Bose · pari.bose64@nexlidemo.test · +919870000064
+- **IT Manager 3** — Rudra Naidu · rudra.naidu63@nexlidemo.test · +919870000063
+- **IT Administrator 2** — Daksh Menon · daksh.menon65@nexlidemo.test · +919870000065
+- **Transport Manager 1** — Advik Gupta · advik.gupta67@nexlidemo.test · +919870000067
+- **IT Administrator 3** — Inaya Bhat · inaya.bhat66@nexlidemo.test · +919870000066
+- **Transport Manager 3** — Rudra Rao · rudra.rao69@nexlidemo.test · +919870000069
+- **Estate / Facility Manager 1** — Gauri Malhotra · gauri.malhotra70@nexlidemo.test · +919870000070
+- **Transport Manager 2** — Vanya Nair · vanya.nair68@nexlidemo.test · +919870000068
+- **Estate / Facility Manager 2** — Daksh Pandey · daksh.pandey71@nexlidemo.test · +919870000071
+- **Estate / Facility Manager 3** — Ishita Sinha · ishita.sinha72@nexlidemo.test · +919870000072
+- **Facilities Manager 2** — Sara Banerjee · sara.banerjee74@nexlidemo.test · +919870000074
+- **Facilities Manager 3** — Rudra Pillai · rudra.pillai75@nexlidemo.test · +919870000075
+- **Admissions Officer 1** — Prisha Bajaj · prisha.bajaj76@nexlidemo.test · +919870000076
+- **Admissions Officer 2** — Daksh Dube · daksh.dube77@nexlidemo.test · +919870000077
+- **Public Relations Executive 1** — Advik Chauhan · advik.chauhan79@nexlidemo.test · +919870000079
+- **Public Relations Executive 2** — Sia Ghosh · sia.ghosh80@nexlidemo.test · +919870000080
+- **Admissions Officer 3** — Charvi Verma · charvi.verma78@nexlidemo.test · +919870000078
+- **Public Relations Executive 3** — Rudra Kapoor · rudra.kapoor81@nexlidemo.test · +919870000081
+- **Senior Accountant 1** — Pari Patel · pari.patel82@nexlidemo.test · +919870000082
+- **Senior Accountant 2** — Daksh Khan · daksh.khan83@nexlidemo.test · +919870000083
+- **Facilities Manager 1** — Advik Das · advik.das73@nexlidemo.test · +919870000073
+- **Senior Accountant 3** — Inaya Joshi · inaya.joshi84@nexlidemo.test · +919870000084
+- **School Accountant 1** — Advik Trivedi · advik.trivedi85@nexlidemo.test · +919870000085
+- **School Accountant 2** — Vanya Mishra · vanya.mishra86@nexlidemo.test · +919870000086
+- **School Accountant 3** — Rudra Naidu · rudra.naidu87@nexlidemo.test · +919870000087
+- **Junior Accountant 2** — Daksh Menon · daksh.menon89@nexlidemo.test · +919870000089
+- **Junior Accountant 1** — Gauri Bose · gauri.bose88@nexlidemo.test · +919870000088
+- **Junior Accountant 3** — Ishita Bhat · ishita.bhat90@nexlidemo.test · +919870000090
+- **Accounts Clerk 1** — Advik Gupta · advik.gupta91@nexlidemo.test · +919870000091
+- **Accounts Clerk 2** — Sara Nair · sara.nair92@nexlidemo.test · +919870000092
+- **Accounts Assistant 1** — Prisha Malhotra · prisha.malhotra94@nexlidemo.test · +919870000094
+- **Accounts Clerk 3** — Rudra Rao · rudra.rao93@nexlidemo.test · +919870000093
+- **Accounts Assistant 2** — Daksh Pandey · daksh.pandey95@nexlidemo.test · +919870000095
+- **Accounts Assistant 3** — Charvi Sinha · charvi.sinha96@nexlidemo.test · +919870000096
+- **Billing Executive 1** — Advik Das · advik.das97@nexlidemo.test · +919870000097
+- **Billing Executive 2** — Sia Banerjee · sia.banerjee98@nexlidemo.test · +919870000098
+- **Billing Executive 3** — Rudra Pillai · rudra.pillai99@nexlidemo.test · +919870000099
+- **Cashier 1** — Pari Bajaj · pari.bajaj100@nexlidemo.test · +919870000100
+- **Cashier 2** — Daksh Dube · daksh.dube101@nexlidemo.test · +919870000101
+- **Cashier 3** — Inaya Verma · inaya.verma102@nexlidemo.test · +919870000102
+- **Hostel Accountant 1** — Advik Chauhan · advik.chauhan103@nexlidemo.test · +919870000103
+- **Hostel Accountant 3** — Rudra Kapoor · rudra.kapoor105@nexlidemo.test · +919870000105
+- **Data Protection Officer 1** — Gauri Patel · gauri.patel106@nexlidemo.test · +919870000106
+- **Hostel Accountant 2** — Vanya Ghosh · vanya.ghosh104@nexlidemo.test · +919870000104
+- **Data Protection Officer 3** — Ishita Joshi · ishita.joshi108@nexlidemo.test · +919870000108
+- **Data Protection Officer 2** — Daksh Khan · daksh.khan107@nexlidemo.test · +919870000107
+- **Consent Officer 1** — Advik Trivedi · advik.trivedi109@nexlidemo.test · +919870000109
+- **Consent Officer 2** — Sara Mishra · sara.mishra110@nexlidemo.test · +919870000110
+- **Consent Officer 3** — Rudra Naidu · rudra.naidu111@nexlidemo.test · +919870000111
+- **Designated Child Protection Officer (DCPO) 1** — Prisha Bose · prisha.bose112@nexlidemo.test · +919870000112
+- **Designated Child Protection Officer (DCPO) 2** — Daksh Menon · daksh.menon113@nexlidemo.test · +919870000113
+- **Alternate Child Protection Officer 1** — Advik Gupta · advik.gupta115@nexlidemo.test · +919870000115
+- **School Counselor 1** — Pari Malhotra · pari.malhotra118@nexlidemo.test · +919870000118
+- **Alternate Child Protection Officer 3** — Rudra Rao · rudra.rao117@nexlidemo.test · +919870000117
+- **Alternate Child Protection Officer 2** — Sia Nair · sia.nair116@nexlidemo.test · +919870000116
+- **School Counselor 2** — Daksh Pandey · daksh.pandey119@nexlidemo.test · +919870000119
+- **School Counselor 3** — Inaya Sinha · inaya.sinha120@nexlidemo.test · +919870000120
+- **Designated Child Protection Officer (DCPO) 3** — Charvi Bhat · charvi.bhat114@nexlidemo.test · +919870000114
+- **Guidance Counselor 1** — Advik Das · advik.das121@nexlidemo.test · +919870000121
+- **Guidance Counselor 2** — Vanya Banerjee · vanya.banerjee122@nexlidemo.test · +919870000122
+- **Guidance Counselor 3** — Rudra Pillai · rudra.pillai123@nexlidemo.test · +919870000123
+- **Wellness Teacher 2** — Daksh Dube · daksh.dube125@nexlidemo.test · +919870000125
+- **Wellness Teacher 1** — Gauri Bajaj · gauri.bajaj124@nexlidemo.test · +919870000124
+- **Wellness Teacher 3** — Ishita Verma · ishita.verma126@nexlidemo.test · +919870000126
+- **POSH / POCSO Committee Member 2** — Sara Ghosh · sara.ghosh128@nexlidemo.test · +919870000128
+- **POSH / POCSO Committee Member 1** — Advik Chauhan · advik.chauhan127@nexlidemo.test · +919870000127
+- **POSH / POCSO Committee Member 3** — Rudra Kapoor · rudra.kapoor129@nexlidemo.test · +919870000129
+- **Internal Complaints Committee (ICC) Member 1** — Prisha Patel · prisha.patel130@nexlidemo.test · +919870000130
+- **Internal Complaints Committee (ICC) Member 3** — Charvi Joshi · charvi.joshi132@nexlidemo.test · +919870000132
+- **Internal Complaints Committee (ICC) Member 2** — Daksh Khan · daksh.khan131@nexlidemo.test · +919870000131
+- **School Board Representative 1** — Advik Trivedi · advik.trivedi133@nexlidemo.test · +919870000133
+- **School Board Representative 2** — Sia Mishra · sia.mishra134@nexlidemo.test · +919870000134
+- **School Doctor 1** — Pari Bose · pari.bose136@nexlidemo.test · +919870000136
+- **School Board Representative 3** — Rudra Naidu · rudra.naidu135@nexlidemo.test · +919870000135
+- **School Doctor 2** — Daksh Menon · daksh.menon137@nexlidemo.test · +919870000137
+- **School Doctor 3** — Inaya Bhat · inaya.bhat138@nexlidemo.test · +919870000138
+- **Nurse Practitioner 2** — Vanya Nair · vanya.nair140@nexlidemo.test · +919870000140
+- **Nurse Practitioner 1** — Advik Gupta · advik.gupta139@nexlidemo.test · +919870000139
+- **Nurse Practitioner 3** — Rudra Rao · rudra.rao141@nexlidemo.test · +919870000141
+- **Regular School Nurse 1** — Gauri Malhotra · gauri.malhotra142@nexlidemo.test · +919870000142
+- **Regular School Nurse 2** — Daksh Pandey · daksh.pandey143@nexlidemo.test · +919870000143
+- **Regular School Nurse 3** — Ishita Sinha · ishita.sinha144@nexlidemo.test · +919870000144
+- **Residential School Nurse 1** — Advik Das · advik.das145@nexlidemo.test · +919870000145
+- **Residential School Nurse 3** — Rudra Pillai · rudra.pillai147@nexlidemo.test · +919870000147
+- **Special Education School Nurse 1** — Prisha Bajaj · prisha.bajaj148@nexlidemo.test · +919870000148
+- **Residential School Nurse 2** — Sara Banerjee · sara.banerjee146@nexlidemo.test · +919870000146
+- **Special Education School Nurse 3** — Charvi Verma · charvi.verma150@nexlidemo.test · +919870000150
+- **Pediatric School Nurse 2** — Sia Ghosh · sia.ghosh152@nexlidemo.test · +919870000152
+- **Pediatric School Nurse 1** — Advik Chauhan · advik.chauhan151@nexlidemo.test · +919870000151
+- **Pediatric School Nurse 3** — Rudra Kapoor · rudra.kapoor153@nexlidemo.test · +919870000153
+- **Special Education School Nurse 2** — Daksh Dube · daksh.dube149@nexlidemo.test · +919870000149
+- **Community Health Nurse 1** — Pari Patel · pari.patel154@nexlidemo.test · +919870000154
+- **Community Health Nurse 2** — Daksh Khan · daksh.khan155@nexlidemo.test · +919870000155
+- **Community Health Nurse 3** — Inaya Joshi · inaya.joshi156@nexlidemo.test · +919870000156
+- **Visiting School Nurse 1** — Advik Trivedi · advik.trivedi157@nexlidemo.test · +919870000157
+- **Visiting School Nurse 3** — Rudra Naidu · rudra.naidu159@nexlidemo.test · +919870000159
+- **Class Teacher 1** — Gauri Bose · gauri.bose160@nexlidemo.test · +919870000160
+- **Visiting School Nurse 2** — Vanya Mishra · vanya.mishra158@nexlidemo.test · +919870000158
+- **Class Teacher 2** — Daksh Menon · daksh.menon161@nexlidemo.test · +919870000161
+- **Class Teacher 3** — Ishita Bhat · ishita.bhat162@nexlidemo.test · +919870000162
+- **Subject Teacher 2** — Sara Nair · sara.nair164@nexlidemo.test · +919870000164
+- **Subject Teacher 1** — Advik Gupta · advik.gupta163@nexlidemo.test · +919870000163
+- **Subject Teacher 3** — Rudra Rao · rudra.rao165@nexlidemo.test · +919870000165
+- **Substitute Teacher 1** — Prisha Malhotra · prisha.malhotra166@nexlidemo.test · +919870000166
+- **Substitute Teacher 2** — Daksh Pandey · daksh.pandey167@nexlidemo.test · +919870000167
+- **Substitute Teacher 3** — Charvi Sinha · charvi.sinha168@nexlidemo.test · +919870000168
+- **Special Educator 1** — Advik Das · advik.das169@nexlidemo.test · +919870000169
+- **Special Educator 3** — Rudra Pillai · rudra.pillai171@nexlidemo.test · +919870000171
+- **Special Educator 2** — Sia Banerjee · sia.banerjee170@nexlidemo.test · +919870000170
+- **Sports Teacher / PET 1** — Pari Bajaj · pari.bajaj172@nexlidemo.test · +919870000172
+- **Sports Teacher / PET 3** — Inaya Verma · inaya.verma174@nexlidemo.test · +919870000174
+- **Arts / Music Teacher 3** — Rudra Kapoor · rudra.kapoor177@nexlidemo.test · +919870000177
+- **Arts / Music Teacher 2** — Vanya Ghosh · vanya.ghosh176@nexlidemo.test · +919870000176
+- **Arts / Music Teacher 1** — Advik Chauhan · advik.chauhan175@nexlidemo.test · +919870000175
+- **Activity Coordinator 1** — Gauri Patel · gauri.patel178@nexlidemo.test · +919870000178
+- **Activity Coordinator 2** — Daksh Khan · daksh.khan179@nexlidemo.test · +919870000179
+- **Club Coordinator 1** — Advik Trivedi · advik.trivedi181@nexlidemo.test · +919870000181
+- **Activity Coordinator 3** — Ishita Joshi · ishita.joshi180@nexlidemo.test · +919870000180
+- **Sports Teacher / PET 2** — Daksh Dube · daksh.dube173@nexlidemo.test · +919870000173
+- **Club Coordinator 3** — Rudra Naidu · rudra.naidu183@nexlidemo.test · +919870000183
+- **Lab Assistant 2** — Daksh Menon · daksh.menon185@nexlidemo.test · +919870000185
+- **Club Coordinator 2** — Sara Mishra · sara.mishra182@nexlidemo.test · +919870000182
+- **Lab Assistant 3** — Charvi Bhat · charvi.bhat186@nexlidemo.test · +919870000186
+- **Lab Assistant 1** — Prisha Bose · prisha.bose184@nexlidemo.test · +919870000184
+- **Head Librarian 1** — Advik Gupta · advik.gupta187@nexlidemo.test · +919870000187
+- **Head Librarian 2** — Sia Nair · sia.nair188@nexlidemo.test · +919870000188
+- **Head Librarian 3** — Rudra Rao · rudra.rao189@nexlidemo.test · +919870000189
+- **Senior Secondary Librarian 1** — Pari Malhotra · pari.malhotra190@nexlidemo.test · +919870000190
+- **Senior Secondary Librarian 2** — Daksh Pandey · daksh.pandey191@nexlidemo.test · +919870000191
+- **Senior Secondary Librarian 3** — Inaya Sinha · inaya.sinha192@nexlidemo.test · +919870000192
+- **High School Librarian 1** — Advik Das · advik.das193@nexlidemo.test · +919870000193
+- **High School Librarian 2** — Vanya Banerjee · vanya.banerjee194@nexlidemo.test · +919870000194
+- **High School Librarian 3** — Rudra Pillai · rudra.pillai195@nexlidemo.test · +919870000195
+- **Middle School Librarian 2** — Daksh Dube · daksh.dube197@nexlidemo.test · +919870000197
+- **Middle School Librarian 1** — Gauri Bajaj · gauri.bajaj196@nexlidemo.test · +919870000196
+- **Middle School Librarian 3** — Ishita Verma · ishita.verma198@nexlidemo.test · +919870000198
+- **Primary School Librarian 2** — Sara Ghosh · sara.ghosh200@nexlidemo.test · +919870000200
+- **Primary School Librarian 1** — Advik Chauhan · advik.chauhan199@nexlidemo.test · +919870000199
+- **Primary School Librarian 3** — Rudra Kapoor · rudra.kapoor201@nexlidemo.test · +919870000201
+- **Teacher Librarian 2** — Daksh Khan · daksh.khan203@nexlidemo.test · +919870000203
+- **Teacher Librarian 1** — Prisha Patel · prisha.patel202@nexlidemo.test · +919870000202
+- **Teacher Librarian 3** — Charvi Joshi · charvi.joshi204@nexlidemo.test · +919870000204
+- **Digital Media Librarian 2** — Sia Mishra · sia.mishra206@nexlidemo.test · +919870000206
+- **Digital Media Librarian 1** — Advik Trivedi · advik.trivedi205@nexlidemo.test · +919870000205
+- **Digital Media Librarian 3** — Rudra Naidu · rudra.naidu207@nexlidemo.test · +919870000207
+- **Assistant Librarian 3** — Inaya Bhat · inaya.bhat210@nexlidemo.test · +919870000210
+- **Assistant Librarian 2** — Daksh Menon · daksh.menon209@nexlidemo.test · +919870000209
+- **Assistant Librarian 1** — Pari Bose · pari.bose208@nexlidemo.test · +919870000208
+- **Library Attendant 1** — Advik Gupta · advik.gupta211@nexlidemo.test · +919870000211
+- **Library Attendant 3** — Rudra Rao · rudra.rao213@nexlidemo.test · +919870000213
+- **Chief Warden 1** — Gauri Malhotra · gauri.malhotra214@nexlidemo.test · +919870000214
+- **Library Attendant 2** — Vanya Nair · vanya.nair212@nexlidemo.test · +919870000212
+- **Chief Warden 3** — Ishita Sinha · ishita.sinha216@nexlidemo.test · +919870000216
+- **Chief Warden 2** — Daksh Pandey · daksh.pandey215@nexlidemo.test · +919870000215
+- **Senior Warden 3** — Rudra Pillai · rudra.pillai219@nexlidemo.test · +919870000219
+- **Senior Warden 1** — Advik Das · advik.das217@nexlidemo.test · +919870000217
+- **Senior Warden 2** — Sara Banerjee · sara.banerjee218@nexlidemo.test · +919870000218
+- **Hostel Superintendent 1** — Prisha Bajaj · prisha.bajaj220@nexlidemo.test · +919870000220
+- **Hostel Superintendent 2** — Daksh Dube · daksh.dube221@nexlidemo.test · +919870000221
+- **Provost 1** — Advik Chauhan · advik.chauhan223@nexlidemo.test · +919870000223
+- **Hostel Superintendent 3** — Charvi Verma · charvi.verma222@nexlidemo.test · +919870000222
+- **Provost 2** — Sia Ghosh · sia.ghosh224@nexlidemo.test · +919870000224
+- **Residential Warden 1** — Pari Patel · pari.patel226@nexlidemo.test · +919870000226
+- **Residential Warden 2** — Daksh Khan · daksh.khan227@nexlidemo.test · +919870000227
+- **Provost 3** — Rudra Kapoor · rudra.kapoor225@nexlidemo.test · +919870000225
+- **Residential Warden 3** — Inaya Joshi · inaya.joshi228@nexlidemo.test · +919870000228
+- **Day Boarding Warden 2** — Vanya Mishra · vanya.mishra230@nexlidemo.test · +919870000230
+- **Day Boarding Warden 3** — Rudra Naidu · rudra.naidu231@nexlidemo.test · +919870000231
+- **Day Boarding Warden 1** — Advik Trivedi · advik.trivedi229@nexlidemo.test · +919870000229
+- **Assistant Warden 1** — Gauri Bose · gauri.bose232@nexlidemo.test · +919870000232
+- **Assistant Warden 3** — Ishita Bhat · ishita.bhat234@nexlidemo.test · +919870000234
+- **Assistant Warden 2** — Daksh Menon · daksh.menon233@nexlidemo.test · +919870000233
+- **Hostel Warden 1** — Advik Gupta · advik.gupta235@nexlidemo.test · +919870000235
+- **Hostel Warden 2** — Sara Nair · sara.nair236@nexlidemo.test · +919870000236
+- **Hostel Warden 3** — Rudra Rao · rudra.rao237@nexlidemo.test · +919870000237
+- **Night Warden 2** — Daksh Pandey · daksh.pandey239@nexlidemo.test · +919870000239
+- **Night Warden 1** — Prisha Malhotra · prisha.malhotra238@nexlidemo.test · +919870000238
+- **Night Warden 3** — Charvi Sinha · charvi.sinha240@nexlidemo.test · +919870000240
+- **Matron 1** — Gauri Das · gauri.das241@nexlidemo.test · +919870000241
+- **Matron 2** — Sia Banerjee · sia.banerjee242@nexlidemo.test · +919870000242
+- **Matron 3** — Ishita Pillai · ishita.pillai243@nexlidemo.test · +919870000243
+- **Housemaster 1** — Advik Bajaj · advik.bajaj244@nexlidemo.test · +919870000244
+- **Housemaster 2** — Daksh Dube · daksh.dube245@nexlidemo.test · +919870000245
+- **Housemaster 3** — Rudra Verma · rudra.verma246@nexlidemo.test · +919870000246
+- **Housemistress 1** — Prisha Chauhan · prisha.chauhan247@nexlidemo.test · +919870000247
+- **Housemistress 2** — Vanya Ghosh · vanya.ghosh248@nexlidemo.test · +919870000248
+- **Housemistress 3** — Charvi Kapoor · charvi.kapoor249@nexlidemo.test · +919870000249
+- **Mess Manager 2** — Daksh Khan · daksh.khan251@nexlidemo.test · +919870000251
+- **Mess Manager 1** — Gauri Patel · gauri.patel250@nexlidemo.test · +919870000250
+- **Mess Manager 3** — Ishita Joshi · ishita.joshi252@nexlidemo.test · +919870000252
+- **Caretaker 1** — Advik Trivedi · advik.trivedi253@nexlidemo.test · +919870000253
+- **Caretaker 2** — Sara Mishra · sara.mishra254@nexlidemo.test · +919870000254
+- **Caretaker 3** — Rudra Naidu · rudra.naidu255@nexlidemo.test · +919870000255
+- **Hostel Committee Member 1** — Prisha Bose · prisha.bose256@nexlidemo.test · +919870000256
+- **Hostel Committee Member 2** — Daksh Menon · daksh.menon257@nexlidemo.test · +919870000257
+- **Hostel Committee Member 3** — Charvi Bhat · charvi.bhat258@nexlidemo.test · +919870000258
+- **Security Supervisor 1** — Advik Gupta · advik.gupta259@nexlidemo.test · +919870000259
+- **Security Supervisor 2** — Sia Nair · sia.nair260@nexlidemo.test · +919870000260
+- **Security Officer 1** — Pari Malhotra · pari.malhotra262@nexlidemo.test · +919870000262
+- **Security Supervisor 3** — Rudra Rao · rudra.rao261@nexlidemo.test · +919870000261
+- **Security Officer 2** — Daksh Pandey · daksh.pandey263@nexlidemo.test · +919870000263
+- **Security Officer 3** — Inaya Sinha · inaya.sinha264@nexlidemo.test · +919870000264
+- **Security Guard 2** — Vanya Banerjee · vanya.banerjee266@nexlidemo.test · +919870000266
+- **Security Guard 1** — Advik Das · advik.das265@nexlidemo.test · +919870000265
+- **Security Guard 3** — Rudra Pillai · rudra.pillai267@nexlidemo.test · +919870000267
+- **CCTV Administrator 1** — Gauri Bajaj · gauri.bajaj268@nexlidemo.test · +919870000268
+- **CCTV Administrator 2** — Daksh Dube · daksh.dube269@nexlidemo.test · +919870000269
+- **Visitor Management Officer 1** — Advik Chauhan · advik.chauhan271@nexlidemo.test · +919870000271
+- **CCTV Administrator 3** — Ishita Verma · ishita.verma270@nexlidemo.test · +919870000270
+- **Visitor Management Officer 2** — Sara Ghosh · sara.ghosh272@nexlidemo.test · +919870000272
+- **Visitor Management Officer 3** — Rudra Kapoor · rudra.kapoor273@nexlidemo.test · +919870000273
+- **Housekeeping Staff 1** — Prisha Patel · prisha.patel274@nexlidemo.test · +919870000274
+- **Housekeeping Staff 2** — Daksh Khan · daksh.khan275@nexlidemo.test · +919870000275
+- **Housekeeping Staff 3** — Charvi Joshi · charvi.joshi276@nexlidemo.test · +919870000276
+- **Bus Conductor 1** — Advik Trivedi · advik.trivedi277@nexlidemo.test · +919870000277
+- **Bus Conductor 2** — Sia Mishra · sia.mishra278@nexlidemo.test · +919870000278
+- **Bus Conductor 3** — Rudra Naidu · rudra.naidu279@nexlidemo.test · +919870000279
+- **Bus Driver 1** — Pari Bose · pari.bose280@nexlidemo.test · +919870000280
+- **Bus Driver 2** — Daksh Menon · daksh.menon281@nexlidemo.test · +919870000281
+- **Bus Driver 3** — Inaya Bhat · inaya.bhat282@nexlidemo.test · +919870000282
+- **Canteen Manager 1** — Advik Gupta · advik.gupta283@nexlidemo.test · +919870000283
+- **Canteen Manager 2** — Vanya Nair · vanya.nair284@nexlidemo.test · +919870000284
+- **Canteen Manager 3** — Rudra Rao · rudra.rao285@nexlidemo.test · +919870000285
+- **Canteen Staff 1** — Gauri Malhotra · gauri.malhotra286@nexlidemo.test · +919870000286
+- **Canteen Staff 2** — Daksh Pandey · daksh.pandey287@nexlidemo.test · +919870000287
+- **Canteen Staff 3** — Ishita Sinha · ishita.sinha288@nexlidemo.test · +919870000288
+- **Front Desk 1** — Advik Das · advik.das289@nexlidemo.test · +919870000289
+- **Front Desk 2** — Sara Banerjee · sara.banerjee290@nexlidemo.test · +919870000290
+- **Front Desk 3** — Rudra Pillai · rudra.pillai291@nexlidemo.test · +919870000291
+- **Main Receptionist 2** — Daksh Dube · daksh.dube293@nexlidemo.test · +919870000293
+- **Admissions Receptionist 1** — Advik Chauhan · advik.chauhan295@nexlidemo.test · +919870000295
+- **Main Receptionist 3** — Charvi Verma · charvi.verma294@nexlidemo.test · +919870000294
+- **Admissions Receptionist 2** — Sia Ghosh · sia.ghosh296@nexlidemo.test · +919870000296
+- **Main Receptionist 1** — Prisha Bajaj · prisha.bajaj292@nexlidemo.test · +919870000292
+- **Admissions Receptionist 3** — Rudra Kapoor · rudra.kapoor297@nexlidemo.test · +919870000297
+- **Office Assistant 1** — Pari Patel · pari.patel298@nexlidemo.test · +919870000298
+- **Office Assistant 2** — Daksh Khan · daksh.khan299@nexlidemo.test · +919870000299
+- **Office Assistant 3** — Inaya Joshi · inaya.joshi300@nexlidemo.test · +919870000300
+
+### Students (300)
+- Shaurya Bose · Nursery A · _House Captain, Prefect_ · shaurya.bose301@nexlidemo.test · +919870000301
+- Ishita Sinha · Nursery A · _House Captain, Prefect_ · ishita.sinha303@nexlidemo.test · +919870000303
+- Samar Reddy · Nursery A · _House Captain_ · samar.reddy305@nexlidemo.test · +919870000305
+- Anika Menon · Nursery A · _House Captain_ · anika.menon307@nexlidemo.test · +919870000307
+- Naman Yadav · Nursery A · _House Captain_ · naman.yadav309@nexlidemo.test · +919870000309
+- Riya Patel · Nursery A · _House Captain_ · riya.patel311@nexlidemo.test · +919870000311
+- Nirvaan Bhat · Nursery A · _House Captain_ · nirvaan.bhat313@nexlidemo.test · +919870000313
+- Shaurya Gupta · Nursery B · _Vice House Captain, Prefect_ · shaurya.gupta315@nexlidemo.test · +919870000315
+- Inaya Pillai · Nursery B · _Vice House Captain, Prefect_ · inaya.pillai317@nexlidemo.test · +919870000317
+- Samar Rana · Nursery B · _Vice House Captain_ · samar.rana319@nexlidemo.test · +919870000319
+- Aaradhya Nair · Nursery B · _Vice House Captain_ · aaradhya.nair321@nexlidemo.test · +919870000321
+- Naman Shah · Nursery B · _Vice House Captain_ · naman.shah323@nexlidemo.test · +919870000323
+- Trisha Trivedi · Nursery B · _House Captain_ · trisha.trivedi325@nexlidemo.test · +919870000325
+- Nirvaan Rao · Nursery B · _House Captain_ · nirvaan.rao327@nexlidemo.test · +919870000327
+- Shaurya Malhotra · Nursery C · _Prefect_ · shaurya.malhotra329@nexlidemo.test · +919870000329
+- Charvi Verma · Nursery C · _Prefect_ · charvi.verma331@nexlidemo.test · +919870000331
+- Samar Chopra · Nursery C · samar.chopra333@nexlidemo.test · +919870000333
+- Jhanvi Pandey · Nursery C · _Vice House Captain_ · jhanvi.pandey335@nexlidemo.test · +919870000335
+- Naman Iyer · Nursery C · _Vice House Captain_ · naman.iyer337@nexlidemo.test · +919870000337
+- Reet Bose · Nursery C · _House Captain_ · reet.bose339@nexlidemo.test · +919870000339
+- Nirvaan Sinha · Nursery C · _Vice House Captain_ · nirvaan.sinha341@nexlidemo.test · +919870000341
+- Shaurya Das · LKG A · _Prefect_ · shaurya.das343@nexlidemo.test · +919870000343
+- Ishita Kapoor · LKG A · _Prefect_ · ishita.kapoor345@nexlidemo.test · +919870000345
+- Samar Sharma · LKG A · samar.sharma347@nexlidemo.test · +919870000347
+- Anika Banerjee · LKG A · _Vice House Captain_ · anika.banerjee349@nexlidemo.test · +919870000349
+- Riya Gupta · LKG A · _Vice House Captain_ · riya.gupta353@nexlidemo.test · +919870000353
+- Naman Nanda · LKG A · naman.nanda351@nexlidemo.test · +919870000351
+- Nirvaan Pillai · LKG A · nirvaan.pillai355@nexlidemo.test · +919870000355
+- Shaurya Bajaj · LKG B · _Prefect_ · shaurya.bajaj357@nexlidemo.test · +919870000357
+- Inaya Joshi · LKG B · _Prefect_ · inaya.joshi359@nexlidemo.test · +919870000359
+- Samar Jain · LKG B · samar.jain361@nexlidemo.test · +919870000361
+- Aaradhya Dube · LKG B · aaradhya.dube363@nexlidemo.test · +919870000363
+- Naman Kulkarni · LKG B · naman.kulkarni365@nexlidemo.test · +919870000365
+- Trisha Malhotra · LKG B · trisha.malhotra367@nexlidemo.test · +919870000367
+- Nirvaan Verma · LKG B · nirvaan.verma369@nexlidemo.test · +919870000369
+- Shaurya Chauhan · LKG C · _Prefect_ · shaurya.chauhan371@nexlidemo.test · +919870000371
+- Charvi Naidu · LKG C · _Prefect_ · charvi.naidu373@nexlidemo.test · +919870000373
+- Samar Mehta · LKG C · samar.mehta375@nexlidemo.test · +919870000375
+- Jhanvi Ghosh · LKG C · jhanvi.ghosh377@nexlidemo.test · +919870000377
+- Naman Chawla · LKG C · naman.chawla379@nexlidemo.test · +919870000379
+- Reet Das · LKG C · reet.das381@nexlidemo.test · +919870000381
+- Nirvaan Kapoor · LKG C · nirvaan.kapoor383@nexlidemo.test · +919870000383
+- Shaurya Patel · UKG A · _Prefect_ · shaurya.patel385@nexlidemo.test · +919870000385
+- Ishita Bhat · UKG A · _Prefect_ · ishita.bhat387@nexlidemo.test · +919870000387
+- Samar Saxena · UKG A · samar.saxena389@nexlidemo.test · +919870000389
+- Naman Desai · UKG A · naman.desai393@nexlidemo.test · +919870000393
+- Riya Bajaj · UKG A · riya.bajaj395@nexlidemo.test · +919870000395
+- Anika Khan · UKG A · anika.khan391@nexlidemo.test · +919870000391
+- Nirvaan Joshi · UKG A · nirvaan.joshi397@nexlidemo.test · +919870000397
+- Shaurya Trivedi · UKG B · _Prefect_ · shaurya.trivedi399@nexlidemo.test · +919870000399
+- Inaya Rao · UKG B · _Prefect_ · inaya.rao401@nexlidemo.test · +919870000401
+- Samar Agarwal · UKG B · samar.agarwal403@nexlidemo.test · +919870000403
+- Aaradhya Mishra · UKG B · aaradhya.mishra405@nexlidemo.test · +919870000405
+- Naman Singh · UKG B · naman.singh407@nexlidemo.test · +919870000407
+- Trisha Chauhan · UKG B · trisha.chauhan409@nexlidemo.test · +919870000409
+- Nirvaan Naidu · UKG B · nirvaan.naidu411@nexlidemo.test · +919870000411
+- Shaurya Bose · UKG C · _Prefect_ · shaurya.bose413@nexlidemo.test · +919870000413
+- Charvi Sinha · UKG C · _Prefect_ · charvi.sinha415@nexlidemo.test · +919870000415
+- Samar Reddy · UKG C · samar.reddy417@nexlidemo.test · +919870000417
+- Jhanvi Menon · UKG C · jhanvi.menon419@nexlidemo.test · +919870000419
+- Naman Yadav · UKG C · naman.yadav421@nexlidemo.test · +919870000421
+- Reet Patel · UKG C · reet.patel423@nexlidemo.test · +919870000423
+- Nirvaan Bhat · UKG C · nirvaan.bhat425@nexlidemo.test · +919870000425
+- Shaurya Gupta · Class 1 A · _Prefect_ · shaurya.gupta427@nexlidemo.test · +919870000427
+- Samar Rana · Class 1 A · samar.rana431@nexlidemo.test · +919870000431
+- Ishita Pillai · Class 1 A · _Prefect_ · ishita.pillai429@nexlidemo.test · +919870000429
+- Anika Nair · Class 1 A · anika.nair433@nexlidemo.test · +919870000433
+- Naman Shah · Class 1 A · naman.shah435@nexlidemo.test · +919870000435
+- Riya Trivedi · Class 1 A · riya.trivedi437@nexlidemo.test · +919870000437
+- Nirvaan Rao · Class 1 A · nirvaan.rao439@nexlidemo.test · +919870000439
+- Shaurya Malhotra · Class 1 B · _Prefect_ · shaurya.malhotra441@nexlidemo.test · +919870000441
+- Inaya Verma · Class 1 B · _Prefect_ · inaya.verma443@nexlidemo.test · +919870000443
+- Samar Chopra · Class 1 B · samar.chopra445@nexlidemo.test · +919870000445
+- Aaradhya Pandey · Class 1 B · aaradhya.pandey447@nexlidemo.test · +919870000447
+- Naman Iyer · Class 1 B · naman.iyer449@nexlidemo.test · +919870000449
+- Trisha Bose · Class 1 B · trisha.bose451@nexlidemo.test · +919870000451
+- Nirvaan Sinha · Class 1 B · nirvaan.sinha453@nexlidemo.test · +919870000453
+- Shaurya Das · Class 1 C · _Prefect_ · shaurya.das455@nexlidemo.test · +919870000455
+- Charvi Kapoor · Class 1 C · _Prefect_ · charvi.kapoor457@nexlidemo.test · +919870000457
+- Samar Sharma · Class 1 C · samar.sharma459@nexlidemo.test · +919870000459
+- Jhanvi Banerjee · Class 1 C · jhanvi.banerjee461@nexlidemo.test · +919870000461
+- Naman Nanda · Class 1 C · naman.nanda463@nexlidemo.test · +919870000463
+- Nirvaan Pillai · Class 1 C · nirvaan.pillai467@nexlidemo.test · +919870000467
+- Reet Gupta · Class 1 C · reet.gupta465@nexlidemo.test · +919870000465
+- Shaurya Bajaj · Class 2 A · _Prefect_ · shaurya.bajaj469@nexlidemo.test · +919870000469
+- Ishita Joshi · Class 2 A · _Prefect_ · ishita.joshi471@nexlidemo.test · +919870000471
+- Samar Jain · Class 2 A · samar.jain473@nexlidemo.test · +919870000473
+- Anika Dube · Class 2 A · anika.dube475@nexlidemo.test · +919870000475
+- Naman Kulkarni · Class 2 A · naman.kulkarni477@nexlidemo.test · +919870000477
+- Riya Malhotra · Class 2 A · riya.malhotra479@nexlidemo.test · +919870000479
+- Nirvaan Verma · Class 2 A · nirvaan.verma481@nexlidemo.test · +919870000481
+- Shaurya Chauhan · Class 2 B · _Prefect_ · shaurya.chauhan483@nexlidemo.test · +919870000483
+- Inaya Naidu · Class 2 B · _Prefect_ · inaya.naidu485@nexlidemo.test · +919870000485
+- Aaradhya Ghosh · Class 2 B · aaradhya.ghosh489@nexlidemo.test · +919870000489
+- Samar Mehta · Class 2 B · samar.mehta487@nexlidemo.test · +919870000487
+- Naman Chawla · Class 2 B · naman.chawla491@nexlidemo.test · +919870000491
+- Trisha Das · Class 2 B · trisha.das493@nexlidemo.test · +919870000493
+- Nirvaan Kapoor · Class 2 B · nirvaan.kapoor495@nexlidemo.test · +919870000495
+- Shaurya Patel · Class 2 C · _Prefect_ · shaurya.patel497@nexlidemo.test · +919870000497
+- Charvi Bhat · Class 2 C · _Prefect_ · charvi.bhat499@nexlidemo.test · +919870000499
+- Samar Saxena · Class 2 C · samar.saxena501@nexlidemo.test · +919870000501
+- Jhanvi Khan · Class 2 C · jhanvi.khan503@nexlidemo.test · +919870000503
+- Naman Desai · Class 2 C · naman.desai505@nexlidemo.test · +919870000505
+- Reet Bajaj · Class 2 C · reet.bajaj507@nexlidemo.test · +919870000507
+- Nirvaan Joshi · Class 2 C · nirvaan.joshi509@nexlidemo.test · +919870000509
+- Ishita Rao · Class 3 A · _Prefect_ · ishita.rao513@nexlidemo.test · +919870000513
+- Shaurya Trivedi · Class 3 A · _Prefect_ · shaurya.trivedi511@nexlidemo.test · +919870000511
+- Samar Agarwal · Class 3 A · samar.agarwal515@nexlidemo.test · +919870000515
+- Anika Mishra · Class 3 A · anika.mishra517@nexlidemo.test · +919870000517
+- Naman Singh · Class 3 A · naman.singh519@nexlidemo.test · +919870000519
+- Riya Chauhan · Class 3 A · riya.chauhan521@nexlidemo.test · +919870000521
+- Nirvaan Naidu · Class 3 A · nirvaan.naidu523@nexlidemo.test · +919870000523
+- Shaurya Bose · Class 3 B · _Prefect_ · shaurya.bose525@nexlidemo.test · +919870000525
+- Inaya Sinha · Class 3 B · _Prefect_ · inaya.sinha527@nexlidemo.test · +919870000527
+- Samar Reddy · Class 3 B · samar.reddy529@nexlidemo.test · +919870000529
+- Aaradhya Menon · Class 3 B · aaradhya.menon531@nexlidemo.test · +919870000531
+- Naman Yadav · Class 3 B · naman.yadav533@nexlidemo.test · +919870000533
+- Trisha Patel · Class 3 B · trisha.patel535@nexlidemo.test · +919870000535
+- Nirvaan Bhat · Class 3 B · nirvaan.bhat537@nexlidemo.test · +919870000537
+- Shaurya Gupta · Class 3 C · _Prefect_ · shaurya.gupta539@nexlidemo.test · +919870000539
+- Charvi Pillai · Class 3 C · _Prefect_ · charvi.pillai541@nexlidemo.test · +919870000541
+- Samar Rana · Class 3 C · samar.rana543@nexlidemo.test · +919870000543
+- Jhanvi Nair · Class 3 C · jhanvi.nair545@nexlidemo.test · +919870000545
+- Naman Shah · Class 3 C · naman.shah547@nexlidemo.test · +919870000547
+- Reet Trivedi · Class 3 C · reet.trivedi549@nexlidemo.test · +919870000549
+- Nirvaan Rao · Class 3 C · nirvaan.rao551@nexlidemo.test · +919870000551
+- Shaurya Malhotra · Class 4 A · _Prefect_ · shaurya.malhotra553@nexlidemo.test · +919870000553
+- Ishita Verma · Class 4 A · _Prefect_ · ishita.verma555@nexlidemo.test · +919870000555
+- Samar Chopra · Class 4 A · samar.chopra557@nexlidemo.test · +919870000557
+- Anika Pandey · Class 4 A · anika.pandey559@nexlidemo.test · +919870000559
+- Naman Iyer · Class 4 A · naman.iyer561@nexlidemo.test · +919870000561
+- Riya Bose · Class 4 A · riya.bose563@nexlidemo.test · +919870000563
+- Nirvaan Sinha · Class 4 A · nirvaan.sinha565@nexlidemo.test · +919870000565
+- Shaurya Das · Class 4 B · _Prefect_ · shaurya.das567@nexlidemo.test · +919870000567
+- Inaya Kapoor · Class 4 B · _Prefect_ · inaya.kapoor569@nexlidemo.test · +919870000569
+- Samar Sharma · Class 4 B · samar.sharma571@nexlidemo.test · +919870000571
+- Naman Nanda · Class 4 B · naman.nanda575@nexlidemo.test · +919870000575
+- Aaradhya Banerjee · Class 4 B · aaradhya.banerjee573@nexlidemo.test · +919870000573
+- Trisha Gupta · Class 4 B · trisha.gupta577@nexlidemo.test · +919870000577
+- Nirvaan Pillai · Class 4 B · nirvaan.pillai579@nexlidemo.test · +919870000579
+- Shaurya Bajaj · Class 4 C · _Prefect_ · shaurya.bajaj581@nexlidemo.test · +919870000581
+- Charvi Joshi · Class 4 C · _Prefect_ · charvi.joshi583@nexlidemo.test · +919870000583
+- Jhanvi Dube · Class 4 C · jhanvi.dube587@nexlidemo.test · +919870000587
+- Samar Jain · Class 4 C · samar.jain585@nexlidemo.test · +919870000585
+- Naman Kulkarni · Class 4 C · naman.kulkarni589@nexlidemo.test · +919870000589
+- Reet Malhotra · Class 4 C · reet.malhotra591@nexlidemo.test · +919870000591
+- Nirvaan Verma · Class 4 C · nirvaan.verma593@nexlidemo.test · +919870000593
+- Shaurya Chauhan · Class 5 A · _Prefect_ · shaurya.chauhan595@nexlidemo.test · +919870000595
+- Ishita Naidu · Class 5 A · _Prefect_ · ishita.naidu597@nexlidemo.test · +919870000597
+- Samar Mehta · Class 5 A · samar.mehta599@nexlidemo.test · +919870000599
+- Anika Ghosh · Class 5 A · anika.ghosh601@nexlidemo.test · +919870000601
+- Naman Chawla · Class 5 A · naman.chawla603@nexlidemo.test · +919870000603
+- Riya Das · Class 5 A · riya.das605@nexlidemo.test · +919870000605
+- Nirvaan Kapoor · Class 5 A · nirvaan.kapoor607@nexlidemo.test · +919870000607
+- Shaurya Patel · Class 5 B · _Prefect_ · shaurya.patel609@nexlidemo.test · +919870000609
+- Inaya Bhat · Class 5 B · _Prefect_ · inaya.bhat611@nexlidemo.test · +919870000611
+- Samar Saxena · Class 5 B · samar.saxena613@nexlidemo.test · +919870000613
+- Aaradhya Khan · Class 5 B · aaradhya.khan615@nexlidemo.test · +919870000615
+- Naman Desai · Class 5 B · naman.desai617@nexlidemo.test · +919870000617
+- Trisha Bajaj · Class 5 B · trisha.bajaj619@nexlidemo.test · +919870000619
+- Nirvaan Joshi · Class 5 B · nirvaan.joshi621@nexlidemo.test · +919870000621
+- Shaurya Trivedi · Class 5 C · _Prefect_ · shaurya.trivedi623@nexlidemo.test · +919870000623
+- Charvi Rao · Class 5 C · _Prefect_ · charvi.rao625@nexlidemo.test · +919870000625
+- Samar Agarwal · Class 5 C · samar.agarwal627@nexlidemo.test · +919870000627
+- Jhanvi Mishra · Class 5 C · jhanvi.mishra629@nexlidemo.test · +919870000629
+- Naman Singh · Class 5 C · naman.singh631@nexlidemo.test · +919870000631
+- Reet Chauhan · Class 5 C · reet.chauhan633@nexlidemo.test · +919870000633
+- Nirvaan Naidu · Class 5 C · nirvaan.naidu635@nexlidemo.test · +919870000635
+- Shaurya Bose · Class 6 A · _Prefect_ · shaurya.bose637@nexlidemo.test · +919870000637
+- Ishita Sinha · Class 6 A · _Prefect_ · ishita.sinha639@nexlidemo.test · +919870000639
+- Samar Reddy · Class 6 A · samar.reddy641@nexlidemo.test · +919870000641
+- Anika Menon · Class 6 A · anika.menon643@nexlidemo.test · +919870000643
+- Naman Yadav · Class 6 A · naman.yadav645@nexlidemo.test · +919870000645
+- Riya Patel · Class 6 A · riya.patel647@nexlidemo.test · +919870000647
+- Nirvaan Bhat · Class 6 A · nirvaan.bhat649@nexlidemo.test · +919870000649
+- Shaurya Gupta · Class 6 B · _Prefect_ · shaurya.gupta651@nexlidemo.test · +919870000651
+- Inaya Pillai · Class 6 B · _Prefect_ · inaya.pillai653@nexlidemo.test · +919870000653
+- Samar Rana · Class 6 B · samar.rana655@nexlidemo.test · +919870000655
+- Aaradhya Nair · Class 6 B · aaradhya.nair657@nexlidemo.test · +919870000657
+- Naman Shah · Class 6 B · naman.shah659@nexlidemo.test · +919870000659
+- Trisha Trivedi · Class 6 B · trisha.trivedi661@nexlidemo.test · +919870000661
+- Nirvaan Rao · Class 6 B · nirvaan.rao663@nexlidemo.test · +919870000663
+- Shaurya Malhotra · Class 6 C · _Prefect_ · shaurya.malhotra665@nexlidemo.test · +919870000665
+- Charvi Verma · Class 6 C · _Prefect_ · charvi.verma667@nexlidemo.test · +919870000667
+- Samar Chopra · Class 6 C · samar.chopra669@nexlidemo.test · +919870000669
+- Jhanvi Pandey · Class 6 C · jhanvi.pandey671@nexlidemo.test · +919870000671
+- Naman Iyer · Class 6 C · naman.iyer673@nexlidemo.test · +919870000673
+- Reet Bose · Class 6 C · reet.bose675@nexlidemo.test · +919870000675
+- Nirvaan Sinha · Class 6 C · nirvaan.sinha677@nexlidemo.test · +919870000677
+- Shaurya Das · Class 7 A · _Prefect_ · shaurya.das679@nexlidemo.test · +919870000679
+- Ishita Kapoor · Class 7 A · _Prefect_ · ishita.kapoor681@nexlidemo.test · +919870000681
+- Samar Sharma · Class 7 A · samar.sharma683@nexlidemo.test · +919870000683
+- Anika Banerjee · Class 7 A · anika.banerjee685@nexlidemo.test · +919870000685
+- Naman Nanda · Class 7 A · naman.nanda687@nexlidemo.test · +919870000687
+- Riya Gupta · Class 7 A · riya.gupta689@nexlidemo.test · +919870000689
+- Nirvaan Pillai · Class 7 A · nirvaan.pillai691@nexlidemo.test · +919870000691
+- Shaurya Bajaj · Class 7 B · _Prefect_ · shaurya.bajaj693@nexlidemo.test · +919870000693
+- Inaya Joshi · Class 7 B · _Prefect_ · inaya.joshi695@nexlidemo.test · +919870000695
+- Samar Jain · Class 7 B · samar.jain697@nexlidemo.test · +919870000697
+- Aaradhya Dube · Class 7 B · aaradhya.dube699@nexlidemo.test · +919870000699
+- Naman Kulkarni · Class 7 B · naman.kulkarni701@nexlidemo.test · +919870000701
+- Trisha Malhotra · Class 7 B · trisha.malhotra703@nexlidemo.test · +919870000703
+- Nirvaan Verma · Class 7 B · nirvaan.verma705@nexlidemo.test · +919870000705
+- Shaurya Chauhan · Class 7 C · _Prefect_ · shaurya.chauhan707@nexlidemo.test · +919870000707
+- Charvi Naidu · Class 7 C · _Prefect_ · charvi.naidu709@nexlidemo.test · +919870000709
+- Samar Mehta · Class 7 C · samar.mehta711@nexlidemo.test · +919870000711
+- Naman Chawla · Class 7 C · naman.chawla715@nexlidemo.test · +919870000715
+- Reet Das · Class 7 C · reet.das717@nexlidemo.test · +919870000717
+- Nirvaan Kapoor · Class 7 C · nirvaan.kapoor719@nexlidemo.test · +919870000719
+- Jhanvi Ghosh · Class 7 C · jhanvi.ghosh713@nexlidemo.test · +919870000713
+- Shaurya Patel · Class 8 A · _Prefect_ · shaurya.patel721@nexlidemo.test · +919870000721
+- Ishita Bhat · Class 8 A · _Prefect_ · ishita.bhat723@nexlidemo.test · +919870000723
+- Samar Saxena · Class 8 A · samar.saxena725@nexlidemo.test · +919870000725
+- Anika Khan · Class 8 A · anika.khan727@nexlidemo.test · +919870000727
+- Naman Desai · Class 8 A · naman.desai729@nexlidemo.test · +919870000729
+- Riya Bajaj · Class 8 A · riya.bajaj731@nexlidemo.test · +919870000731
+- Vivaan Shah · Class 8 B · _Prefect_ · vivaan.shah733@nexlidemo.test · +919870000733
+- Anvi Trivedi · Class 8 B · _Prefect_ · anvi.trivedi735@nexlidemo.test · +919870000735
+- Rudra Rao · Class 8 B · rudra.rao737@nexlidemo.test · +919870000737
+- Nitya Agarwal · Class 8 B · nitya.agarwal739@nexlidemo.test · +919870000739
+- Rishabh Mishra · Class 8 B · rishabh.mishra741@nexlidemo.test · +919870000741
+- Kavya Singh · Class 8 B · kavya.singh743@nexlidemo.test · +919870000743
+- Daksh Pandey · Class 8 C · _Prefect_ · daksh.pandey745@nexlidemo.test · +919870000745
+- Naira Iyer · Class 8 C · _Prefect_ · naira.iyer747@nexlidemo.test · +919870000747
+- Shaurya Bose · Class 8 C · shaurya.bose749@nexlidemo.test · +919870000749
+- Charvi Sinha · Class 8 C · charvi.sinha751@nexlidemo.test · +919870000751
+- Samar Reddy · Class 8 C · samar.reddy753@nexlidemo.test · +919870000753
+- Jhanvi Menon · Class 8 C · jhanvi.menon755@nexlidemo.test · +919870000755
+- Sahil Sharma · Class 9 A · _Prefect_ · sahil.sharma757@nexlidemo.test · +919870000757
+- Sia Banerjee · Class 9 A · _Prefect_ · sia.banerjee759@nexlidemo.test · +919870000759
+- Vivaan Nanda · Class 9 A · vivaan.nanda761@nexlidemo.test · +919870000761
+- Diya Gupta · Class 9 A · diya.gupta763@nexlidemo.test · +919870000763
+- Rudra Pillai · Class 9 A · rudra.pillai765@nexlidemo.test · +919870000765
+- Aanya Rana · Class 9 A · aanya.rana767@nexlidemo.test · +919870000767
+- Harsh Joshi · Class 9 B · _Prefect_ · harsh.joshi769@nexlidemo.test · +919870000769
+- Aarohi Jain · Class 9 B · _Prefect_ · aarohi.jain771@nexlidemo.test · +919870000771
+- Daksh Dube · Class 9 B · daksh.dube773@nexlidemo.test · +919870000773
+- Zara Kulkarni · Class 9 B · zara.kulkarni775@nexlidemo.test · +919870000775
+- Shaurya Malhotra · Class 9 B · shaurya.malhotra777@nexlidemo.test · +919870000777
+- Inaya Verma · Class 9 B · inaya.verma779@nexlidemo.test · +919870000779
+- Advik Chauhan · Class 9 C · _Prefect_ · advik.chauhan781@nexlidemo.test · +919870000781
+- Mahira Naidu · Class 9 C · _Prefect_ · mahira.naidu783@nexlidemo.test · +919870000783
+- Sahil Mehta · Class 9 C · sahil.mehta785@nexlidemo.test · +919870000785
+- Vanya Ghosh · Class 9 C · vanya.ghosh787@nexlidemo.test · +919870000787
+- Vivaan Chawla · Class 9 C · vivaan.chawla789@nexlidemo.test · +919870000789
+- Aleena Das · Class 9 C · aleena.das791@nexlidemo.test · +919870000791
+- Kayaan Yadav · Class 10 A · _Prefect_ · kayaan.yadav793@nexlidemo.test · +919870000793
+- Gauri Patel · Class 10 A · _Prefect_ · gauri.patel795@nexlidemo.test · +919870000795
+- Harsh Bhat · Class 10 A · harsh.bhat797@nexlidemo.test · +919870000797
+- Daksh Khan · Class 10 A · daksh.khan801@nexlidemo.test · +919870000801
+- Aadhya Desai · Class 10 A · aadhya.desai803@nexlidemo.test · +919870000803
+- Nandini Saxena · Class 10 A · nandini.saxena799@nexlidemo.test · +919870000799
+- Myra Shah · Class 10 B · _Prefect_ · myra.shah807@nexlidemo.test · +919870000807
+- Advik Trivedi · Class 10 B · advik.trivedi809@nexlidemo.test · +919870000809
+- Navya Rao · Class 10 B · navya.rao811@nexlidemo.test · +919870000811
+- Sahil Agarwal · Class 10 B · sahil.agarwal813@nexlidemo.test · +919870000813
+- Kabir Nair · Class 10 B · _Prefect_ · kabir.nair805@nexlidemo.test · +919870000805
+- Sara Mishra · Class 10 B · sara.mishra815@nexlidemo.test · +919870000815
+- Reyansh Chopra · Class 10 C · _Prefect_ · reyansh.chopra817@nexlidemo.test · +919870000817
+- Siya Pandey · Class 10 C · _Prefect_ · siya.pandey819@nexlidemo.test · +919870000819
+- Kayaan Iyer · Class 10 C · kayaan.iyer821@nexlidemo.test · +919870000821
+- Prisha Bose · Class 10 C · prisha.bose823@nexlidemo.test · +919870000823
+- Harsh Sinha · Class 10 C · harsh.sinha825@nexlidemo.test · +919870000825
+- Shanaya Reddy · Class 10 C · shanaya.reddy827@nexlidemo.test · +919870000827
+- Nirvaan Kapoor · Class 11 A · _Sports Captain_ · nirvaan.kapoor829@nexlidemo.test · +919870000829
+- Mishka Sharma · Class 11 A · _Sports Captain_ · mishka.sharma831@nexlidemo.test · +919870000831
+- Kabir Banerjee · Class 11 A · _Prefect_ · kabir.banerjee833@nexlidemo.test · +919870000833
+- Drishti Nanda · Class 11 A · _Prefect_ · drishti.nanda835@nexlidemo.test · +919870000835
+- Advik Gupta · Class 11 A · advik.gupta837@nexlidemo.test · +919870000837
+- Khushi Pillai · Class 11 A · khushi.pillai839@nexlidemo.test · +919870000839
+- Varun Bajaj · Class 11 B · _Prefect_ · varun.bajaj841@nexlidemo.test · +919870000841
+- Tanvi Joshi · Class 11 B · _Prefect_ · tanvi.joshi843@nexlidemo.test · +919870000843
+- Reyansh Jain · Class 11 B · reyansh.jain845@nexlidemo.test · +919870000845
+- Saanvi Dube · Class 11 B · saanvi.dube847@nexlidemo.test · +919870000847
+- Kayaan Kulkarni · Class 11 B · kayaan.kulkarni849@nexlidemo.test · +919870000849
+- Pari Malhotra · Class 11 B · pari.malhotra851@nexlidemo.test · +919870000851
+- Naman Singh · Class 11 C · _Prefect_ · naman.singh853@nexlidemo.test · +919870000853
+- Riya Chauhan · Class 11 C · _Prefect_ · riya.chauhan855@nexlidemo.test · +919870000855
+- Nirvaan Naidu · Class 11 C · nirvaan.naidu857@nexlidemo.test · +919870000857
+- Avni Mehta · Class 11 C · avni.mehta859@nexlidemo.test · +919870000859
+- Kabir Ghosh · Class 11 C · kabir.ghosh861@nexlidemo.test · +919870000861
+- Meher Chawla · Class 11 C · meher.chawla863@nexlidemo.test · +919870000863
+- Rishabh Menon · Class 12 A · _Head Boy_ · rishabh.menon865@nexlidemo.test · +919870000865
+- Kavya Yadav · Class 12 A · _Head Girl_ · kavya.yadav867@nexlidemo.test · +919870000867
+- Varun Patel · Class 12 A · _Prefect_ · varun.patel869@nexlidemo.test · +919870000869
+- Ira Bhat · Class 12 A · _Prefect_ · ira.bhat871@nexlidemo.test · +919870000871
+- Reyansh Saxena · Class 12 A · reyansh.saxena873@nexlidemo.test · +919870000873
+- Bhavya Khan · Class 12 A · bhavya.khan875@nexlidemo.test · +919870000875
+- Samar Rana · Class 12 B · _Prefect_ · samar.rana877@nexlidemo.test · +919870000877
+- Jhanvi Nair · Class 12 B · _Prefect_ · jhanvi.nair879@nexlidemo.test · +919870000879
+- Naman Shah · Class 12 B · naman.shah881@nexlidemo.test · +919870000881
+- Reet Trivedi · Class 12 B · reet.trivedi883@nexlidemo.test · +919870000883
+- Nirvaan Rao · Class 12 B · nirvaan.rao885@nexlidemo.test · +919870000885
+- Ananya Agarwal · Class 12 B · ananya.agarwal887@nexlidemo.test · +919870000887
+- Rudra Verma · Class 12 C · _Prefect_ · rudra.verma889@nexlidemo.test · +919870000889
+- Aanya Chopra · Class 12 C · _Prefect_ · aanya.chopra891@nexlidemo.test · +919870000891
+- Rishabh Pandey · Class 12 C · rishabh.pandey893@nexlidemo.test · +919870000893
+- Kiara Iyer · Class 12 C · kiara.iyer895@nexlidemo.test · +919870000895
+- Varun Bose · Class 12 C · varun.bose897@nexlidemo.test · +919870000897
+- Tara Sinha · Class 12 C · tara.sinha899@nexlidemo.test · +919870000899
+
+### Parents / Guardians (300)
+- Ayaan Bose (parent of Shaurya Bose, Nursery A) · ayaan.bose302@nexlidemo.test · +919870000302
+- Karthik Reddy (parent of Samar Reddy, Nursery A) · karthik.reddy306@nexlidemo.test · +919870000306
+- Devansh Sinha (parent of Ishita Sinha, Nursery A) · devansh.sinha304@nexlidemo.test · +919870000304
+- Kunal Menon (parent of Anika Menon, Nursery A) · kunal.menon308@nexlidemo.test · +919870000308
+- Tanish Yadav (parent of Naman Yadav, Nursery A) · tanish.yadav310@nexlidemo.test · +919870000310
+- Gaurav Patel (parent of Riya Patel, Nursery A) · gaurav.patel312@nexlidemo.test · +919870000312
+- Sia Gupta (parent of Shaurya Gupta, Nursery B) · sia.gupta316@nexlidemo.test · +919870000316
+- Aditya Bhat (parent of Nirvaan Bhat, Nursery A) · aditya.bhat314@nexlidemo.test · +919870000314
+- Diya Pillai (parent of Inaya Pillai, Nursery B) · diya.pillai318@nexlidemo.test · +919870000318
+- Aanya Rana (parent of Samar Rana, Nursery B) · aanya.rana320@nexlidemo.test · +919870000320
+- Kiara Nair (parent of Aaradhya Nair, Nursery B) · kiara.nair322@nexlidemo.test · +919870000322
+- Tara Shah (parent of Naman Shah, Nursery B) · tara.shah324@nexlidemo.test · +919870000324
+- Siya Trivedi (parent of Trisha Trivedi, Nursery B) · siya.trivedi326@nexlidemo.test · +919870000326
+- Prisha Rao (parent of Nirvaan Rao, Nursery B) · prisha.rao328@nexlidemo.test · +919870000328
+- Krishna Malhotra (parent of Shaurya Malhotra, Nursery C) · krishna.malhotra330@nexlidemo.test · +919870000330
+- Ayaan Verma (parent of Charvi Verma, Nursery C) · ayaan.verma332@nexlidemo.test · +919870000332
+- Devansh Chopra (parent of Samar Chopra, Nursery C) · devansh.chopra334@nexlidemo.test · +919870000334
+- Karthik Pandey (parent of Jhanvi Pandey, Nursery C) · karthik.pandey336@nexlidemo.test · +919870000336
+- Kunal Iyer (parent of Naman Iyer, Nursery C) · kunal.iyer338@nexlidemo.test · +919870000338
+- Tanish Bose (parent of Reet Bose, Nursery C) · tanish.bose340@nexlidemo.test · +919870000340
+- Gaurav Sinha (parent of Nirvaan Sinha, Nursery C) · gaurav.sinha342@nexlidemo.test · +919870000342
+- Navya Das (parent of Shaurya Das, LKG A) · navya.das344@nexlidemo.test · +919870000344
+- Sara Kapoor (parent of Ishita Kapoor, LKG A) · sara.kapoor346@nexlidemo.test · +919870000346
+- Anvi Sharma (parent of Samar Sharma, LKG A) · anvi.sharma348@nexlidemo.test · +919870000348
+- Nitya Banerjee (parent of Anika Banerjee, LKG A) · nitya.banerjee350@nexlidemo.test · +919870000350
+- Kavya Nanda (parent of Naman Nanda, LKG A) · kavya.nanda352@nexlidemo.test · +919870000352
+- Ira Gupta (parent of Riya Gupta, LKG A) · ira.gupta354@nexlidemo.test · +919870000354
+- Bhavya Pillai (parent of Nirvaan Pillai, LKG A) · bhavya.pillai356@nexlidemo.test · +919870000356
+- Ranbir Bajaj (parent of Shaurya Bajaj, LKG B) · ranbir.bajaj358@nexlidemo.test · +919870000358
+- Krishna Joshi (parent of Inaya Joshi, LKG B) · krishna.joshi360@nexlidemo.test · +919870000360
+- Ayaan Jain (parent of Samar Jain, LKG B) · ayaan.jain362@nexlidemo.test · +919870000362
+- Devansh Dube (parent of Aaradhya Dube, LKG B) · devansh.dube364@nexlidemo.test · +919870000364
+- Karthik Kulkarni (parent of Naman Kulkarni, LKG B) · karthik.kulkarni366@nexlidemo.test · +919870000366
+- Kunal Malhotra (parent of Trisha Malhotra, LKG B) · kunal.malhotra368@nexlidemo.test · +919870000368
+- Tanish Verma (parent of Nirvaan Verma, LKG B) · tanish.verma370@nexlidemo.test · +919870000370
+- Meher Chauhan (parent of Shaurya Chauhan, LKG C) · meher.chauhan372@nexlidemo.test · +919870000372
+- Mahira Naidu (parent of Charvi Naidu, LKG C) · mahira.naidu374@nexlidemo.test · +919870000374
+- Vanya Mehta (parent of Samar Mehta, LKG C) · vanya.mehta376@nexlidemo.test · +919870000376
+- Aleena Ghosh (parent of Jhanvi Ghosh, LKG C) · aleena.ghosh378@nexlidemo.test · +919870000378
+- Esha Chawla (parent of Naman Chawla, LKG C) · esha.chawla380@nexlidemo.test · +919870000380
+- Lavanya Das (parent of Reet Das, LKG C) · lavanya.das382@nexlidemo.test · +919870000382
+- Tanvi Kapoor (parent of Nirvaan Kapoor, LKG C) · tanvi.kapoor384@nexlidemo.test · +919870000384
+- Yash Patel (parent of Shaurya Patel, UKG A) · yash.patel386@nexlidemo.test · +919870000386
+- Ranbir Bhat (parent of Ishita Bhat, UKG A) · ranbir.bhat388@nexlidemo.test · +919870000388
+- Krishna Saxena (parent of Samar Saxena, UKG A) · krishna.saxena390@nexlidemo.test · +919870000390
+- Ayaan Khan (parent of Anika Khan, UKG A) · ayaan.khan392@nexlidemo.test · +919870000392
+- Devansh Desai (parent of Naman Desai, UKG A) · devansh.desai394@nexlidemo.test · +919870000394
+- Karthik Bajaj (parent of Riya Bajaj, UKG A) · karthik.bajaj396@nexlidemo.test · +919870000396
+- Kunal Joshi (parent of Nirvaan Joshi, UKG A) · kunal.joshi398@nexlidemo.test · +919870000398
+- Mishka Trivedi (parent of Shaurya Trivedi, UKG B) · mishka.trivedi400@nexlidemo.test · +919870000400
+- Drishti Rao (parent of Inaya Rao, UKG B) · drishti.rao402@nexlidemo.test · +919870000402
+- Sia Mishra (parent of Aaradhya Mishra, UKG B) · sia.mishra406@nexlidemo.test · +919870000406
+- Diya Singh (parent of Naman Singh, UKG B) · diya.singh408@nexlidemo.test · +919870000408
+- Aanya Chauhan (parent of Trisha Chauhan, UKG B) · aanya.chauhan410@nexlidemo.test · +919870000410
+- Kiara Naidu (parent of Nirvaan Naidu, UKG B) · kiara.naidu412@nexlidemo.test · +919870000412
+- Khushi Agarwal (parent of Samar Agarwal, UKG B) · khushi.agarwal404@nexlidemo.test · +919870000404
+- Parth Bose (parent of Shaurya Bose, UKG C) · parth.bose414@nexlidemo.test · +919870000414
+- Yash Sinha (parent of Charvi Sinha, UKG C) · yash.sinha416@nexlidemo.test · +919870000416
+- Ranbir Reddy (parent of Samar Reddy, UKG C) · ranbir.reddy418@nexlidemo.test · +919870000418
+- Krishna Menon (parent of Jhanvi Menon, UKG C) · krishna.menon420@nexlidemo.test · +919870000420
+- Ayaan Yadav (parent of Naman Yadav, UKG C) · ayaan.yadav422@nexlidemo.test · +919870000422
+- Devansh Patel (parent of Reet Patel, UKG C) · devansh.patel424@nexlidemo.test · +919870000424
+- Karthik Bhat (parent of Nirvaan Bhat, UKG C) · karthik.bhat426@nexlidemo.test · +919870000426
+- Reet Gupta (parent of Shaurya Gupta, Class 1 A) · reet.gupta428@nexlidemo.test · +919870000428
+- Ananya Pillai (parent of Ishita Pillai, Class 1 A) · ananya.pillai430@nexlidemo.test · +919870000430
+- Myra Rana (parent of Samar Rana, Class 1 A) · myra.rana432@nexlidemo.test · +919870000432
+- Navya Nair (parent of Anika Nair, Class 1 A) · navya.nair434@nexlidemo.test · +919870000434
+- Sara Shah (parent of Naman Shah, Class 1 A) · sara.shah436@nexlidemo.test · +919870000436
+- Anvi Trivedi (parent of Riya Trivedi, Class 1 A) · anvi.trivedi438@nexlidemo.test · +919870000438
+- Nitya Rao (parent of Nirvaan Rao, Class 1 A) · nitya.rao440@nexlidemo.test · +919870000440
+- Siddharth Malhotra (parent of Shaurya Malhotra, Class 1 B) · siddharth.malhotra442@nexlidemo.test · +919870000442
+- Parth Verma (parent of Inaya Verma, Class 1 B) · parth.verma444@nexlidemo.test · +919870000444
+- Yash Chopra (parent of Samar Chopra, Class 1 B) · yash.chopra446@nexlidemo.test · +919870000446
+- Ranbir Pandey (parent of Aaradhya Pandey, Class 1 B) · ranbir.pandey448@nexlidemo.test · +919870000448
+- Devansh Sinha (parent of Nirvaan Sinha, Class 1 B) · devansh.sinha454@nexlidemo.test · +919870000454
+- Krishna Iyer (parent of Naman Iyer, Class 1 B) · krishna.iyer450@nexlidemo.test · +919870000450
+- Riya Kapoor (parent of Charvi Kapoor, Class 1 C) · riya.kapoor458@nexlidemo.test · +919870000458
+- Anika Das (parent of Shaurya Das, Class 1 C) · anika.das456@nexlidemo.test · +919870000456
+- Ayaan Bose (parent of Trisha Bose, Class 1 B) · ayaan.bose452@nexlidemo.test · +919870000452
+- Avni Sharma (parent of Samar Sharma, Class 1 C) · avni.sharma460@nexlidemo.test · +919870000460
+- Vanya Gupta (parent of Reet Gupta, Class 1 C) · vanya.gupta466@nexlidemo.test · +919870000466
+- Mahira Nanda (parent of Naman Nanda, Class 1 C) · mahira.nanda464@nexlidemo.test · +919870000464
+- Meher Banerjee (parent of Jhanvi Banerjee, Class 1 C) · meher.banerjee462@nexlidemo.test · +919870000462
+- Aleena Pillai (parent of Nirvaan Pillai, Class 1 C) · aleena.pillai468@nexlidemo.test · +919870000468
+- Laksh Bajaj (parent of Shaurya Bajaj, Class 2 A) · laksh.bajaj470@nexlidemo.test · +919870000470
+- Siddharth Joshi (parent of Ishita Joshi, Class 2 A) · siddharth.joshi472@nexlidemo.test · +919870000472
+- Parth Jain (parent of Samar Jain, Class 2 A) · parth.jain474@nexlidemo.test · +919870000474
+- Ranbir Kulkarni (parent of Naman Kulkarni, Class 2 A) · ranbir.kulkarni478@nexlidemo.test · +919870000478
+- Yash Dube (parent of Anika Dube, Class 2 A) · yash.dube476@nexlidemo.test · +919870000476
+- Krishna Malhotra (parent of Riya Malhotra, Class 2 A) · krishna.malhotra480@nexlidemo.test · +919870000480
+- Ayaan Verma (parent of Nirvaan Verma, Class 2 A) · ayaan.verma482@nexlidemo.test · +919870000482
+- Inaya Chauhan (parent of Shaurya Chauhan, Class 2 B) · inaya.chauhan484@nexlidemo.test · +919870000484
+- Aaradhya Naidu (parent of Inaya Naidu, Class 2 B) · aaradhya.naidu486@nexlidemo.test · +919870000486
+- Trisha Mehta (parent of Samar Mehta, Class 2 B) · trisha.mehta488@nexlidemo.test · +919870000488
+- Mishka Ghosh (parent of Aaradhya Ghosh, Class 2 B) · mishka.ghosh490@nexlidemo.test · +919870000490
+- Drishti Chawla (parent of Naman Chawla, Class 2 B) · drishti.chawla492@nexlidemo.test · +919870000492
+- Khushi Das (parent of Trisha Das, Class 2 B) · khushi.das494@nexlidemo.test · +919870000494
+- Sia Kapoor (parent of Nirvaan Kapoor, Class 2 B) · sia.kapoor496@nexlidemo.test · +919870000496
+- Veer Patel (parent of Shaurya Patel, Class 2 C) · veer.patel498@nexlidemo.test · +919870000498
+- Laksh Bhat (parent of Charvi Bhat, Class 2 C) · laksh.bhat500@nexlidemo.test · +919870000500
+- Siddharth Saxena (parent of Samar Saxena, Class 2 C) · siddharth.saxena502@nexlidemo.test · +919870000502
+- Parth Khan (parent of Jhanvi Khan, Class 2 C) · parth.khan504@nexlidemo.test · +919870000504
+- Yash Desai (parent of Naman Desai, Class 2 C) · yash.desai506@nexlidemo.test · +919870000506
+- Ranbir Bajaj (parent of Reet Bajaj, Class 2 C) · ranbir.bajaj508@nexlidemo.test · +919870000508
+- Krishna Joshi (parent of Nirvaan Joshi, Class 2 C) · krishna.joshi510@nexlidemo.test · +919870000510
+- Naira Trivedi (parent of Shaurya Trivedi, Class 3 A) · naira.trivedi512@nexlidemo.test · +919870000512
+- Charvi Rao (parent of Ishita Rao, Class 3 A) · charvi.rao514@nexlidemo.test · +919870000514
+- Jhanvi Agarwal (parent of Samar Agarwal, Class 3 A) · jhanvi.agarwal516@nexlidemo.test · +919870000516
+- Reet Mishra (parent of Anika Mishra, Class 3 A) · reet.mishra518@nexlidemo.test · +919870000518
+- Ananya Singh (parent of Naman Singh, Class 3 A) · ananya.singh520@nexlidemo.test · +919870000520
+- Myra Chauhan (parent of Riya Chauhan, Class 3 A) · myra.chauhan522@nexlidemo.test · +919870000522
+- Atharv Bose (parent of Shaurya Bose, Class 3 B) · atharv.bose526@nexlidemo.test · +919870000526
+- Navya Naidu (parent of Nirvaan Naidu, Class 3 A) · navya.naidu524@nexlidemo.test · +919870000524
+- Veer Sinha (parent of Inaya Sinha, Class 3 B) · veer.sinha528@nexlidemo.test · +919870000528
+- Laksh Reddy (parent of Samar Reddy, Class 3 B) · laksh.reddy530@nexlidemo.test · +919870000530
+- Siddharth Menon (parent of Aaradhya Menon, Class 3 B) · siddharth.menon532@nexlidemo.test · +919870000532
+- Yash Patel (parent of Trisha Patel, Class 3 B) · yash.patel536@nexlidemo.test · +919870000536
+- Ranbir Bhat (parent of Nirvaan Bhat, Class 3 B) · ranbir.bhat538@nexlidemo.test · +919870000538
+- Nandini Gupta (parent of Shaurya Gupta, Class 3 C) · nandini.gupta540@nexlidemo.test · +919870000540
+- Aadhya Pillai (parent of Charvi Pillai, Class 3 C) · aadhya.pillai542@nexlidemo.test · +919870000542
+- Parth Yadav (parent of Naman Yadav, Class 3 B) · parth.yadav534@nexlidemo.test · +919870000534
+- Ishita Rana (parent of Samar Rana, Class 3 C) · ishita.rana544@nexlidemo.test · +919870000544
+- Anika Nair (parent of Jhanvi Nair, Class 3 C) · anika.nair546@nexlidemo.test · +919870000546
+- Riya Shah (parent of Naman Shah, Class 3 C) · riya.shah548@nexlidemo.test · +919870000548
+- Avni Trivedi (parent of Reet Trivedi, Class 3 C) · avni.trivedi550@nexlidemo.test · +919870000550
+- Meher Rao (parent of Nirvaan Rao, Class 3 C) · meher.rao552@nexlidemo.test · +919870000552
+- Aditya Malhotra (parent of Shaurya Malhotra, Class 4 A) · aditya.malhotra554@nexlidemo.test · +919870000554
+- Atharv Verma (parent of Ishita Verma, Class 4 A) · atharv.verma556@nexlidemo.test · +919870000556
+- Veer Chopra (parent of Samar Chopra, Class 4 A) · veer.chopra558@nexlidemo.test · +919870000558
+- Laksh Pandey (parent of Anika Pandey, Class 4 A) · laksh.pandey560@nexlidemo.test · +919870000560
+- Siddharth Iyer (parent of Naman Iyer, Class 4 A) · siddharth.iyer562@nexlidemo.test · +919870000562
+- Parth Bose (parent of Riya Bose, Class 4 A) · parth.bose564@nexlidemo.test · +919870000564
+- Yash Sinha (parent of Nirvaan Sinha, Class 4 A) · yash.sinha566@nexlidemo.test · +919870000566
+- Pari Das (parent of Shaurya Das, Class 4 B) · pari.das568@nexlidemo.test · +919870000568
+- Aarohi Kapoor (parent of Inaya Kapoor, Class 4 B) · aarohi.kapoor570@nexlidemo.test · +919870000570
+- Zara Sharma (parent of Samar Sharma, Class 4 B) · zara.sharma572@nexlidemo.test · +919870000572
+- Inaya Banerjee (parent of Aaradhya Banerjee, Class 4 B) · inaya.banerjee574@nexlidemo.test · +919870000574
+- Aaradhya Nanda (parent of Naman Nanda, Class 4 B) · aaradhya.nanda576@nexlidemo.test · +919870000576
+- Trisha Gupta (parent of Trisha Gupta, Class 4 B) · trisha.gupta578@nexlidemo.test · +919870000578
+- Mishka Pillai (parent of Nirvaan Pillai, Class 4 B) · mishka.pillai580@nexlidemo.test · +919870000580
+- Gaurav Bajaj (parent of Shaurya Bajaj, Class 4 C) · gaurav.bajaj582@nexlidemo.test · +919870000582
+- Aditya Joshi (parent of Charvi Joshi, Class 4 C) · aditya.joshi584@nexlidemo.test · +919870000584
+- Atharv Jain (parent of Samar Jain, Class 4 C) · atharv.jain586@nexlidemo.test · +919870000586
+- Veer Dube (parent of Jhanvi Dube, Class 4 C) · veer.dube588@nexlidemo.test · +919870000588
+- Laksh Kulkarni (parent of Naman Kulkarni, Class 4 C) · laksh.kulkarni590@nexlidemo.test · +919870000590
+- Siddharth Malhotra (parent of Reet Malhotra, Class 4 C) · siddharth.malhotra592@nexlidemo.test · +919870000592
+- Parth Verma (parent of Nirvaan Verma, Class 4 C) · parth.verma594@nexlidemo.test · +919870000594
+- Siya Chauhan (parent of Shaurya Chauhan, Class 5 A) · siya.chauhan596@nexlidemo.test · +919870000596
+- Prisha Naidu (parent of Ishita Naidu, Class 5 A) · prisha.naidu598@nexlidemo.test · +919870000598
+- Shanaya Mehta (parent of Samar Mehta, Class 5 A) · shanaya.mehta600@nexlidemo.test · +919870000600
+- Naira Ghosh (parent of Anika Ghosh, Class 5 A) · naira.ghosh602@nexlidemo.test · +919870000602
+- Charvi Chawla (parent of Naman Chawla, Class 5 A) · charvi.chawla604@nexlidemo.test · +919870000604
+- Jhanvi Das (parent of Riya Das, Class 5 A) · jhanvi.das606@nexlidemo.test · +919870000606
+- Reet Kapoor (parent of Nirvaan Kapoor, Class 5 A) · reet.kapoor608@nexlidemo.test · +919870000608
+- Tanish Patel (parent of Shaurya Patel, Class 5 B) · tanish.patel610@nexlidemo.test · +919870000610
+- Gaurav Bhat (parent of Inaya Bhat, Class 5 B) · gaurav.bhat612@nexlidemo.test · +919870000612
+- Aditya Saxena (parent of Samar Saxena, Class 5 B) · aditya.saxena614@nexlidemo.test · +919870000614
+- Veer Desai (parent of Naman Desai, Class 5 B) · veer.desai618@nexlidemo.test · +919870000618
+- Laksh Bajaj (parent of Trisha Bajaj, Class 5 B) · laksh.bajaj620@nexlidemo.test · +919870000620
+- Siddharth Joshi (parent of Nirvaan Joshi, Class 5 B) · siddharth.joshi622@nexlidemo.test · +919870000622
+- Ira Trivedi (parent of Shaurya Trivedi, Class 5 C) · ira.trivedi624@nexlidemo.test · +919870000624
+- Atharv Khan (parent of Aaradhya Khan, Class 5 B) · atharv.khan616@nexlidemo.test · +919870000616
+- Bhavya Rao (parent of Charvi Rao, Class 5 C) · bhavya.rao626@nexlidemo.test · +919870000626
+- Gauri Agarwal (parent of Samar Agarwal, Class 5 C) · gauri.agarwal628@nexlidemo.test · +919870000628
+- Nandini Mishra (parent of Jhanvi Mishra, Class 5 C) · nandini.mishra630@nexlidemo.test · +919870000630
+- Aadhya Singh (parent of Naman Singh, Class 5 C) · aadhya.singh632@nexlidemo.test · +919870000632
+- Ishita Chauhan (parent of Reet Chauhan, Class 5 C) · ishita.chauhan634@nexlidemo.test · +919870000634
+- Kunal Bose (parent of Shaurya Bose, Class 6 A) · kunal.bose638@nexlidemo.test · +919870000638
+- Tanish Sinha (parent of Ishita Sinha, Class 6 A) · tanish.sinha640@nexlidemo.test · +919870000640
+- Gaurav Reddy (parent of Samar Reddy, Class 6 A) · gaurav.reddy642@nexlidemo.test · +919870000642
+- Aditya Menon (parent of Anika Menon, Class 6 A) · aditya.menon644@nexlidemo.test · +919870000644
+- Anika Naidu (parent of Nirvaan Naidu, Class 5 C) · anika.naidu636@nexlidemo.test · +919870000636
+- Atharv Yadav (parent of Naman Yadav, Class 6 A) · atharv.yadav646@nexlidemo.test · +919870000646
+- Veer Patel (parent of Riya Patel, Class 6 A) · veer.patel648@nexlidemo.test · +919870000648
+- Laksh Bhat (parent of Nirvaan Bhat, Class 6 A) · laksh.bhat650@nexlidemo.test · +919870000650
+- Lavanya Gupta (parent of Shaurya Gupta, Class 6 B) · lavanya.gupta652@nexlidemo.test · +919870000652
+- Tanvi Pillai (parent of Inaya Pillai, Class 6 B) · tanvi.pillai654@nexlidemo.test · +919870000654
+- Aarohi Shah (parent of Naman Shah, Class 6 B) · aarohi.shah660@nexlidemo.test · +919870000660
+- Pari Nair (parent of Aaradhya Nair, Class 6 B) · pari.nair658@nexlidemo.test · +919870000658
+- Zara Trivedi (parent of Trisha Trivedi, Class 6 B) · zara.trivedi662@nexlidemo.test · +919870000662
+- Inaya Rao (parent of Nirvaan Rao, Class 6 B) · inaya.rao664@nexlidemo.test · +919870000664
+- Saanvi Rana (parent of Samar Rana, Class 6 B) · saanvi.rana656@nexlidemo.test · +919870000656
+- Karthik Malhotra (parent of Shaurya Malhotra, Class 6 C) · karthik.malhotra666@nexlidemo.test · +919870000666
+- Kunal Verma (parent of Charvi Verma, Class 6 C) · kunal.verma668@nexlidemo.test · +919870000668
+- Tanish Chopra (parent of Samar Chopra, Class 6 C) · tanish.chopra670@nexlidemo.test · +919870000670
+- Gaurav Pandey (parent of Jhanvi Pandey, Class 6 C) · gaurav.pandey672@nexlidemo.test · +919870000672
+- Aditya Iyer (parent of Naman Iyer, Class 6 C) · aditya.iyer674@nexlidemo.test · +919870000674
+- Atharv Bose (parent of Reet Bose, Class 6 C) · atharv.bose676@nexlidemo.test · +919870000676
+- Veer Sinha (parent of Nirvaan Sinha, Class 6 C) · veer.sinha678@nexlidemo.test · +919870000678
+- Aanya Das (parent of Shaurya Das, Class 7 A) · aanya.das680@nexlidemo.test · +919870000680
+- Kiara Kapoor (parent of Ishita Kapoor, Class 7 A) · kiara.kapoor682@nexlidemo.test · +919870000682
+- Tara Sharma (parent of Samar Sharma, Class 7 A) · tara.sharma684@nexlidemo.test · +919870000684
+- Siya Banerjee (parent of Anika Banerjee, Class 7 A) · siya.banerjee686@nexlidemo.test · +919870000686
+- Prisha Nanda (parent of Naman Nanda, Class 7 A) · prisha.nanda688@nexlidemo.test · +919870000688
+- Shanaya Gupta (parent of Riya Gupta, Class 7 A) · shanaya.gupta690@nexlidemo.test · +919870000690
+- Naira Pillai (parent of Nirvaan Pillai, Class 7 A) · naira.pillai692@nexlidemo.test · +919870000692
+- Devansh Bajaj (parent of Shaurya Bajaj, Class 7 B) · devansh.bajaj694@nexlidemo.test · +919870000694
+- Karthik Joshi (parent of Inaya Joshi, Class 7 B) · karthik.joshi696@nexlidemo.test · +919870000696
+- Kunal Jain (parent of Samar Jain, Class 7 B) · kunal.jain698@nexlidemo.test · +919870000698
+- Tanish Dube (parent of Aaradhya Dube, Class 7 B) · tanish.dube700@nexlidemo.test · +919870000700
+- Gaurav Kulkarni (parent of Naman Kulkarni, Class 7 B) · gaurav.kulkarni702@nexlidemo.test · +919870000702
+- Aditya Malhotra (parent of Trisha Malhotra, Class 7 B) · aditya.malhotra704@nexlidemo.test · +919870000704
+- Atharv Verma (parent of Nirvaan Verma, Class 7 B) · atharv.verma706@nexlidemo.test · +919870000706
+- Anvi Chauhan (parent of Shaurya Chauhan, Class 7 C) · anvi.chauhan708@nexlidemo.test · +919870000708
+- Nitya Naidu (parent of Charvi Naidu, Class 7 C) · nitya.naidu710@nexlidemo.test · +919870000710
+- Kavya Mehta (parent of Samar Mehta, Class 7 C) · kavya.mehta712@nexlidemo.test · +919870000712
+- Ira Ghosh (parent of Jhanvi Ghosh, Class 7 C) · ira.ghosh714@nexlidemo.test · +919870000714
+- Bhavya Chawla (parent of Naman Chawla, Class 7 C) · bhavya.chawla716@nexlidemo.test · +919870000716
+- Gauri Das (parent of Reet Das, Class 7 C) · gauri.das718@nexlidemo.test · +919870000718
+- Nandini Kapoor (parent of Nirvaan Kapoor, Class 7 C) · nandini.kapoor720@nexlidemo.test · +919870000720
+- Ayaan Patel (parent of Shaurya Patel, Class 8 A) · ayaan.patel722@nexlidemo.test · +919870000722
+- Devansh Bhat (parent of Ishita Bhat, Class 8 A) · devansh.bhat724@nexlidemo.test · +919870000724
+- Karthik Saxena (parent of Samar Saxena, Class 8 A) · karthik.saxena726@nexlidemo.test · +919870000726
+- Kunal Khan (parent of Anika Khan, Class 8 A) · kunal.khan728@nexlidemo.test · +919870000728
+- Tanish Desai (parent of Naman Desai, Class 8 A) · tanish.desai730@nexlidemo.test · +919870000730
+- Gaurav Bajaj (parent of Riya Bajaj, Class 8 A) · gaurav.bajaj732@nexlidemo.test · +919870000732
+- Aditya Shah (parent of Vivaan Shah, Class 8 B) · aditya.shah734@nexlidemo.test · +919870000734
+- Atharv Trivedi (parent of Anvi Trivedi, Class 8 B) · atharv.trivedi736@nexlidemo.test · +919870000736
+- Veer Rao (parent of Rudra Rao, Class 8 B) · veer.rao738@nexlidemo.test · +919870000738
+- Laksh Agarwal (parent of Nitya Agarwal, Class 8 B) · laksh.agarwal740@nexlidemo.test · +919870000740
+- Siddharth Mishra (parent of Rishabh Mishra, Class 8 B) · siddharth.mishra742@nexlidemo.test · +919870000742
+- Parth Singh (parent of Kavya Singh, Class 8 B) · parth.singh744@nexlidemo.test · +919870000744
+- Yash Pandey (parent of Daksh Pandey, Class 8 C) · yash.pandey746@nexlidemo.test · +919870000746
+- Ranbir Iyer (parent of Naira Iyer, Class 8 C) · ranbir.iyer748@nexlidemo.test · +919870000748
+- Krishna Bose (parent of Shaurya Bose, Class 8 C) · krishna.bose750@nexlidemo.test · +919870000750
+- Ayaan Sinha (parent of Charvi Sinha, Class 8 C) · ayaan.sinha752@nexlidemo.test · +919870000752
+- Devansh Reddy (parent of Samar Reddy, Class 8 C) · devansh.reddy754@nexlidemo.test · +919870000754
+- Karthik Menon (parent of Jhanvi Menon, Class 8 C) · karthik.menon756@nexlidemo.test · +919870000756
+- Kunal Sharma (parent of Sahil Sharma, Class 9 A) · kunal.sharma758@nexlidemo.test · +919870000758
+- Tanish Banerjee (parent of Sia Banerjee, Class 9 A) · tanish.banerjee760@nexlidemo.test · +919870000760
+- Gaurav Nanda (parent of Vivaan Nanda, Class 9 A) · gaurav.nanda762@nexlidemo.test · +919870000762
+- Aditya Gupta (parent of Diya Gupta, Class 9 A) · aditya.gupta764@nexlidemo.test · +919870000764
+- Atharv Pillai (parent of Rudra Pillai, Class 9 A) · atharv.pillai766@nexlidemo.test · +919870000766
+- Veer Rana (parent of Aanya Rana, Class 9 A) · veer.rana768@nexlidemo.test · +919870000768
+- Laksh Joshi (parent of Harsh Joshi, Class 9 B) · laksh.joshi770@nexlidemo.test · +919870000770
+- Siddharth Jain (parent of Aarohi Jain, Class 9 B) · siddharth.jain772@nexlidemo.test · +919870000772
+- Parth Dube (parent of Daksh Dube, Class 9 B) · parth.dube774@nexlidemo.test · +919870000774
+- Yash Kulkarni (parent of Zara Kulkarni, Class 9 B) · yash.kulkarni776@nexlidemo.test · +919870000776
+- Ranbir Malhotra (parent of Shaurya Malhotra, Class 9 B) · ranbir.malhotra778@nexlidemo.test · +919870000778
+- Krishna Verma (parent of Inaya Verma, Class 9 B) · krishna.verma780@nexlidemo.test · +919870000780
+- Ayaan Chauhan (parent of Advik Chauhan, Class 9 C) · ayaan.chauhan782@nexlidemo.test · +919870000782
+- Devansh Naidu (parent of Mahira Naidu, Class 9 C) · devansh.naidu784@nexlidemo.test · +919870000784
+- Karthik Mehta (parent of Sahil Mehta, Class 9 C) · karthik.mehta786@nexlidemo.test · +919870000786
+- Kunal Ghosh (parent of Vanya Ghosh, Class 9 C) · kunal.ghosh788@nexlidemo.test · +919870000788
+- Tanish Chawla (parent of Vivaan Chawla, Class 9 C) · tanish.chawla790@nexlidemo.test · +919870000790
+- Gaurav Das (parent of Aleena Das, Class 9 C) · gaurav.das792@nexlidemo.test · +919870000792
+- Aditya Yadav (parent of Kayaan Yadav, Class 10 A) · aditya.yadav794@nexlidemo.test · +919870000794
+- Atharv Patel (parent of Gauri Patel, Class 10 A) · atharv.patel796@nexlidemo.test · +919870000796
+- Veer Bhat (parent of Harsh Bhat, Class 10 A) · veer.bhat798@nexlidemo.test · +919870000798
+- Laksh Saxena (parent of Nandini Saxena, Class 10 A) · laksh.saxena800@nexlidemo.test · +919870000800
+- Siddharth Khan (parent of Daksh Khan, Class 10 A) · siddharth.khan802@nexlidemo.test · +919870000802
+- Parth Desai (parent of Aadhya Desai, Class 10 A) · parth.desai804@nexlidemo.test · +919870000804
+- Yash Nair (parent of Kabir Nair, Class 10 B) · yash.nair806@nexlidemo.test · +919870000806
+- Ranbir Shah (parent of Myra Shah, Class 10 B) · ranbir.shah808@nexlidemo.test · +919870000808
+- Krishna Trivedi (parent of Advik Trivedi, Class 10 B) · krishna.trivedi810@nexlidemo.test · +919870000810
+- Ayaan Rao (parent of Navya Rao, Class 10 B) · ayaan.rao812@nexlidemo.test · +919870000812
+- Devansh Agarwal (parent of Sahil Agarwal, Class 10 B) · devansh.agarwal814@nexlidemo.test · +919870000814
+- Karthik Mishra (parent of Sara Mishra, Class 10 B) · karthik.mishra816@nexlidemo.test · +919870000816
+- Kunal Chopra (parent of Reyansh Chopra, Class 10 C) · kunal.chopra818@nexlidemo.test · +919870000818
+- Tanish Pandey (parent of Siya Pandey, Class 10 C) · tanish.pandey820@nexlidemo.test · +919870000820
+- Gaurav Iyer (parent of Kayaan Iyer, Class 10 C) · gaurav.iyer822@nexlidemo.test · +919870000822
+- Aditya Bose (parent of Prisha Bose, Class 10 C) · aditya.bose824@nexlidemo.test · +919870000824
+- Atharv Sinha (parent of Harsh Sinha, Class 10 C) · atharv.sinha826@nexlidemo.test · +919870000826
+- Veer Reddy (parent of Shanaya Reddy, Class 10 C) · veer.reddy828@nexlidemo.test · +919870000828
+- Laksh Kapoor (parent of Nirvaan Kapoor, Class 11 A) · laksh.kapoor830@nexlidemo.test · +919870000830
+- Siddharth Sharma (parent of Mishka Sharma, Class 11 A) · siddharth.sharma832@nexlidemo.test · +919870000832
+- Parth Banerjee (parent of Kabir Banerjee, Class 11 A) · parth.banerjee834@nexlidemo.test · +919870000834
+- Yash Nanda (parent of Drishti Nanda, Class 11 A) · yash.nanda836@nexlidemo.test · +919870000836
+- Ranbir Gupta (parent of Advik Gupta, Class 11 A) · ranbir.gupta838@nexlidemo.test · +919870000838
+- Krishna Pillai (parent of Khushi Pillai, Class 11 A) · krishna.pillai840@nexlidemo.test · +919870000840
+- Ayaan Bajaj (parent of Varun Bajaj, Class 11 B) · ayaan.bajaj842@nexlidemo.test · +919870000842
+- Devansh Joshi (parent of Tanvi Joshi, Class 11 B) · devansh.joshi844@nexlidemo.test · +919870000844
+- Karthik Jain (parent of Reyansh Jain, Class 11 B) · karthik.jain846@nexlidemo.test · +919870000846
+- Kunal Dube (parent of Saanvi Dube, Class 11 B) · kunal.dube848@nexlidemo.test · +919870000848
+- Tanish Kulkarni (parent of Kayaan Kulkarni, Class 11 B) · tanish.kulkarni850@nexlidemo.test · +919870000850
+- Gaurav Malhotra (parent of Pari Malhotra, Class 11 B) · gaurav.malhotra852@nexlidemo.test · +919870000852
+- Aditya Singh (parent of Naman Singh, Class 11 C) · aditya.singh854@nexlidemo.test · +919870000854
+- Atharv Chauhan (parent of Riya Chauhan, Class 11 C) · atharv.chauhan856@nexlidemo.test · +919870000856
+- Veer Naidu (parent of Nirvaan Naidu, Class 11 C) · veer.naidu858@nexlidemo.test · +919870000858
+- Laksh Mehta (parent of Avni Mehta, Class 11 C) · laksh.mehta860@nexlidemo.test · +919870000860
+- Siddharth Ghosh (parent of Kabir Ghosh, Class 11 C) · siddharth.ghosh862@nexlidemo.test · +919870000862
+- Parth Chawla (parent of Meher Chawla, Class 11 C) · parth.chawla864@nexlidemo.test · +919870000864
+- Yash Menon (parent of Rishabh Menon, Class 12 A) · yash.menon866@nexlidemo.test · +919870000866
+- Ranbir Yadav (parent of Kavya Yadav, Class 12 A) · ranbir.yadav868@nexlidemo.test · +919870000868
+- Krishna Patel (parent of Varun Patel, Class 12 A) · krishna.patel870@nexlidemo.test · +919870000870
+- Ayaan Bhat (parent of Ira Bhat, Class 12 A) · ayaan.bhat872@nexlidemo.test · +919870000872
+- Devansh Saxena (parent of Reyansh Saxena, Class 12 A) · devansh.saxena874@nexlidemo.test · +919870000874
+- Karthik Khan (parent of Bhavya Khan, Class 12 A) · karthik.khan876@nexlidemo.test · +919870000876
+- Kunal Rana (parent of Samar Rana, Class 12 B) · kunal.rana878@nexlidemo.test · +919870000878
+- Tanish Nair (parent of Jhanvi Nair, Class 12 B) · tanish.nair880@nexlidemo.test · +919870000880
+- Gaurav Shah (parent of Naman Shah, Class 12 B) · gaurav.shah882@nexlidemo.test · +919870000882
+- Aditya Trivedi (parent of Reet Trivedi, Class 12 B) · aditya.trivedi884@nexlidemo.test · +919870000884
+- Atharv Rao (parent of Nirvaan Rao, Class 12 B) · atharv.rao886@nexlidemo.test · +919870000886
+- Veer Agarwal (parent of Ananya Agarwal, Class 12 B) · veer.agarwal888@nexlidemo.test · +919870000888
+- Laksh Verma (parent of Rudra Verma, Class 12 C) · laksh.verma890@nexlidemo.test · +919870000890
+- Siddharth Chopra (parent of Aanya Chopra, Class 12 C) · siddharth.chopra892@nexlidemo.test · +919870000892
+- Parth Pandey (parent of Rishabh Pandey, Class 12 C) · parth.pandey894@nexlidemo.test · +919870000894
+- Yash Iyer (parent of Kiara Iyer, Class 12 C) · yash.iyer896@nexlidemo.test · +919870000896
+- Ranbir Bose (parent of Varun Bose, Class 12 C) · ranbir.bose898@nexlidemo.test · +919870000898
+- Krishna Sinha (parent of Tara Sinha, Class 12 C) · krishna.sinha900@nexlidemo.test · +919870000900
+
+### Alumni (30)
+- Prisha Bajaj (Class of 2023) · prisha.bajaj902@nexlidemo.test · +919870000902
+- Reyansh Agarwal (Class of 2022) · reyansh.agarwal903@nexlidemo.test · +919870000903
+- Lavanya Iyer (Class of 2021) · lavanya.iyer904@nexlidemo.test · +919870000904
+- Rudra Kapoor (Class of 2020) · rudra.kapoor905@nexlidemo.test · +919870000905
+- Sara Khan (Class of 2019) · sara.khan906@nexlidemo.test · +919870000906
+- Daksh Banerjee (Class of 2024) · daksh.banerjee901@nexlidemo.test · +919870000901
+- Advik Trivedi (Class of 2018) · advik.trivedi907@nexlidemo.test · +919870000907
+- Naman Chawla (Class of 2023) · naman.chawla909@nexlidemo.test · +919870000909
+- Mishka Chopra (Class of 2024) · mishka.chopra908@nexlidemo.test · +919870000908
+- Prisha Malhotra (Class of 2020) · prisha.malhotra912@nexlidemo.test · +919870000912
+- Ishita Bhat (Class of 2022) · ishita.bhat910@nexlidemo.test · +919870000910
+- Daksh Nair (Class of 2021) · daksh.nair911@nexlidemo.test · +919870000911
+- Lavanya Yadav (Class of 2018) · lavanya.yadav914@nexlidemo.test · +919870000914
+- Reyansh Mehta (Class of 2019) · reyansh.mehta913@nexlidemo.test · +919870000913
+- Rudra Pillai (Class of 2024) · rudra.pillai915@nexlidemo.test · +919870000915
+- Sara Dube (Class of 2023) · sara.dube916@nexlidemo.test · +919870000916
+- Advik Chauhan (Class of 2022) · advik.chauhan917@nexlidemo.test · +919870000917
+- Naman Nanda (Class of 2020) · naman.nanda919@nexlidemo.test · +919870000919
+- Mishka Reddy (Class of 2021) · mishka.reddy918@nexlidemo.test · +919870000918
+- Ishita Joshi (Class of 2019) · ishita.joshi920@nexlidemo.test · +919870000920
+- Daksh Mishra (Class of 2018) · daksh.mishra921@nexlidemo.test · +919870000921
+- Lavanya Desai (Class of 2022) · lavanya.desai924@nexlidemo.test · +919870000924
+- Prisha Bose (Class of 2024) · prisha.bose922@nexlidemo.test · +919870000922
+- Reyansh Sharma (Class of 2023) · reyansh.sharma923@nexlidemo.test · +919870000923
+- Rudra Rao (Class of 2021) · rudra.rao925@nexlidemo.test · +919870000925
+- Sara Pandey (Class of 2020) · sara.pandey926@nexlidemo.test · +919870000926
+- Mishka Saxena (Class of 2018) · mishka.saxena928@nexlidemo.test · +919870000928
+- Naman Shah (Class of 2024) · naman.shah929@nexlidemo.test · +919870000929
+- Advik Das (Class of 2019) · advik.das927@nexlidemo.test · +919870000927
+- Ishita Verma (Class of 2023) · ishita.verma930@nexlidemo.test · +919870000930
+
+## 4. Step-by-step testing order
+
+**Step 0 — Setup.** Start the app (section 1). Have this file open to copy emails. Optionally turn on the Galaxy S20 mobile view (section 2).
+
+**Step 1 — Test Super Admin.** Sign in as `testadmin@nexlidemo.test`. Check: the platform console loads (Schools, Subscriptions, Plans, Users & Roles, Roles & Permissions, Analytics). Open **Schools** → the demo school; open **Roles & Permissions** and confirm every role group is listed. Sign out.
+
+**Step 2 — Staff, role by role.** For each staff account in section 3, sign in and confirm the **menu and screens match the role**:
+- Leadership (Principal / Head of School / VPs / Directors): should see most/all modules + dashboards.
+- Academic (Coordinators / HOD / Exam Controller / Teachers): Students, Attendance, Academics, Assessments, Homework, Exams, Progress Cards.
+- Finance (Finance Manager / Accountants / Cashier / Billing): Fees & Finance, Expense; should NOT see HR/Payroll unless allowed.
+- HR / Management (HR roles / Payroll / IT / Managers): Human Resources, Payroll, Settings/Users (IT), as applicable.
+- Welfare/Health (Counselor / DCPO / Nurses / Doctor): Medical / Child-protection / Counselling — confirm these are visible ONLY to these roles.
+- Hostel / Library / Transport / Security / Canteen / Office: each should land on its own module.
+- For each: open the Students list → a student → check the profile tabs load. Try one create/save in the role’s main module to confirm saving works. Sign out.
+
+**Step 3 — Students.** Sign in as a few students from different grades (e.g. one from Class 12, one from Class 1, one Nursery). Check: their dashboard, attendance, fees, timetable, progress card. A student should only see their own data.
+
+**Step 4 — Parents.** Sign in as a few parents. Check: they see ONLY their own child, with attendance, fees and notices for that child.
+
+**Step 5 — Positions.** Confirm the leadership titles show on the right students (Head Boy/Girl, House & Vice Captains, Sports Captains, class Prefects) — open those students’ profiles and check the **Tags** + **House**.
+
+## 5. Free-tier (Spark) daily limits — important
+
+On the free Firebase (Spark) plan there are **daily limits** on reads/writes and auth operations. Logging into and clicking through ~900 accounts in a single day can hit those limits, after which the app may show errors or fail to load data. If that happens:
+- It is almost always the daily quota, **not** a bug.
+- **Test in batches across several days** (e.g. staff one day, students another, parents another).
+- Quotas reset daily (around midnight Pacific time). Try again the next day.

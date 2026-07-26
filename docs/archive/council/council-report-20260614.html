@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NEXLI — LLM Council Verdict (2026-06-14)</title>
+<style>
+  :root{--bg:#fff;--ink:#1a1d23;--muted:#5b626e;--line:#e7e9ee;--gold:#b58a2e;--green:#1f8b4c;--red:#c0443a;--blue:#2f6fb0;--card:#f7f8fa}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:880px;margin:0 auto;padding:40px 22px 80px}
+  h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0 0 28px;font-size:14px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 28px;font-size:14.5px;color:#333}
+  .q b{color:var(--ink)}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:34px 0 12px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  .verdict{background:#fffdf6;border:1px solid #efe2bf;border-radius:14px;padding:8px 22px 18px}
+  .verdict h3{font-size:16px;margin:18px 0 6px}
+  .verdict h3.green{color:var(--green)} .verdict h3.red{color:var(--red)} .verdict h3.blue{color:var(--blue)} .verdict h3.gold{color:var(--gold)}
+  .verdict p,.verdict li{font-size:15px}
+  .first{background:#0f1116;color:#fff;border-radius:12px;padding:16px 20px;margin:16px 0 0}
+  .first b{color:#f4d484}
+  .spectrum{display:grid;grid-template-columns:1fr;gap:8px;margin:6px 0 0}
+  .pos{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+  .chip{flex:none;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;color:#fff;white-space:nowrap}
+  .c-sec{background:var(--red)} .c-found{background:var(--green)} .c-ux{background:var(--blue)} .c-ai{background:var(--gold)} .c-fp{background:#6b3fa0}
+  details{border:1px solid var(--line);border-radius:10px;padding:0 14px;margin:8px 0}
+  summary{cursor:pointer;font-weight:600;padding:12px 0;font-size:14.5px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸ ";color:var(--muted)}
+  details[open] summary::before{content:"▾ "}
+  details p{margin:0 0 14px;font-size:14px;color:#333}
+  .tag{font-size:11px;color:var(--muted);font-weight:600}
+  .ver{background:#eef6ff;border:1px solid #cfe2f7;border-radius:10px;padding:12px 16px;font-size:14px;margin:10px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0}
+  th,td{text-align:left;border-bottom:1px solid var(--line);padding:8px 8px;vertical-align:top}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  footer{margin-top:40px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>NEXLI — LLM Council Verdict</h1>
+  <p class="sub">Implementation vs Master Specification · 5 advisors → anonymized peer review → chairman · 2026-06-14 · build green @603</p>
+
+  <div class="q"><b>Question:</b> Audit NEXLI's current implementation against its Master Specification, operational realism, role/workflow ownership, permission architecture, and product vision. Where is it <b>missing / incorrect / partial / deviating</b>, and what corrections are justified? Goal: architectural correctness + operational realism + vision alignment before testing — <b>not feature expansion</b>.</div>
+
+  <h2>Chairman's Verdict</h2>
+  <div class="verdict">
+    <h3 class="green">Where the council agrees</h3>
+    <p>The #1 issue is the <b>security boundary</b>. UI-level permission scoping is not real enforcement; on Spark (no Cloud Functions) the only server-side boundary is Firestore rules. Three advisors converged independently and peer review ranked them strongest (4/5). This is a <b>present blocker, not a "P9/future" item</b> — testing a UI-gated app validates nothing about who can read the database — and it is <b>fixable on Spark for free</b> (rules need no Blaze).</p>
+
+    <h3 class="red">Where the council clashes</h3>
+    <p>What to do <em>first</em>. The <b>Executor</b> says "lock the rules (1–3 days), defer everything else." The <b>Outsider</b> says the real trust-breaker is that <b>parents/students have no way to message a teacher</b> (the spec's #1 promise). The <b>Expansionist</b> says the biggest under-build is the <b>stubbed Intelligence layer</b> (AI panels are hardcoded mock data, ~60% of which needs no LLM). Peer review sided with the Executor and flagged the other two as "optimizing cosmetics over an open data layer." They aren't really competing — they answer different questions (most <em>dangerous</em> vs most <em>adoption-breaking</em> vs most <em>vision-breaking</em>) and are <b>sequential</b>.</p>
+
+    <h3 class="blue">Blind spots the peer review caught</h3>
+    <ul>
+      <li><b>Can the data model even be scoped by rules?</b> Verified: docs carry <code>schoolId</code> + <code>studentId</code>/<code>sectionId</code>/<code>staffId</code> → the fix is <b>additive per-collection rules, not a data migration</b>.</li>
+      <li>RBAC-in-rules needs no Blaze (rules already <code>get()</code> the member doc); but <b>nobody verified the rules are actually deployed</b>.</li>
+      <li>The <b>spec itself mandates Spark-impossible features</b> (Cloud-Function account suspension, enforced MFA, SMS fan-out) — it should be formally reconciled to the Spark tier + server-enforced trust model, or every future build re-introduces the gap.</li>
+    </ul>
+
+    <div class="ver"><b>Chairman correction (post-verification of <code>firestore.rules</code>):</b> the advisors who said "no rules / every collection is a wildcard / all UI theatre" <b>overstated</b> it. Rules <b>do</b> exist: deny-by-default, structurally tenant-isolated (no cross-tenant), with strict role allowlists on the <em>most</em> sensitive collections (medical, immunization, counseling, POCSO, grievances) + members/settings/append-only audit. <b>But the substance holds:</b> the coarse <em>default</em> rule (<code>isActiveMember</code> reads / <code>isStaff</code> writes) governs everything not on the restricted list — and that list <b>omits fees, payroll, salary_structures, assessment_results, students (Aadhaar/guardians), staff (PAN), iep_plans, therapy_logs, consent_records, attendance</b>. So a <b>parent or student can read the whole school's marks, fees, payroll, salaries and Aadhaar</b>, and any staff (bus driver/canteen) can write them. That is the real, DPDP-relevant gap.</div>
+
+    <h3 class="gold">The recommendation</h3>
+    <p>Treat the Firestore rules as the next unit of work — but precisely. <b>Tighten the default rule</b> with explicit per-collection matches for the sensitive collections (role allowlists like the existing <code>medical</code> rule + own-record scoping via <code>studentId</code> for parents/students), <b>verify the rules are deployed</b>, and <b>emulator-test</b> against teacher-cross-section / parent / accountant / driver before any human resumes role-by-role testing. Then, as fast-follows (not blockers): give <b>parents/students a real Messages entry point</b> wired to the existing recipient policy, relabel "Communication"→"Notices" vs "Messages", and split the analytics panels into <b>computed-now vs provider-later</b>. Finally, <b>reconcile the spec</b> so it stops asserting protections the Spark tier can't run.</p>
+
+    <h3>The one thing to do first</h3>
+    <div class="first">Verify the deployed rules, then <b>add explicit restricted-collection rules</b> for <b>fees · payroll · salary_structures · assessment_results · students · staff · iep_plans · therapy_logs · consent_records · attendance</b> (role allowlists + parent/student own-record scoping), and <b>emulator-test before any further role testing.</b></div>
+  </div>
+
+  <h2>Where the advisors landed</h2>
+  <div class="spectrum">
+    <div class="pos"><span class="chip c-sec">CONTRARIAN</span><span>Security claim is false; coarse rules expose sensitive data; §7 communication engine unbuilt; spec assumes Spark-impossible features.</span></div>
+    <div class="pos"><span class="chip c-fp">1ST PRINCIPLES</span><span>Wrong load-bearing assumption — the client is trusted to scope itself. The next unit of work is the rules, not module #41.</span></div>
+    <div class="pos"><span class="chip c-ai">EXPANSIONIST</span><span>Intelligence layer is a painted backdrop; ~60% of §8 AI is deterministic and buildable on Spark today; §11 differentiators are workflow triggers, not AI.</span></div>
+    <div class="pos"><span class="chip c-ux">OUTSIDER</span><span>Parents/students can't message a teacher (the spec's #1 promise); "Communication" vs "Messages" jargon; 35-item nav doesn't feel role-shaped.</span></div>
+    <div class="pos"><span class="chip c-found">EXECUTOR</span><span>One blocker only: deploy/ tighten rules + split the leaky per-student docs + emulator-test, THEN role-test. Defer B1–B11 to live/Blaze.</span></div>
+  </div>
+
+  <h2>Mapped to the requested buckets</h2>
+  <table>
+    <tr><th>Bucket</th><th>Items</th></tr>
+    <tr><td><b>Missing</b></td><td>Server-side read-scoping for sensitive collections (rules); parent/student Messages entry point; §7 working-hours policy & banned-pattern enforcement; real (computed) intelligence/AI signals; spec's Cloud-Function-dependent items (suspension, MFA, SMS) — Spark-deferred.</td></tr>
+    <tr><td><b>Incorrect</b></td><td>Spec §10 asserts a rules-enforced boundary that the coarse default rule doesn't deliver; AI surfaces present mock data as if live.</td></tr>
+    <tr><td><b>Partial</b></td><td>RBAC/ownership enforced in UI only; messaging engine staff-only (policy exists, parent/student UI doesn't); analytics shown as static panels.</td></tr>
+    <tr><td><b>Deviations</b></td><td>"Least-privilege, non-negotiable" vision vs any-active-member reads of marks/fees/payroll/Aadhaar; spec assumes Blaze capabilities on a Spark build.</td></tr>
+    <tr><td><b>Corrections</b></td><td>Tighten rules (per-collection role + own-record scoping) → verify deploy → emulator-test → resume testing. Then parent/student messaging, nav relabel, computed-now analytics split, spec reconciliation.</td></tr>
+  </table>
+
+  <h2>Full advisor responses</h2>
+  <details><summary>The Contrarian <span class="tag">— what fails</span></summary><p>The central security claim is false. Spec §10 promises "no bug can expose cross-school data" + per-role allowlists at the rules layer; the 50-role engine and scoped grants are UI theatre. Concrete leaks the UI can't patch: assessment_results ship every classmate's marks; event_registrations expose all names — a live DPDP/§7.4 violation. Second gap: §7 communication spec unbuilt (matrix, banned patterns = POCSO, SLA, escalation; nav has communication/messages with no permission gate). Third: spec bakes in Spark-impossible capabilities (CF account suspension, MFA, SMS). Priority: rules-as-boundary before testing; then §7 engine; then reconcile spec to Spark.</p></details>
+  <details><summary>The First Principles Thinker <span class="tag">— what are we solving</span></summary><p>The spec's mission (§1.2/§1.6) is to replace WhatsApp-and-registers with something trustworthy — trust is an enforced boundary ("least privilege is the foundation… non-negotiable"). The foundation rests on the wrong assumption: that the client can be trusted to scope itself. On Spark the only real boundary is Firestore rules; today the trust model is a <code>.includes()</code> on the attacker's machine — the inverse of the vision. The team is optimizing the wrong thing: 40 modules/50 roles above a tier where correctness can't be enforced. The next unit of work is firestore.rules, not module #41.</p></details>
+  <details><summary>The Expansionist <span class="tag">— the upside being missed</span></summary><p>The spec promises five layers (§11.2); four shipped. The Intelligence layer is a painted backdrop — every AI surface is hardcoded mock data. Yet half the §8 AI catalogue needs no LLM: at-risk flags (attendance &lt;75% + grade drop), fee-defaulter prediction, pacing alerts, leave anomalies — deterministic queries over data NEXLI already has, sitting as static panels. Split AI into "computed-now" vs "provider-later"; wire rule-based signals to live data today. The §11.1 differentiators that sell (Counselor Referral, Hardship Workflow, Exam-Stress Calendar, Night SOS) are workflow/trigger features, not AI, yet they're the moat. NEXLI built the ERP and stubbed the operating system.</p></details>
+  <details><summary>The Outsider <span class="tag">— fresh eyes</span></summary><p>The parent can't message anyone — yet the spec's #1 promise is "message your class teacher first." Parent nav has "Communication" = a read-only announcements list; the two-way Messages engine exists only for staff. A parent asking "why was my daughter marked absent?" finds no reply button and returns to WhatsApp. "Communication" vs "Messages" is jargon (label "Notices/Circulars" and "Messages (Chat)"). Student support says "Message a teacher in Communications" — read-only, a dead end. Staff nav is a 35-item wall that doesn't feel role-shaped. "Class Assessments" vs "Holistic Progress Card" vs "Examinations" — three marks tabs. Fix parent/student messaging first.</p></details>
+  <details><summary>The Executor <span class="tag">— Monday morning</span></summary><p>One blocker: any authenticated user can DevTools→Firestore→POCSO/payroll/Aadhaar/marks. Monday: (1) deploy/tighten firestore.rules today — per-tenant + lock confidential collections (free on Spark; the "P9" framing makes a present vuln sound future-tense). (2) Fix leaks rules can't catch — assessment_results peers' marks, event_registrations names — split into per-student docs (half a day). (3) Emulator-test vs teacher/parent/accountant before any human logs in. THEN role-test. Defer to Blaze: B1–B11, doc-numbering, pagination. A 1–3 day blocker, not a re-architecture.</p></details>
+
+  <details><summary>Peer review highlights</summary><p><b>Strongest:</b> Executor ×4, Contrarian ×1 — most actionable; debunks the "future-tense" framing. <b>Biggest blind spot:</b> Expansionist ×3 / Outsider ×2 — auditing the cosmetic/AI/UX layer while the data layer is open ("optimizing layer 5 while layer 1 is breached"). <b>All five missed:</b> whether the data model can be scoped by rules (verified: yes, additive — no migration); the spec itself should be reconciled to Spark; nobody verified the rules deploy; the Blaze cost/viability ceiling for a DPDP multi-tenant OS.</p></details>
+
+  <footer>Counciled: NEXLI implementation vs Master Specification (role ownership · workflow ownership · permission architecture · product vision). Method: llm-council.md. Generated 2026-06-14. Companion transcript: <code>council-transcript-20260614.md</code>.</footer>
+</div>
+</body>
+</html>
